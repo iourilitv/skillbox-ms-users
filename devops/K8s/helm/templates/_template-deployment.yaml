@@ -1,12 +1,13 @@
 {{- define "users.deployment" }}
 apiVersion: apps/v1
-kind: Deployment
+kind: {{ .kind }}
 metadata:
   name: {{ .appName }}-deployment
   namespace: {{ .namespace }}
   labels:
     app: {{ .appName }}
 spec:
+  serviceName: {{ .service.name }}
   replicas: {{ .replicaCount }}
   selector:
     matchLabels:
@@ -31,5 +32,13 @@ spec:
 {{- if .container.env }}
         env:              #indent 8 adds 8 spaces
 {{ toYaml .container.env | indent 8 }}
+{{- end }}
+{{- if .container.volumeMounts }}
+        volumeMounts:
+{{ toYaml .container.volumeMounts | indent 8 }}
+{{- end }}
+{{- if .volumeClaimTemplates }}
+  volumeClaimTemplates:
+{{ toYaml .volumeClaimTemplates | indent 2 }}
 {{- end }}
 {{- end }}

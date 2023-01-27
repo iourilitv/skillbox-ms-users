@@ -1,4 +1,5 @@
 #issue-minikube-not-save-state
+Solved in kubernetes-K8s-8-3.md.
 
 ## Description.
 Every time the minikube starts a new instance starts instead of exist instance starts in saved state.   
