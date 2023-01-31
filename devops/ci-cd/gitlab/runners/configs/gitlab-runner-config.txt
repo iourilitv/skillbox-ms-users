@@ -1,0 +1,2 @@
+Gitlab runner's configuration files are located at the folder:
+D:\Software\gitlab\GitLab-Runner

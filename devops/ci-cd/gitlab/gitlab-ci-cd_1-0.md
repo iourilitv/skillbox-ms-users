@@ -1,4 +1,4 @@
-# Creating pipeline on GitLab 1 part
+# Creating pipeline on GitLab. Part 1-0
 Unsuccessfully!
 
 Source: https://about.gitlab.com/blog/2016/12/14/continuous-delivery-of-a-spring-boot-application-with-gitlab-ci-and-kubernetes/
@@ -183,3 +183,7 @@ Preparing the "docker-windows" executor
 ERROR: Failed to remove network for build
 ERROR: Job failed: executor requires OSType=windows, but Docker Engine supports only OSType=linux
 ``
+
+## See copies of runner's configuration at:
+devops/ci-cd/gitlab/runners/configs/1       
+!!!The example above was updated with changing executor to "instance".
