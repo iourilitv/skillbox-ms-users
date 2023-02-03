@@ -13,7 +13,8 @@ stages:
 maven-build:
   stage: build
   image: $MAVEN_IMAGE
-  script: "mvn package -B"
+  script:
+    - mvn package -B
   artifacts:
     paths:
       - target/*.jar
