@@ -7,6 +7,10 @@ variables:
   APP_IMAGE: users-app
   APP_TAG: $CI_COMMIT_TAG
 
+before_script:
+  - $env:MAVEN_HOME=“C:\apache-maven-3.6.3”
+  - env:PATH = "(env:PATH);($env:MAVEN_HOME)\bin;"
+
 stages:
   - build
 
