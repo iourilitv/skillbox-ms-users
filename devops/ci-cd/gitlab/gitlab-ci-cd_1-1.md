@@ -1,5 +1,5 @@
-# Creating pipeline on GitLab. Part 1-1
-Trying to fix the problem in gitlab-ci-cd_1.md.
+# Creating pipeline on GitLab. Part 1-1. "maven-build" stage
+Trying to fix the problem in gitlab-ci-cd_1-0.md.
 Solved but there is another one "CommandNotFoundException": ObjectNotFound: (mvn:String).
 
 ## Delete exist runner

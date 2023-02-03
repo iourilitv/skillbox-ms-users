@@ -1,4 +1,4 @@
-# Creating pipeline on GitLab. Part 1-0
+# Creating pipeline on GitLab. Part 1-0. "maven-build" stage
 Unsuccessfully!
 
 Source: https://about.gitlab.com/blog/2016/12/14/continuous-delivery-of-a-spring-boot-application-with-gitlab-ci-and-kubernetes/

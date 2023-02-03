@@ -1,7 +1,8 @@
-# Creating pipeline on GitLab. Part 1-2
-Trying to fix the problem in gitlab-ci-cd_2.md:     
+# Creating pipeline on GitLab. Part 1-2. "maven-build" stage
+Trying to fix the problem in gitlab-ci-cd_1-1.md:     
 "CommandNotFoundException": ObjectNotFound: (mvn:String).
 Solved!
+But there is another problem: "JUnit tests falls"
 
 ## The problem's reason is that the path to maven has been set only for the User
 ### Add the path to maven for the System user as well 
@@ -36,3 +37,17 @@ Runtime platform                                    arch=amd64 os=windows pid=25
 ``
 
 Result: This problem is solved.         
+
+## There is another problem "JUnit tests falls"
+### The reason:
+"SpringApplication: Application run failed because of nested exception is java.io.FileNotFoundException:        
+class path resource [private.properties] cannot be opened because it does not exist"
+
+### Logs
+``
+..
+2023-02-03 13:52:09.350  WARN 3088 --- [           main] o.s.w.c.s.GenericWebApplicationContext   : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanDefinitionStoreException: Failed to parse configuration class [com.example.microservices.users.UsersApplication]; nested exception is java.io.FileNotFoundException: class path resource [private.properties] cannot be opened because it does not exist
+2023-02-03 13:52:09.490 ERROR 3088 --- [           main] o.s.boot.SpringApplication               : Application run failed
+org.springframework.beans.factory.BeanDefinitionStoreException: Failed to parse configuration class [com.example.microservices.users.UsersApplication]; nested exception is java.io.FileNotFoundException: class path resource [private.properties] cannot be opened because it does not exist
+..
+``
