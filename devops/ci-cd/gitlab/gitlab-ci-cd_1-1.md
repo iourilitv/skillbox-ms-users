@@ -1,6 +1,6 @@
 # Creating pipeline on GitLab. Part 1-1
 Trying to fix the problem in gitlab-ci-cd_1.md.
-Solved but there is another one "CommandNotFoundException".
+Solved but there is another one "CommandNotFoundException": ObjectNotFound: (mvn:String).
 
 ## Delete exist runner
 ### Remove exist runner on gitlab account
