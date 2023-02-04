@@ -1,5 +1,6 @@
 # Creating pipeline on GitLab. Part 2. "maven-integration-tests" stage (itests)
 Source: https://about.gitlab.com/blog/2016/12/14/continuous-delivery-of-a-spring-boot-application-with-gitlab-ci-and-kubernetes/
+Successfully.
 
 ## Prepare environment. Do operations if still have not done
 ### Run PowerShell (PS) as administrator
@@ -32,6 +33,6 @@ In Windows Start
 
 Result.     
 ``
-Waiting a result
+Successfully.
 ``
 
