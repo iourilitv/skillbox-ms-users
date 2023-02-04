@@ -9,7 +9,9 @@ variables:
 
 stages:
   - build
+  - itests
 
+# Packaging the project with JUnit tests running
 maven-build:
   stage: build
   image: $MAVEN_IMAGE
@@ -18,3 +20,10 @@ maven-build:
   artifacts:
     paths:
       - target/*.jar
+
+# Starting integration tests that use docker testcontainers
+maven-integration-tests:
+  stage: itests
+  image: $MAVEN_IMAGE
+  script:
+    - mvn verify -Pintegration-test
