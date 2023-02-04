@@ -43,6 +43,7 @@ In browser: http://192.168.59.102:30001/swagger-ui/index.html
 ### Instructions of how to run docker containers with docker-compose.yaml using is located at devops/docker-compose.md
 ### Instructions of how to execute module and integration tests with testcontainers and docker using is located in testcontainers-with-docker.md    
 ### Instructions of how to run docker containers with kubernetes is located in devops/K8s folder
+### Instruction of how to set CI/CD on Gitlab CI is located in devops/ci-cd/gitlab folder
 
 
 ## Should be added
