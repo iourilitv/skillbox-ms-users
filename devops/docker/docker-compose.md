@@ -15,7 +15,7 @@ mvn clean install
 ## Create the following files in classpath: 
 docker-compose.yaml in order to run group of containers; 
 
-Dockerfile - tu build docker containers for app  
+Dockerfile - to build docker containers for app  
 
 ## Build and run the containers in classpath
 
