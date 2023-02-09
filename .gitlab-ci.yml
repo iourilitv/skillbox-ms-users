@@ -1,16 +1,29 @@
+image: docker:latest
+services:
+  - docker:dind
 variables:
-  JAVA_VERSION: 11
+  DOCKER_DRIVER: overlay
+  MAVEN_IMAGE: maven:3-openjdk-11-slim:latest
   APP_IMAGE: users-app
+  APP_TAG: $CI_COMMIT_TAG
 
 stages:
   - build
+  - itests
 
-cache:
-  key: "$CI_COMMIT_REF_SLUG-build-cache"
-  paths:
-    - build/
-
-stage_build:
+# Packaging the project with JUnit tests running
+maven-build:
   stage: build
-  image: openjdk:$JAVA_VERSION
-  script: "mvn clean install"
+  image: $MAVEN_IMAGE
+  script:
+    - mvn package -B
+  artifacts:
+    paths:
+      - target/*.jar
+
+# Starting integration tests that use docker testcontainers
+maven-integration-tests:
+  stage: itests
+  image: $MAVEN_IMAGE
+  script:
+    - mvn verify -Pintegration-test
