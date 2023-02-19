@@ -24,6 +24,12 @@
 		<maven-surefire-report-plugin.version>3.0.0-M7</maven-surefire-report-plugin.version>
 		<maven-failsafe-plugin.version>3.0.0-M7</maven-failsafe-plugin.version>
 		<build-helper-maven-plugin.version>3.3.0</build-helper-maven-plugin.version>
+		<sonar-maven-plugin.version>3.9.1.2184</sonar-maven-plugin.version>
+		<jacoco-maven-plugin.version>0.8.6</jacoco-maven-plugin.version>
+		<sonar.host.url>http://localhost:9000</sonar.host.url>
+		<sonar.login>admin</sonar.login>
+		<sonar.password>sonarqube</sonar.password>
+		<sonar.coverage.exclusions>**/*Application.*</sonar.coverage.exclusions>
 	</properties>
 
 	<dependencies>
@@ -250,6 +256,22 @@
 						</configuration>
 					</execution>
 				</executions>
+			</plugin>
+			<!-- These both plugins are for GitLab CI: sonarqube-check on Pull Request stage -->
+			<plugin>
+				<groupId>org.sonarsource.scanner.maven</groupId>
+				<artifactId>sonar-maven-plugin</artifactId>
+				<version>${sonar-maven-plugin.version}</version>
+			</plugin>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>${jacoco-maven-plugin.version}</version>
+				<configuration>
+					<excludes>
+						<exclude>**/*Application.*</exclude>
+					</excludes>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
