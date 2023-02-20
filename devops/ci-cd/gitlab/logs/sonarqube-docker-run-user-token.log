@@ -1,0 +1,274 @@
+PS D:\projects\skillbox\microservices\users> mvn clean install sonar:sonar `-Dsonar.host.url=http://localhost:9000 `-Dsonar.login=squ_31c99d8483c6c42c155df4c665cc5614a6cead71
+[INFO] Scanning for projects...
+[INFO]
+[INFO] ------------------< com.example.microservices:users >-------------------
+[INFO] Building users 0.0.1-SNAPSHOT
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO]
+[INFO] --- maven-clean-plugin:3.2.0:clean (default-clean) @ users ---
+[INFO] Deleting D:\projects\skillbox\microservices\users\target
+[INFO]
+[INFO] --- properties-maven-plugin:1.1.0:read-project-properties (default) @ users ---
+[INFO]
+[INFO] --- maven-resources-plugin:3.2.0:resources (default-resources) @ users ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Using 'UTF-8' encoding to copy filtered properties files.
+[INFO] Copying 1 resource
+[INFO] Copying 14 resources
+[INFO]
+[INFO] --- maven-compiler-plugin:3.10.1:compile (default-compile) @ users ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 20 source files to D:\projects\skillbox\microservices\users\target\classes
+[INFO]
+[INFO] --- build-helper-maven-plugin:3.3.0:add-test-source (add-integration-test-source) @ users ---
+[INFO] Test Source directory: D:\projects\skillbox\microservices\users\src\integration-test\java added.
+[INFO]
+[INFO] --- build-helper-maven-plugin:3.3.0:add-test-resource (add-integration-test-resource) @ users ---
+[INFO]
+[INFO] --- maven-resources-plugin:3.2.0:testResources (default-testResources) @ users ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Using 'UTF-8' encoding to copy filtered properties files.
+[INFO] skip non existing resourceDirectory D:\projects\skillbox\microservices\users\src\test\resources
+[INFO] Copying 7 resources
+[INFO]
+[INFO] --- maven-compiler-plugin:3.10.1:testCompile (default-testCompile) @ users ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 12 source files to D:\projects\skillbox\microservices\users\target\test-classes
+[INFO]
+[INFO] --- maven-surefire-plugin:3.0.0-M7:test (default-test) @ users ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO]
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.example.microservices.users.controller.UserControllerTest
+08:23:25.241 [main] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating CacheAwareContextLoaderDelegate from class [org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDele
+gate]
+08:23:25.304 [main] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating BootstrapContext using constructor [public org.springframework.test.context.support.DefaultBootstrapContext(java.lang
+.Class,org.springframework.test.context.CacheAwareContextLoaderDelegate)]
+08:23:25.491 [main] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating TestContextBootstrapper for test class [com.example.microservices.users.controller.UserControllerTest] from class [or
+g.springframework.boot.test.autoconfigure.web.servlet.WebMvcTestContextBootstrapper]
+08:23:25.572 [main] INFO org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTestContextBootstrapper - Neither @ContextConfiguration nor @ContextHierarchy found for test class [com.example.microser
+vices.users.controller.UserControllerTest], using SpringBootContextLoader
+08:23:25.592 [main] DEBUG org.springframework.test.context.support.AbstractContextLoader - Did not detect default resource location for test class [com.example.microservices.users.controller.UserControllerTe
+st]: class path resource [com/example/microservices/users/controller/UserControllerTest-context.xml] does not exist
+08:23:25.603 [main] DEBUG org.springframework.test.context.support.AbstractContextLoader - Did not detect default resource location for test class [com.example.microservices.users.controller.UserControllerTe
+st]: class path resource [com/example/microservices/users/controller/UserControllerTestContext.groovy] does not exist
+08:23:25.604 [main] INFO org.springframework.test.context.support.AbstractContextLoader - Could not detect default resource locations for test class [com.example.microservices.users.controller.UserController
+Test]: no resource found for suffixes {-context.xml, Context.groovy}.
+08:23:25.606 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.example.microservices.users.controlle
+r.UserControllerTest]: UserControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+08:23:26.202 [main] DEBUG org.springframework.test.context.support.ActiveProfilesUtils - Could not find an 'annotation declaring class' for annotation type [org.springframework.test.context.ActiveProfiles] a
+nd class [com.example.microservices.users.controller.UserControllerTest]
+08:23:26.689 [main] DEBUG org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider - Identified candidate component class: file [D:\projects\skillbox\microservices\users\target\clas
+ses\com\example\microservices\users\UsersApplication.class]
+08:23:26.694 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.example.microservices.users.UsersApplication for test class com.example.m
+icroservices.users.controller.UserControllerTest
+08:23:26.705 [main] DEBUG org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTestContextBootstrapper - @TestExecutionListeners is not present for class [com.example.microservices.users.controller.
+UserControllerTest]: using defaults.
+08:23:26.708 [main] INFO org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTestContextBootstrapper - Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [o
+rg.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.boot.test.autoconfigure.restdocs.RestDo
+csTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFail
+ureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecut
+ionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.event
+.ApplicationEventsTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.s
+pringframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener, org.springframework.test.context.event.EventPublishingTestEx
+ecutionListener]
+08:23:26.878 [main] INFO org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTestContextBootstrapper - Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListen
+er@22d6f11, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@30990c1b, org.springframework.test.context.event.ApplicationEventsTestExecutionListener@2453f95d, org.sprin
+gframework.boot.test.mock.mockito.MockitoTestExecutionListener@44828f6b, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@2dbe250d, org.springframework.test.cont
+ext.support.DirtiesContextTestExecutionListener@553f1d75, org.springframework.test.context.transaction.TransactionalTestExecutionListener@6e1d8f9e, org.springframework.test.context.jdbc.SqlScriptsTestExecuti
+onListener@3e34ace1, org.springframework.test.context.event.EventPublishingTestExecutionListener@62fe6067, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@4f071df8, org.springframe
+work.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@4de41af9, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@56ace400, org.springframew
+ork.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@47404bea, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@305f7627, org.springfra
+mework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener@5d018107]
+08:23:26.896 [main] DEBUG org.springframework.test.context.support.AbstractDirtiesContextTestExecutionListener - Before test class: context [DefaultTestContext@54227100 testClass = UserControllerTest, testIn
+stance = [null], testMethod = [null], testException = [null], mergedContextConfiguration = [WebMergedContextConfiguration@6b5894c8 testClass = UserControllerTest, locations = '{}', classes = '{class com.exam
+ple.microservices.users.UsersApplication}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.autoconfigure.w
+eb.servlet.WebMvcTestContextBootstrapper=true}', contextCustomizers = set[[ImportsContextCustomizer@1433046b key = [org.springframework.boot.autoconfigure.cache.CacheAutoConfiguration, org.springframework.bo
+ot.autoconfigure.context.MessageSourceAutoConfiguration, org.springframework.boot.autoconfigure.data.web.SpringDataWebAutoConfiguration, org.springframework.boot.autoconfigure.freemarker.FreeMarkerAutoConfig
+uration, org.springframework.boot.autoconfigure.groovy.template.GroovyTemplateAutoConfiguration, org.springframework.boot.autoconfigure.gson.GsonAutoConfiguration, org.springframework.boot.autoconfigure.hate
+oas.HypermediaAutoConfiguration, org.springframework.boot.autoconfigure.http.HttpMessageConvertersAutoConfiguration, org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration, org.springframewo
+rk.boot.autoconfigure.jsonb.JsonbAutoConfiguration, org.springframework.boot.autoconfigure.mustache.MustacheAutoConfiguration, org.springframework.boot.autoconfigure.task.TaskExecutionAutoConfiguration, org.
+springframework.boot.autoconfigure.thymeleaf.ThymeleafAutoConfiguration, org.springframework.boot.autoconfigure.validation.ValidationAutoConfiguration, org.springframework.boot.autoconfigure.web.servlet.erro
+r.ErrorMvcAutoConfiguration, org.springframework.boot.autoconfigure.web.servlet.HttpEncodingAutoConfiguration, org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration, org.springframework.
+boot.test.autoconfigure.web.servlet.MockMvcAutoConfiguration, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcWebClientAutoConfiguration, org.springframework.boot.test.autoconfigure.web.servle
+t.MockMvcWebDriverAutoConfiguration, org.springframework.boot.autoconfigure.security.oauth2.client.servlet.OAuth2ClientAutoConfiguration, org.springframework.boot.autoconfigure.security.oauth2.resource.servl
+et.OAuth2ResourceServerAutoConfiguration, org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration, org.springframework.boot.autoconfigure.security.servlet.SecurityFilterAutoConfigur
+ation, org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcSecurityConfiguration, org.springframework.b
+oot.test.autoconfigure.web.reactive.WebTestClientAutoConfiguration]], org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@7502291e, org.springframework.boot.test.json.DuplicateJsonObj
+ectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@46944ca9, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@5c5c5aa0, org.springframework.boot.test.autoconfigure.OverrideAu
+toConfigurationContextCustomizerFactory$DisableAutoConfigurationContextCustomizer@497486b3, org.springframework.boot.test.autoconfigure.actuate.metrics.MetricsExportContextCustomizerFactory$DisableMetricExpo
+rtContextCustomizer@495fac5f, org.springframework.boot.test.autoconfigure.filter.TypeExcludeFiltersContextCustomizer@1b166792, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCus
+tomizer@f8401fc1, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@74960bfa, org.springframework.boot.test.context.SpringBootTestArgs@1, org.springframewor
+k.boot.test.context.SpringBootTestWebEnvironment@0], resourceBasePath = 'src/main/webapp', contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map[
+[empty]]], class annotated with @DirtiesContext [false] with mode [null].
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v2.7.5)
+
+2023-02-20 08:23:29.650  INFO 8756 --- [           main] c.e.m.u.controller.UserControllerTest    : Starting UserControllerTest using Java 11.0.11 on IOURI-X555L with PID 8756 (started by iurii in D:\project
+s\skillbox\microservices\users)
+2023-02-20 08:23:29.654  INFO 8756 --- [           main] c.e.m.u.controller.UserControllerTest    : No active profile set, falling back to 1 default profile: "default"
+2023-02-20 08:23:40.055  INFO 8756 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-02-20 08:23:40.055  INFO 8756 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-02-20 08:23:40.059  INFO 8756 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 3 ms
+2023-02-20 08:23:40.156  INFO 8756 --- [           main] c.e.m.u.controller.UserControllerTest    : Started UserControllerTest in 12.905 seconds (JVM running for 18.717)
+[INFO] Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 16.963 s - in com.example.microservices.users.controller.UserControllerTest
+[INFO] Running com.example.microservices.users.mapper.FollowMapperTest
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.078 s - in com.example.microservices.users.mapper.FollowMapperTest
+[INFO] Running com.example.microservices.users.mapper.UserMapperTest
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.086 s - in com.example.microservices.users.mapper.UserMapperTest
+[INFO] Running com.example.microservices.users.service.FollowServiceTest
+[INFO] Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.521 s - in com.example.microservices.users.service.FollowServiceTest
+[INFO] Running com.example.microservices.users.service.UserServiceTest
+[INFO] Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.342 s - in com.example.microservices.users.service.UserServiceTest
+[INFO]
+[INFO] Results:
+[INFO]
+[INFO] Tests run: 38, Failures: 0, Errors: 0, Skipped: 0
+[INFO]
+[INFO]
+[INFO] --- maven-jar-plugin:3.2.2:jar (default-jar) @ users ---
+[INFO] Building jar: D:\projects\skillbox\microservices\users\target\users-0.0.1-SNAPSHOT.jar
+[INFO]
+[INFO] --- spring-boot-maven-plugin:2.7.6:repackage (repackage) @ users ---
+[INFO] Replacing main artifact with repackaged archive
+[INFO]
+[INFO] --- maven-install-plugin:2.5.2:install (default-install) @ users ---
+[INFO] Installing D:\projects\skillbox\microservices\users\target\users-0.0.1-SNAPSHOT.jar to C:\Users\iurii\.m2\repository\com\example\microservices\users\0.0.1-SNAPSHOT\users-0.0.1-SNAPSHOT.jar
+[INFO] Installing D:\projects\skillbox\microservices\users\pom.xml to C:\Users\iurii\.m2\repository\com\example\microservices\users\0.0.1-SNAPSHOT\users-0.0.1-SNAPSHOT.pom
+[INFO]
+[INFO] ------------------< com.example.microservices:users >-------------------
+[INFO] Building users 0.0.1-SNAPSHOT
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO]
+[INFO] --- sonar-maven-plugin:3.9.1.2184:sonar (default-cli) @ users ---
+[INFO] User cache: C:\Users\iurii\.sonar\cache
+[INFO] SonarQube version: 9.9.0.65466
+[INFO] Default locale: "ru_RU", source code encoding: "UTF-8"
+[INFO] Load global settings
+[INFO] Load global settings (done) | time=811ms
+[INFO] Server id: 147B411E-AYZtOONodfroiLq7wI2I
+[INFO] User cache: C:\Users\iurii\.sonar\cache
+[INFO] Load/download plugins
+[INFO] Load plugins index
+[INFO] Load plugins index (done) | time=441ms
+[INFO] Load/download plugins (done) | time=2808ms
+[INFO] Process project properties
+[INFO] Process project properties (done) | time=506ms
+[INFO] Execute project builders
+[INFO] Execute project builders (done) | time=13ms
+[INFO] Project key: com.example.microservices:users
+[INFO] Base dir: D:\projects\skillbox\microservices\users
+[INFO] Working dir: D:\projects\skillbox\microservices\users\target\sonar
+[INFO] Load project settings for component key: 'com.example.microservices:users'
+[INFO] Load quality profiles
+[INFO] Load quality profiles (done) | time=667ms
+[INFO] Load active rules
+[INFO] Load active rules (done) | time=9528ms
+[INFO] Load analysis cache
+[INFO] Load analysis cache (404) | time=33ms
+[INFO] Load project repositories
+[INFO] Load project repositories (done) | time=29ms
+[INFO] Indexing files...
+[INFO] Project configuration:
+[INFO]   Excluded sources for coverage: **/*Application.*
+[INFO] 33 files indexed
+[INFO] 0 files ignored because of scm ignore settings
+[INFO] Quality profile for java: Sonar way
+[INFO] Quality profile for xml: Sonar way
+[INFO] ------------- Run sensors on module users
+[INFO] Load metrics repository
+[INFO] Load metrics repository (done) | time=105ms
+[INFO] Sensor JavaSensor [java]
+[INFO] Configured Java source version (sonar.java.source): 11
+[INFO] JavaClasspath initialization
+[INFO] JavaClasspath initialization (done) | time=53ms
+[INFO] JavaTestClasspath initialization
+[INFO] JavaTestClasspath initialization (done) | time=24ms
+[INFO] Server-side caching is enabled. The Java analyzer will not try to leverage data from a previous analysis.
+[INFO] Using ECJ batch to parse 20 Main java source files with batch size 159 KB.
+[INFO] Starting batch processing.
+[INFO] The Java analyzer cannot skip unchanged files in this context. A full analysis is performed for all files.
+[INFO] 100% analyzed
+[INFO] Batch processing: Done.
+[INFO] Did not optimize analysis for any files, performed a full analysis for all 20 files.
+[INFO] Using ECJ batch to parse 12 Test java source files with batch size 159 KB.
+[INFO] Starting batch processing.
+[INFO] 100% analyzed
+[INFO] Batch processing: Done.
+[INFO] Did not optimize analysis for any files, performed a full analysis for all 12 files.
+[INFO] No "Generated" source files to scan.
+[INFO] Sensor JavaSensor [java] (done) | time=12428ms
+[INFO] Sensor JaCoCo XML Report Importer [jacoco]
+[INFO] 'sonar.coverage.jacoco.xmlReportPaths' is not defined. Using default locations: target/site/jacoco/jacoco.xml,target/site/jacoco-it/jacoco.xml,build/reports/jacoco/test/jacocoTestReport.xml
+[INFO] No report imported, no coverage information will be imported by JaCoCo XML Report Importer
+[INFO] Sensor JaCoCo XML Report Importer [jacoco] (done) | time=92ms
+[INFO] Sensor CSS Rules [javascript]
+[INFO] No CSS, PHP, HTML or VueJS files are found in the project. CSS analysis is skipped.
+[INFO] Sensor CSS Rules [javascript] (done) | time=18ms
+[INFO] Sensor C# Project Type Information [csharp]
+[INFO] Sensor C# Project Type Information [csharp] (done) | time=15ms
+[INFO] Sensor C# Analysis Log [csharp]
+[INFO] Sensor C# Analysis Log [csharp] (done) | time=158ms
+[INFO] Sensor C# Properties [csharp]
+[INFO] Sensor C# Properties [csharp] (done) | time=5ms
+[INFO] Sensor SurefireSensor [java]
+[INFO] parsing [D:\projects\skillbox\microservices\users\target\surefire-reports]
+[INFO] Sensor SurefireSensor [java] (done) | time=446ms
+[INFO] Sensor HTML [web]
+[INFO] Sensor HTML [web] (done) | time=16ms
+[INFO] Sensor XML Sensor [xml]
+[INFO] 1 source file to be analyzed
+[INFO] 1/1 source file has been analyzed
+[INFO] Sensor XML Sensor [xml] (done) | time=1309ms
+[INFO] Sensor TextAndSecretsSensor [text]
+[INFO] 33 source files to be analyzed
+[INFO] 33/33 source files have been analyzed
+[INFO] Sensor TextAndSecretsSensor [text] (done) | time=390ms
+[INFO] Sensor VB.NET Project Type Information [vbnet]
+[INFO] Sensor VB.NET Project Type Information [vbnet] (done) | time=11ms
+[INFO] Sensor VB.NET Analysis Log [vbnet]
+[INFO] Sensor VB.NET Analysis Log [vbnet] (done) | time=156ms
+[INFO] Sensor VB.NET Properties [vbnet]
+[INFO] Sensor VB.NET Properties [vbnet] (done) | time=7ms
+[INFO] Sensor IaC Docker Sensor [iac]
+[INFO] 0 source files to be analyzed
+[INFO] 0/0 source files have been analyzed
+[INFO] Sensor IaC Docker Sensor [iac] (done) | time=275ms
+[INFO] ------------- Run sensors on project
+[INFO] Sensor Analysis Warnings import [csharp]
+[INFO] Sensor Analysis Warnings import [csharp] (done) | time=10ms
+[INFO] Sensor Zero Coverage Sensor
+[INFO] Sensor Zero Coverage Sensor (done) | time=96ms
+[INFO] Sensor Java CPD Block Indexer
+[INFO] Sensor Java CPD Block Indexer (done) | time=177ms
+[INFO] SCM Publisher SCM provider for this project is: git
+[INFO] SCM Publisher 33 source files to be analyzed
+[INFO] SCM Publisher 32/33 source files have been analyzed (done) | time=3457ms
+[WARNING] Missing blame information for the following files:
+[WARNING]   * pom.xml
+[WARNING] This may lead to missing/broken features in SonarQube
+[INFO] CPD Executor 7 files had no CPD blocks
+[INFO] CPD Executor Calculating CPD for 13 files
+[INFO] CPD Executor CPD calculation finished (done) | time=73ms
+[INFO] Analysis report generated in 353ms, dir size=336.6 kB
+[INFO] Analysis report compressed in 5371ms, zip size=117.7 kB
+[INFO] Analysis report uploaded in 1467ms
+[INFO] ANALYSIS SUCCESSFUL, you can find the results at: http://localhost:9000/dashboard?id=com.example.microservices%3Ausers
+[INFO] Note that you will be able to access the updated dashboard once the server has processed the submitted analysis report
+[INFO] More about the report processing at http://localhost:9000/api/ce/task?id=AYZtSKI2dfroiLq7wSvm
+[INFO] Analysis total time: 57.544 s
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  02:55 min
+[INFO] Finished at: 2023-02-20T08:25:22+03:00
+[INFO] ------------------------------------------------------------------------
+PS D:\projects\skillbox\microservices\users>
