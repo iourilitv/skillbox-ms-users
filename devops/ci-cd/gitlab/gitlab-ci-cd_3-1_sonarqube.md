@@ -130,24 +130,24 @@ local     sonarqube_logs
 ##### a. Start the SonarQube container with the embedded H2 database:
 ###### 1. no logs
 ``
-docker run -d --name sonarqube --rm -p 9000:9000 -v sonarqube_extensions:/opt/sonarqube/extensions sonarqube:community
+docker run -d --name sonarqube -p 9000:9000 -v sonarqube_extensions:/opt/sonarqube/extensions sonarqube:community
 ``
 
 Result(no logs):         
 ``
-PS C:\Users\iurii> docker run --rm -p 9000:9000 -v sonarqube_extensions:/opt/sonarqube/extensions sonarqube:community
+PS C:\Users\iurii> docker run -p 9000:9000 -v sonarqube_extensions:/opt/sonarqube/extensions sonarqube:community
 ...
 see logs in devops/ci-cd/gitlab/logs/sonarqube-docker-run.log
 ``
 
 ###### 2. with logs
 ``
-docker run -d --name sonarqube --rm -p 9000:9000 -v sonarqube_extensions:/opt/sonarqube/extensions sonarqube:community
+docker run -d --name sonarqube -p 9000:9000 -v sonarqube_extensions:/opt/sonarqube/extensions sonarqube:community
 ``
 
 Result(no logs):         
 ``
-PS C:\Users\iurii> docker run -d --name sonarqube --rm -p 9000:9000 -v sonarqube_extensions:/opt/sonarqube/extensions sonarqube:community
+PS C:\Users\iurii> docker run -d --name sonarqube -p 9000:9000 -v sonarqube_extensions:/opt/sonarqube/extensions sonarqube:community
 497d41f15bfd7605bd99420d615b0abe7f51a2a851c3de4610cd623c0aaf514f
 ``
 
