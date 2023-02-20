@@ -33,7 +33,7 @@ sonarqube-check:
     paths:
       - .sonar/cache
   script:
-    - mvn verify sonar:sonar -Dsonar.qualitygate.wait=true -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.login=$SONAR_LOGIN_TOKEN
+    - mvn verify sonar:sonar `-Dsonar.qualitygate.wait=true `-Dsonar.host.url=$SONAR_HOST_URL `-Dsonar.login=$SONAR_LOGIN_TOKEN
   allow_failure: true
   rules:
     - if: $CI_COMMIT_REF_NAME == 'main' || $CI_PIPELINE_SOURCE == 'merge_request_event'
