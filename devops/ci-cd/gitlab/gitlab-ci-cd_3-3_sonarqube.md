@@ -15,4 +15,16 @@ Other settings({Key}: {Value}):
 
 ## Configure the project's CI/CD settings for SonarQube usage
 ### Add sonarqube-check job at the build stage into .gitlab-ci.yml
-Trying to run without the project's variables.
+
+## Trying to run pipeline
+### Doesn't work. Without the project's variables
+Unsuccessfully for the Merge Request.  
+
+Result: 
+``
+...
+[ERROR] Failed to execute goal org.sonarsource.scanner.maven:sonar-maven-plugin:3.9.1.2184:sonar (default-cli) on project users: Not authorized. Analyzing this project requires authentication. Please provide a user token in sonar.login or other credentials in sonar.login and sonar.password.
+...
+``
+
+### Add the project's variables into sonarqube-check:script: in .gitlab-ci.yml
