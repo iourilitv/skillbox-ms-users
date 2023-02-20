@@ -1,6 +1,7 @@
 # Creating pipeline on GitLab. Part 3-2. "sonarqube-check" stage (sonarqube for Pull Requests)
-Configuring the project for code analysing by SonarQube.           
-Sources:        
+Continue "Part 3-1" configuring the project for code analysing by SonarQube.           
+Successfully.
+It works even after restart Windows System on the PC.
 
 ## Environment.
 Continue with gitlab-ci-cd_3-1_sonarqube.md state.
@@ -63,7 +64,8 @@ Name: user-admin-no-exp;
 Type: User Token;               
 Expires in: No expiration.               
 Then press "Generate" button
-#### Save generated token to any place in your system 
+#### Save generated token to any place in your system
+squ_1af8d87893a5ce56f3b5975216a103a804e97b27
 
 ### Run SonarQube code analyzing with authorization by user token 
 In PS D:\projects\skillbox\microservices\users>     
@@ -78,3 +80,4 @@ SUCCESSFUL, you can find the results at: http://localhost:9000/dashboard?id=com.
 ...
 ``
 See logs in devops/ci-cd/gitlab/logs/sonarqube-docker-run-user-token.log
+(with warnings because there is "login" property in pom.xml)
