@@ -126,10 +126,6 @@
 						<version>${maven-failsafe-plugin.version}</version>
 						<configuration>
 							<skipTests>${skip.integration.tests}</skipTests>
-							<excludes>
-								<!-- ITestFollowController has been completed so this is only for example here -->
-<!--								<exclude>**/ITestFollowController.java</exclude>-->
-							</excludes>
 						</configuration>
 						<executions>
 							<execution>
