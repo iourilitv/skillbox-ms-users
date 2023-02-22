@@ -124,4 +124,8 @@ public class UserControllerDictionary {
             "  \"error\": \"Precondition Failed\",\n" +
             "  \"path\": \"/users/99999\"\n" +
             "}";
+
+    private UserControllerDictionary() {
+        throw new IllegalStateException("Utility class");
+    }
 }
