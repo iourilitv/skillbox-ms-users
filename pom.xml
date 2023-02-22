@@ -24,9 +24,12 @@
 		<maven-surefire-report-plugin.version>3.0.0-M7</maven-surefire-report-plugin.version>
 		<maven-failsafe-plugin.version>3.0.0-M7</maven-failsafe-plugin.version>
 		<build-helper-maven-plugin.version>3.3.0</build-helper-maven-plugin.version>
-		<sonar-maven-plugin.version>3.9.1.2184</sonar-maven-plugin.version>
+		<!-- SonarQube and JaCoCo properties to CodeQuality checking -->
 		<jacoco-maven-plugin.version>0.8.6</jacoco-maven-plugin.version>
-		<sonar.coverage.exclusions>**/*Application.*</sonar.coverage.exclusions>
+		<sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
+		<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
+		<sonar.language>java</sonar.language>
+		<sonar.coverage.exclusions>**/config/*, **/dictionary/*, **/dto/*, **/entity/*, **/*Application.*</sonar.coverage.exclusions>
 	</properties>
 
 	<dependencies>
@@ -244,21 +247,42 @@
 					</execution>
 				</executions>
 			</plugin>
-			<!-- These both plugins are for GitLab CI: sonarqube-check on Pull Request stage -->
-			<plugin>
-				<groupId>org.sonarsource.scanner.maven</groupId>
-				<artifactId>sonar-maven-plugin</artifactId>
-				<version>${sonar-maven-plugin.version}</version>
-			</plugin>
+			<!-- Plugins for JACOCO Coverage report -->
+			<!-- Source: https://www.baeldung.com/sonarqube-jacoco-code-coverage -->
+			<!-- Source: https://medium.com/backend-habit/generate-codecoverage-report-with-jacoco-and-sonarqube-ed15c4045885 -->
 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
 				<version>${jacoco-maven-plugin.version}</version>
 				<configuration>
+					<destFile>${basedir}/target/coverage-reports/jacoco-unit.exec</destFile>
+					<dataFile>${basedir}/target/coverage-reports/jacoco-unit.exec</dataFile>
+					<output>file</output>
+					<append>true</append>
 					<excludes>
+						<exclude>**/config/*</exclude>
+						<exclude>**/dictionary/*</exclude>
+						<exclude>**/dto/*</exclude>
+						<exclude>**/entity/*</exclude>
 						<exclude>**/*Application.*</exclude>
 					</excludes>
 				</configuration>
+				<executions>
+					<execution>
+						<id>jacoco-initialize</id>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+						<phase>test-compile</phase>
+					</execution>
+					<execution>
+						<id>jacoco-site</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>

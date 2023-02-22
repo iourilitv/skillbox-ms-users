@@ -44,8 +44,11 @@ Coverage is 0%.
 
 ## Recommended. Start the code analyzing by SonarQube
 Another way to Start the code analyzing by SonarQube                
-Source:                               
-Code Analysis with SonarQube: https://www.baeldung.com/sonar-qube
+Sources:                               
+- Generate Codecoverage Report with Jacoco and Sonarqube (Use here the "Generate Code Coverage Using Jacoco" part):
+  https://medium.com/backend-habit/generate-codecoverage-report-with-jacoco-and-sonarqube-ed15c4045885
+- Code Coverage with SonarQube and JaCoCo: https://www.baeldung.com/sonarqube-jacoco-code-coverage
+- Code Analysis with SonarQube(about token only!): https://www.baeldung.com/sonar-qube
 
 ### Update some sonar.* properties in pom.xml:
 #### Move into command line the following properties:       
