@@ -1,24 +1,27 @@
 package com.example.microservices.users.dictionary;
 
 public class UserControllerDictionary {
+    private static final String USER_1 =
+            "{\n" +
+                    "  \"id\": 1,\n" +
+                    "  \"firstName\": \"Yury\",\n" +
+                    "  \"lastName\": \"Petrov\",\n" +
+                    "  \"secondName\": \"Stakanych\",\n" +
+                    "  \"gender\": \"MALE\",\n" +
+                    "  \"birthday\": \"2000-11-22T00:00:00.000+00:00\",\n" +
+                    "  \"currentCity\": {\n" +
+                    "    \"id\": 1,\n" +
+                    "    \"name\": \"Moscow\"\n" +
+                    "  },\n" +
+                    "  \"nickname\": \"iuric\",\n" +
+                    "  \"email\": \"y.petrov@mail.com\",\n" +
+                    "  \"phone\": \"+7(999)123-4567\",\n" +
+                    "  \"followingsNumber\": 2,\n" +
+                    "  \"followersNumber\": 1\n" +
+                    "}";
+
     public static final String EXAMPLE_RESPONSE_GET_ALL_OK_200 = "[\n" +
-            "  {\n" +
-            "    \"id\": 1,\n" +
-            "    \"firstName\": \"Yury\",\n" +
-            "    \"lastName\": \"Petrov\",\n" +
-            "    \"secondName\": \"Stakanych\",\n" +
-            "    \"gender\": \"MALE\",\n" +
-            "    \"birthday\": \"2000-11-22T00:00:00.000+00:00\",\n" +
-            "    \"currentCity\": {\n" +
-            "      \"id\": 1,\n" +
-            "      \"name\": \"Moscow\"\n" +
-            "    },\n" +
-            "    \"nickname\": \"iuric\",\n" +
-            "    \"email\": \"y.petrov@mail.com\",\n" +
-            "    \"phone\": \"+7(999)123-4567\",\n" +
-            "    \"followingsNumber\": 2,\n" +
-            "    \"followersNumber\": 1\n" +
-            "  },\n" +
+            USER_1 + ",\n" +
             "  {\n" +
             "    \"id\": 2,\n" +
             "    \"firstName\": \"Anna\",\n" +
@@ -49,23 +52,7 @@ public class UserControllerDictionary {
             "    \"followersNumber\": 1\n" +
             "  }\n" +
             "]";
-    public static final String EXAMPLE_RESPONSE_GET_USER_OK_200 = "{\n" +
-            "  \"id\": 1,\n" +
-            "  \"firstName\": \"Yury\",\n" +
-            "  \"lastName\": \"Petrov\",\n" +
-            "  \"secondName\": \"Stakanych\",\n" +
-            "  \"gender\": \"MALE\",\n" +
-            "  \"birthday\": \"2000-11-22T00:00:00.000+00:00\",\n" +
-            "  \"currentCity\": {\n" +
-            "    \"id\": 1,\n" +
-            "    \"name\": \"Moscow\"\n" +
-            "  },\n" +
-            "  \"nickname\": \"iuric\",\n" +
-            "  \"email\": \"y.petrov@mail.com\",\n" +
-            "  \"phone\": \"+7(999)123-4567\",\n" +
-            "  \"followingsNumber\": 2,\n" +
-            "  \"followersNumber\": 1\n" +
-            "}";
+    public static final String EXAMPLE_RESPONSE_GET_USER_OK_200 = USER_1;
     public static final String EXAMPLE_RESPONSE_GET_USER_ERROR_404 = "{\n" +
             "  \"timestamp\": \"2022-12-06T21:47:11.775+00:00\",\n" +
             "  \"status\": 404,\n" +
@@ -73,23 +60,7 @@ public class UserControllerDictionary {
             "  \"path\": \"/users/5\"\n" +
             "}";
 
-    public static final String EXAMPLE_REQUEST_BODY_UPDATE_USER = "{\n" +
-            "  \"id\": 1,\n" +
-            "  \"firstName\": \"Yury\",\n" +
-            "  \"lastName\": \"Petrov\",\n" +
-            "  \"secondName\": \"UpdatedStakanych\",\n" +
-            "  \"gender\": \"MALE\",\n" +
-            "  \"birthday\": \"2000-11-22T00:00:00.000+00:00\",\n" +
-            "  \"currentCity\": {\n" +
-            "    \"id\": 1,\n" +
-            "    \"name\": \"Moscow\"\n" +
-            "  },\n" +
-            "  \"nickname\": \"iuric\",\n" +
-            "  \"email\": \"y.petrov@mail.com\",\n" +
-            "  \"phone\": \"+7(999)123-4567\",\n" +
-            "  \"followingsNumber\": 2,\n" +
-            "  \"followersNumber\": 1\n" +
-            "}";
+    public static final String EXAMPLE_REQUEST_BODY_UPDATE_USER = USER_1;
     public static final String EXAMPLE_RESPONSE_UPDATE_USER_OK_200 = "User(id: 5, nickname: othic) has been updated successfully";
     public static final String EXAMPLE_RESPONSE_UPDATE_USER_ERROR_422 = "{\n" +
             "  \"timestamp\": \"2022-12-07T05:43:37.995+00:00\",\n" +
@@ -124,4 +95,8 @@ public class UserControllerDictionary {
             "  \"error\": \"Precondition Failed\",\n" +
             "  \"path\": \"/users/99999\"\n" +
             "}";
+
+    private UserControllerDictionary() {
+        throw new IllegalStateException("Utility class");
+    }
 }

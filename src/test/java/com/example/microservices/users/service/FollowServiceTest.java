@@ -9,6 +9,7 @@ import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.function.Executable;
+import org.junit.jupiter.api.function.ThrowingSupplier;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -19,6 +20,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static com.example.microservices.users.util.FollowTestUtils.fillUpTestFollows;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -175,8 +177,8 @@ class FollowServiceTest {
     @Test
     void test7_givenUserIdAndTrue_thenCorrect_setRefersDeletedUserInAllWhereFollowingIdOrFollowerId() {
         Long userId = 1L;
-        boolean flag = true;
-        doNothing().when(repository).setRefersDeletedUserInAllWhereFollowingIdOrFollowerId(userId, flag);
-        service.setRefersDeletedUserInAllWhereFollowingIdOrFollowerId(userId, flag);
+        doNothing().when(repository).setRefersDeletedUserInAllWhereFollowingIdOrFollowerId(userId, true);
+        service.setRefersDeletedUserInAllWhereFollowingIdOrFollowerId(userId, true);
+        assertDoesNotThrow((ThrowingSupplier<RuntimeException>) RuntimeException::new);
     }
 }

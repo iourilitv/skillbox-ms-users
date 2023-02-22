@@ -99,7 +99,7 @@ class ITestFollowController {
     }
 
     @Test
-    public void test0_givenRequestForHealth_thenCorrect_health() throws Exception {
+    void test0_givenRequestForHealth_thenCorrect_health() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/actuator/health")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -107,7 +107,7 @@ class ITestFollowController {
     }
 
     @Test
-    public void test1_thenCorrect_getAll() throws Exception {
+    void test1_thenCorrect_getAll() throws Exception {
         List<FollowDTO> dtoList = follows.stream().map(FollowTestUtils::toFollowDTO).collect(Collectors.toList());
         String expectedJson = mapper.writeValueAsString(dtoList);
         MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get(BASE_URL)
