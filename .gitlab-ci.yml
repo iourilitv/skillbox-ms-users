@@ -38,8 +38,6 @@ sonarqube-check:
   artifacts:
     paths:
       - target/site/jacoco/jacoco.xml
-  rules:
-    - if: $CI_COMMIT_REF_NAME == 'main' || $CI_PIPELINE_SOURCE == 'merge_request_event'
 
 # Starting integration tests that use docker testcontainers
 maven-integration-tests:
