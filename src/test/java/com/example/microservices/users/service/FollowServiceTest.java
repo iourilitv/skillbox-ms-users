@@ -68,7 +68,7 @@ class FollowServiceTest {
         Long followingId = testFollows.get(0).getFollowerId();
         List<Follow> expectedList = testFollows.stream().filter(follow -> Objects.equals(follow.getFollowingId(), followingId)).collect(Collectors.toList());
         when(repository.findAllByFollowingId(followingId)).thenReturn(expectedList);
-        List<Follow> actualList = service.getAllFollowings(followingId);
+        List<Follow> actualList = service.getAllFollowers(followingId);
         assertIterableEquals(expectedList, actualList);
     }
 

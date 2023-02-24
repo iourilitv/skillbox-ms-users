@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
@@ -30,6 +31,7 @@ import java.util.Set;
  * Source "How to Implement Soft Delete in Spring JPA.": https://www.baeldung.com/spring-jpa-soft-delete
  */
 
+@ToString(exclude = {"followings", "followers"})
 @Data
 @EqualsAndHashCode(exclude = {"followings", "followers"})
 @NoArgsConstructor
@@ -104,24 +106,5 @@ public class User {
         this.birthday = birthday;
         this.currentCity = currentCity;
         this.nickname = nickname;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", secondName='" + secondName + '\'' +
-                ", gender=" + gender +
-                ", birthday=" + birthday +
-                ", currentCity=" + currentCity +
-                ", nickname='" + nickname + '\'' +
-                ", email='" + email + '\'' +
-                ", phone='" + phone + '\'' +
-                ", about='" + about + '\'' +
-                ", hardSkills='" + hardSkills + '\'' +
-                ", isDeleted=" + isDeleted +
-                '}';
     }
 }
