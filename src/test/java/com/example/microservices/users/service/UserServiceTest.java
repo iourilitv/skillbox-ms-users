@@ -94,7 +94,7 @@ class UserServiceTest {
         City city = new City();
         city.setId(100);
         User user = new User("new first name", "new last name", Gender.FEMALE, new Date(), city, "new_user");
-        when(repository.findByNickname(user.getNickname())).thenReturn(Optional.empty());
+        when(repository.findByNicknameIncludingDeleted(user.getNickname())).thenReturn(Optional.empty());
         when(repository.save(user)).thenReturn(user);
         String expected = String.format("New user(nickname: %s) has been saved with id: %s", user.getNickname(), user.getId());
         String actual = service.createUser(user);
@@ -102,12 +102,34 @@ class UserServiceTest {
     }
 
     @Test
-    void test42_givenExistUser_thenError_createUser() {
+    void test42_givenExistAndUndeletedUser_thenError_createUser() {
         City city = new City();
         city.setId(100);
         User user = new User("new first name", "new last name", Gender.FEMALE, new Date(), city, "new_user");
         HttpStatus expectedHttpStatus = HttpStatus.PRECONDITION_FAILED;
-        when(repository.findByNickname(user.getNickname())).thenReturn(Optional.of(user));
+        when(repository.findByNicknameIncludingDeleted(user.getNickname())).thenReturn(Optional.of(user));
+        final HttpStatus[] actualHttpStatus = new HttpStatus[1];
+        Executable actual = () -> {
+            try {
+                service.createUser(user);
+            }
+            catch (ResponseStatusException e) {
+                actualHttpStatus[0] = e.getStatus();
+                throw e;
+            }
+        };
+        assertThrows(ResponseStatusException.class, actual);
+        assertEquals(expectedHttpStatus, actualHttpStatus[0]);
+    }
+
+    @Test
+    void test43_givenExistAndDeletedUser_thenError_createUser() {
+        City city = new City();
+        city.setId(100);
+        User user = new User("new first name", "new last name", Gender.FEMALE, new Date(), city, "new_user");
+        user.setDeleted(true);
+        HttpStatus expectedHttpStatus = HttpStatus.PRECONDITION_FAILED;
+        when(repository.findByNicknameIncludingDeleted(user.getNickname())).thenReturn(Optional.of(user));
         final HttpStatus[] actualHttpStatus = new HttpStatus[1];
         Executable actual = () -> {
             try {
@@ -153,7 +175,7 @@ class UserServiceTest {
     }
 
     @Test
-    void test53_givenExistAndIsDeletedUser_thenError_deleteUser() {
+    void test53_givenExistAndDeletedUser_thenError_deleteUser() {
         User isDeletedUser = testUsers.get(0);
         isDeletedUser.setDeleted(true);
         when(repository.findById(isDeletedUser.getId())).thenReturn(Optional.of(isDeletedUser));
