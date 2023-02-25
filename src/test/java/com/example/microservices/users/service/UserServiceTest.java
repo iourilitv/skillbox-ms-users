@@ -175,7 +175,7 @@ class UserServiceTest {
     }
 
     @Test
-    void test53_givenExistAndIsDeletedUser_thenError_deleteUser() {
+    void test53_givenExistAndDeletedUser_thenError_deleteUser() {
         User isDeletedUser = testUsers.get(0);
         isDeletedUser.setDeleted(true);
         when(repository.findById(isDeletedUser.getId())).thenReturn(Optional.of(isDeletedUser));

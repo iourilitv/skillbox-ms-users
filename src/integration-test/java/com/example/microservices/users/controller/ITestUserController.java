@@ -5,7 +5,6 @@ import com.example.microservices.users.dto.UserDTO;
 import com.example.microservices.users.entity.City;
 import com.example.microservices.users.entity.User;
 import com.example.microservices.users.repository.CityRepository;
-import com.example.microservices.users.service.UserService;
 import com.example.microservices.users.util.ITestUtilPostgreSQLContainer;
 import com.example.microservices.users.util.UserTestUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -71,7 +70,6 @@ class ITestUserController {
     private @Autowired MockMvc mockMvc;
     private @Autowired EntityManager entityManager;
     private @Autowired CityRepository cityRepository;
-    private @Autowired UserService userService;
 
     private List<City> cities;
     private final List<User> testUsers = new ArrayList<>(TEST_LIST_SIZE);
@@ -182,7 +180,8 @@ class ITestUserController {
     void test43_givenExistAndDeletedUser_thenError_createUser() throws Exception {
         HttpStatus expectedHttpStatus = HttpStatus.PRECONDITION_FAILED;
         User userToCreate = testUsers.get(0);
-        userService.deleteUser(userToCreate.getId());
+        userToCreate.setDeleted(true);
+        updateUser(userToCreate);
 
         UserDTO userDTO = toUserDTO(userToCreate);
         MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.post("/users")
@@ -214,11 +213,13 @@ class ITestUserController {
     }
 
     @Test
-    void test53_givenExistAndIsDeletedUser_thenError_deleteUser() throws Exception {
-        User isDeletedUser = testUsers.get(0);
-        isDeletedUser.setDeleted(true);
+    void test53_givenExistAndDeletedUser_thenError_deleteUser() throws Exception {
+        User userToDelete = testUsers.get(0);
+        userToDelete.setDeleted(true);
+        updateUser(userToDelete);
+
         HttpStatus expectedHttpStatus = HttpStatus.PRECONDITION_FAILED;
-        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.delete("/users/{id}", isDeletedUser.getId())
+        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.delete("/users/{id}", userToDelete.getId())
                 .contentType(MediaType.APPLICATION_JSON)).andReturn();
         MockHttpServletResponse response = mvcResult.getResponse();
         assertEquals(expectedHttpStatus.value(), response.getStatus());
@@ -245,6 +246,11 @@ class ITestUserController {
 
     private void storeUser(User user) {
         entityManager.persist(user);
+        entityManager.flush();
+    }
+
+    private void updateUser(User user) {
+        entityManager.merge(user);
         entityManager.flush();
     }
 
