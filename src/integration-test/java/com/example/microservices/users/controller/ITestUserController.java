@@ -5,6 +5,7 @@ import com.example.microservices.users.dto.UserDTO;
 import com.example.microservices.users.entity.City;
 import com.example.microservices.users.entity.User;
 import com.example.microservices.users.repository.CityRepository;
+import com.example.microservices.users.service.UserService;
 import com.example.microservices.users.util.ITestUtilPostgreSQLContainer;
 import com.example.microservices.users.util.UserTestUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -66,10 +67,11 @@ class ITestUserController {
 
     @Container
     public static PostgreSQLContainer<?> sqlContainer = ITestUtilPostgreSQLContainer.getInstance();
+    private static final ObjectMapper mapper = initMapper();
     private @Autowired MockMvc mockMvc;
     private @Autowired EntityManager entityManager;
     private @Autowired CityRepository cityRepository;
-    private static final ObjectMapper mapper = initMapper();
+    private @Autowired UserService userService;
 
     private List<City> cities;
     private final List<User> testUsers = new ArrayList<>(TEST_LIST_SIZE);
@@ -169,6 +171,19 @@ class ITestUserController {
     void test42_givenExistUser_thenError_createUser() throws Exception {
         HttpStatus expectedHttpStatus = HttpStatus.PRECONDITION_FAILED;
         User userToCreate = testUsers.get(0);
+        UserDTO userDTO = toUserDTO(userToCreate);
+        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.post("/users")
+                .contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(userDTO))).andReturn();
+        MockHttpServletResponse response = mvcResult.getResponse();
+        assertEquals(expectedHttpStatus.value(), response.getStatus());
+    }
+
+    @Test
+    void test43_givenExistUser_isDeleted_thenError_createUser() throws Exception {
+        HttpStatus expectedHttpStatus = HttpStatus.PRECONDITION_FAILED;
+        User userToCreate = testUsers.get(0);
+        userService.deleteUser(userToCreate.getId());
+
         UserDTO userDTO = toUserDTO(userToCreate);
         MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.post("/users")
                 .contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(userDTO))).andReturn();
