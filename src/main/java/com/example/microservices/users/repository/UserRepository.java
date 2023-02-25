@@ -9,11 +9,6 @@ import java.util.Optional;
 
 public interface UserRepository extends CrudRepository<User, Long> {
 
-    Optional<User> findByNickname(String nickname);
-
     @Query(value = "SELECT * FROM users u WHERE u.nickname = :nickname", nativeQuery = true)
     Optional<User> findByNicknameIncludingDeleted(@Param("nickname") String nickname);
-
-    @Query(value = "SELECT * FROM users u WHERE u.nickname = :nickname AND u.is_deleted = :deleted", nativeQuery = true)
-    Optional<User> findByNicknameAndIsDeleted(@Param("nickname") String nickname, @Param("deleted") boolean deleted);
 }

@@ -168,7 +168,7 @@ class ITestUserController {
     }
 
     @Test
-    void test42_givenExistUser_thenError_createUser() throws Exception {
+    void test42_givenExistAndUndeletedUser_thenError_createUser() throws Exception {
         HttpStatus expectedHttpStatus = HttpStatus.PRECONDITION_FAILED;
         User userToCreate = testUsers.get(0);
         UserDTO userDTO = toUserDTO(userToCreate);
@@ -179,7 +179,7 @@ class ITestUserController {
     }
 
     @Test
-    void test43_givenExistUser_isDeleted_thenError_createUser() throws Exception {
+    void test43_givenExistAndDeletedUser_thenError_createUser() throws Exception {
         HttpStatus expectedHttpStatus = HttpStatus.PRECONDITION_FAILED;
         User userToCreate = testUsers.get(0);
         userService.deleteUser(userToCreate.getId());
