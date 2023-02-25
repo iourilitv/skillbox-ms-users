@@ -32,7 +32,7 @@ public class UserService {
     }
 
     public String createUser(User user) {
-        if (userRepository.findByNickname(user.getNickname()).isPresent()) {
+        if (userRepository.findByNicknameIncludingDeleted(user.getNickname()).isPresent()) {
             throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED);
         }
         User savedUser = userRepository.save(user);
