@@ -1,4 +1,4 @@
-package com.example.microservices.users.controller;
+package com.example.microservices.users.itest;
 
 import com.example.microservices.users.UsersApplication;
 import com.example.microservices.users.dto.UserDTO;

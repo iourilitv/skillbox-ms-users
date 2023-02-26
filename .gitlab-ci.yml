@@ -9,6 +9,7 @@ variables:
 
 stages:
   - build
+  - smoketests
   - itests
 
 # Packaging the project with JUnit tests running
@@ -38,6 +39,13 @@ sonarqube-check:
   artifacts:
     paths:
       - target/site/jacoco/jacoco.xml
+
+# Smoke tests running
+smoke-tests:
+  stage: smoketests
+  image: $MAVEN_IMAGE
+  script:
+    - mvn -Dtest=**/smoke/* test
 
 # Starting integration tests that use docker testcontainers
 maven-integration-tests:
