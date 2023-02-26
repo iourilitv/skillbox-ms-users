@@ -45,12 +45,12 @@ PS D:\projects\examples\microservices\users> mvn verify -Pintegration-test
 [INFO] -------------------------------------------------------
 [INFO]  T E S T S
 [INFO] -------------------------------------------------------
-[INFO] Running com.example.microservices.users.controller.ITestUserController
+[INFO] Running com.example.microservices.users.itest.ITestUserController
 14:19:00.845 [main] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating CacheAwareContextLoaderDelegate from class [org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDele
 gate]
 14:19:00.886 [main] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating BootstrapContext using constructor [public org.springframework.test.context.support.DefaultBootstrapContext(java.lang
 .Class,org.springframework.test.context.CacheAwareContextLoaderDelegate)]
-14:19:01.008 [main] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating TestContextBootstrapper for test class [com.example.microservices.users.controller.ITestUserController] from class [o
+14:19:01.008 [main] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating TestContextBootstrapper for test class [com.example.microservices.users.itest.ITestUserController] from class [o
 rg.springframework.boot.test.context.SpringBootTestContextBootstrapper]
 14:19:01.060 [main] DEBUG org.springframework.test.context.support.AbstractContextLoader - Did not detect default resource location for test class [com.example.microservices.users.controller.ITestUserControl
 ler]: class path resource [com/example/microservices/users/controller/ITestUserController-context.xml] does not exist
@@ -78,7 +78,7 @@ autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@2dbf4cb
 st.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener@7fc44dec]
 14:19:01.816 [main] DEBUG org.springframework.test.context.support.AbstractDirtiesContextTestExecutionListener - Before test class: context [DefaultTestContext@350ec41e testClass = ITestUserController, testI
 nstance = [null], testMethod = [null], testException = [null], mergedContextConfiguration = [WebMergedContextConfiguration@69637b10 testClass = ITestUserController, locations = '{}', classes = '{class com.ex
-ample.microservices.users.UsersApplication}', contextInitializerClasses = '[class com.example.microservices.users.controller.ITestUserController$Initializer]', activeProfiles = '{integration-test}', property
+ample.microservices.users.UsersApplication}', contextInitializerClasses = '[class com.example.microservices.users.itest.ITestUserController$Initializer]', activeProfiles = '{integration-test}', property
 SourceLocations = '{classpath:application-integration-test.properties}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[
 [ImportsContextCustomizer@71984c3 key = [org.springframework.boot.test.autoconfigure.web.servlet.MockMvcAutoConfiguration, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcWebClientAutoConfigur
 ation, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcWebDriverAutoConfiguration, org.springframework.boot.autoconfigure.security.oauth2.client.servlet.OAuth2ClientAutoConfiguration, org.spri
@@ -1661,7 +1661,7 @@ ndering. Explicitly configure spring.jpa.open-in-view to disable this warning
 2022-12-14 14:19:59.443  INFO 14236 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 163 ms
 2022-12-14 14:19:59.619  INFO 14236 --- [           main] c.e.m.u.controller.ITestUserController   : Started ITestUserController in 32.905 seconds (JVM running for 61.126)
 2022-12-14 14:20:00.003  INFO 14236 --- [           main] o.s.t.c.transaction.TransactionContext   : Began transaction (1) for test context [DefaultTestContext@350ec41e testClass = ITestUserController, testI
-nstance = com.example.microservices.users.controller.ITestUserController@df80af2, testMethod = test1_thenCorrect_getAll@ITestUserController, testException = [null], mergedContextConfiguration = [WebMergedCon
+nstance = com.example.microservices.users.itest.ITestUserController@df80af2, testMethod = test1_thenCorrect_getAll@ITestUserController, testException = [null], mergedContextConfiguration = [WebMergedCon
 textConfiguration@69637b10 testClass = ITestUserController, locations = '{}', classes = '{class com.example.microservices.users.UsersApplication}', contextInitializerClasses = '[class com.example.microservic
 es.users.controller.ITestUserController$Initializer]', activeProfiles = '{integration-test}', propertySourceLocations = '{classpath:application-integration-test.properties}', propertySourceProperties = '{org
 .springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[[ImportsContextCustomizer@71984c3 key = [org.springframework.boot.test.autoconfigure.web.servlet.MockMvcA
@@ -1678,7 +1678,7 @@ map['org.springframework.test.context.web.ServletTestExecutionListener.activateL
 rg.springframework.test.context.web.ServletTestExecutionListener.resetRequestContextHolder' -> true, 'org.springframework.test.context.event.ApplicationEventsTestExecutionListener.recordApplicationEvents' ->
  false]]; transaction manager [org.springframework.orm.jpa.JpaTransactionManager@4f517209]; rollback [true]
 2022-12-14 14:20:02.168  INFO 14236 --- [           main] o.s.t.c.transaction.TransactionContext   : Rolled back transaction for test: [DefaultTestContext@350ec41e testClass = ITestUserController, testInstan
-ce = com.example.microservices.users.controller.ITestUserController@df80af2, testMethod = test1_thenCorrect_getAll@ITestUserController, testException = [null], mergedContextConfiguration = [WebMergedContextC
+ce = com.example.microservices.users.itest.ITestUserController@df80af2, testMethod = test1_thenCorrect_getAll@ITestUserController, testException = [null], mergedContextConfiguration = [WebMergedContextC
 onfiguration@69637b10 testClass = ITestUserController, locations = '{}', classes = '{class com.example.microservices.users.UsersApplication}', contextInitializerClasses = '[class com.example.microservices.us
 ers.controller.ITestUserController$Initializer]', activeProfiles = '{integration-test}', propertySourceLocations = '{classpath:application-integration-test.properties}', propertySourceProperties = '{org.spri
 ngframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[[ImportsContextCustomizer@71984c3 key = [org.springframework.boot.test.autoconfigure.web.servlet.MockMvcAutoCo
@@ -1695,7 +1695,7 @@ org.springframework.test.context.web.ServletTestExecutionListener.activateListen
 ringframework.test.context.web.ServletTestExecutionListener.resetRequestContextHolder' -> true, 'org.springframework.test.context.event.ApplicationEventsTestExecutionListener.recordApplicationEvents' -> fals
 e]]
 2022-12-14 14:20:02.200  INFO 14236 --- [           main] o.s.t.c.transaction.TransactionContext   : Began transaction (1) for test context [DefaultTestContext@350ec41e testClass = ITestUserController, testI
-nstance = com.example.microservices.users.controller.ITestUserController@4a17c516, testMethod = test21_givenExistUserId_thenCorrect_getUser@ITestUserController, testException = [null], mergedContextConfigura
+nstance = com.example.microservices.users.itest.ITestUserController@4a17c516, testMethod = test21_givenExistUserId_thenCorrect_getUser@ITestUserController, testException = [null], mergedContextConfigura
 tion = [WebMergedContextConfiguration@69637b10 testClass = ITestUserController, locations = '{}', classes = '{class com.example.microservices.users.UsersApplication}', contextInitializerClasses = '[class com
 .example.microservices.users.controller.ITestUserController$Initializer]', activeProfiles = '{integration-test}', propertySourceLocations = '{classpath:application-integration-test.properties}', propertySour
 ceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[[ImportsContextCustomizer@71984c3 key = [org.springframework.boot.test.autoconfigure.
@@ -1712,7 +1712,7 @@ ull]], attributes = map['org.springframework.test.context.web.ServletTestExecuti
 tHolder' -> true, 'org.springframework.test.context.web.ServletTestExecutionListener.resetRequestContextHolder' -> true, 'org.springframework.test.context.event.ApplicationEventsTestExecutionListener.recordA
 pplicationEvents' -> false]]; transaction manager [org.springframework.orm.jpa.JpaTransactionManager@4f517209]; rollback [true]
 2022-12-14 14:20:02.523  INFO 14236 --- [           main] o.s.t.c.transaction.TransactionContext   : Rolled back transaction for test: [DefaultTestContext@350ec41e testClass = ITestUserController, testInstan
-ce = com.example.microservices.users.controller.ITestUserController@4a17c516, testMethod = test21_givenExistUserId_thenCorrect_getUser@ITestUserController, testException = [null], mergedContextConfiguration
+ce = com.example.microservices.users.itest.ITestUserController@4a17c516, testMethod = test21_givenExistUserId_thenCorrect_getUser@ITestUserController, testException = [null], mergedContextConfiguration
 = [WebMergedContextConfiguration@69637b10 testClass = ITestUserController, locations = '{}', classes = '{class com.example.microservices.users.UsersApplication}', contextInitializerClasses = '[class com.exam
 ple.microservices.users.controller.ITestUserController$Initializer]', activeProfiles = '{integration-test}', propertySourceLocations = '{classpath:application-integration-test.properties}', propertySourcePro
 perties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[[ImportsContextCustomizer@71984c3 key = [org.springframework.boot.test.autoconfigure.web.s
@@ -1729,7 +1729,7 @@ pringframework.boot.test.context.SpringBootTestWebEnvironment@f381794], resource
 er' -> true, 'org.springframework.test.context.web.ServletTestExecutionListener.resetRequestContextHolder' -> true, 'org.springframework.test.context.event.ApplicationEventsTestExecutionListener.recordApplic
 ationEvents' -> false]]
 2022-12-14 14:20:02.532  INFO 14236 --- [           main] o.s.t.c.transaction.TransactionContext   : Began transaction (1) for test context [DefaultTestContext@350ec41e testClass = ITestUserController, testI
-nstance = com.example.microservices.users.controller.ITestUserController@38b7b02f, testMethod = test22_givenNotExistUserId_thenError_getUser@ITestUserController, testException = [null], mergedContextConfigur
+nstance = com.example.microservices.users.itest.ITestUserController@38b7b02f, testMethod = test22_givenNotExistUserId_thenError_getUser@ITestUserController, testException = [null], mergedContextConfigur
 ation = [WebMergedContextConfiguration@69637b10 testClass = ITestUserController, locations = '{}', classes = '{class com.example.microservices.users.UsersApplication}', contextInitializerClasses = '[class co
 m.example.microservices.users.controller.ITestUserController$Initializer]', activeProfiles = '{integration-test}', propertySourceLocations = '{classpath:application-integration-test.properties}', propertySou
 rceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[[ImportsContextCustomizer@71984c3 key = [org.springframework.boot.test.autoconfigure
@@ -1746,7 +1746,7 @@ null]], attributes = map['org.springframework.test.context.web.ServletTestExecut
 xtHolder' -> true, 'org.springframework.test.context.web.ServletTestExecutionListener.resetRequestContextHolder' -> true, 'org.springframework.test.context.event.ApplicationEventsTestExecutionListener.record
 ApplicationEvents' -> false]]; transaction manager [org.springframework.orm.jpa.JpaTransactionManager@4f517209]; rollback [true]
 2022-12-14 14:20:03.002  INFO 14236 --- [           main] o.s.t.c.transaction.TransactionContext   : Rolled back transaction for test: [DefaultTestContext@350ec41e testClass = ITestUserController, testInstan
-ce = com.example.microservices.users.controller.ITestUserController@38b7b02f, testMethod = test22_givenNotExistUserId_thenError_getUser@ITestUserController, testException = [null], mergedContextConfiguration
+ce = com.example.microservices.users.itest.ITestUserController@38b7b02f, testMethod = test22_givenNotExistUserId_thenError_getUser@ITestUserController, testException = [null], mergedContextConfiguration
  = [WebMergedContextConfiguration@69637b10 testClass = ITestUserController, locations = '{}', classes = '{class com.example.microservices.users.UsersApplication}', contextInitializerClasses = '[class com.exa
 mple.microservices.users.controller.ITestUserController$Initializer]', activeProfiles = '{integration-test}', propertySourceLocations = '{classpath:application-integration-test.properties}', propertySourcePr
 operties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[[ImportsContextCustomizer@71984c3 key = [org.springframework.boot.test.autoconfigure.web.
@@ -1763,9 +1763,9 @@ springframework.boot.test.context.SpringBootTestWebEnvironment@f381794], resourc
 der' -> true, 'org.springframework.test.context.web.ServletTestExecutionListener.resetRequestContextHolder' -> true, 'org.springframework.test.context.event.ApplicationEventsTestExecutionListener.recordAppli
 cationEvents' -> false]]
 2022-12-14 14:20:03.013  INFO 14236 --- [           main] o.s.t.c.transaction.TransactionContext   : Began transaction (1) for test context [DefaultTestContext@350ec41e testClass = ITestUserController, testI
-nstance = com.example.microservices.users.controller.ITestUserController@333ea5d6, testMethod = test31_givenUpdatedUser_thenCorrect_updateUser@ITestUserController, testException = [null], mergedContextConfig
+nstance = com.example.microservices.users.itest.ITestUserController@333ea5d6, testMethod = test31_givenUpdatedUser_thenCorrect_updateUser@ITestUserController, testException = [null], mergedContextConfig
 uration = [WebMergedContextConfiguration@69637b10 testClass = ITestUserController, locations = '{}', classes = '{class com.example.microservices.users.UsersApplication}', contextInitializerClasses = '[class
-com.example.microservices.users.controller.ITestUserController$Initializer]', activeProfiles = '{integration-test}', propertySourceLocations = '{classpath:application-integration-test.properties}', propertyS
+com.example.microservices.users.itest.ITestUserController$Initializer]', activeProfiles = '{integration-test}', propertySourceLocations = '{classpath:application-integration-test.properties}', propertyS
 ourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[[ImportsContextCustomizer@71984c3 key = [org.springframework.boot.test.autoconfigu
 re.web.servlet.MockMvcAutoConfiguration, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcWebClientAutoConfiguration, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcWebDriverAut
 oConfiguration, org.springframework.boot.autoconfigure.security.oauth2.client.servlet.OAuth2ClientAutoConfiguration, org.springframework.boot.autoconfigure.security.oauth2.resource.servlet.OAuth2ResourceServ
@@ -1780,7 +1780,7 @@ ertyMappingContextCustomizer@4b3fa0b3, org.springframework.boot.test.autoconfigu
 textHolder' -> true, 'org.springframework.test.context.web.ServletTestExecutionListener.resetRequestContextHolder' -> true, 'org.springframework.test.context.event.ApplicationEventsTestExecutionListener.reco
 rdApplicationEvents' -> false]]; transaction manager [org.springframework.orm.jpa.JpaTransactionManager@4f517209]; rollback [true]
 2022-12-14 14:20:03.520  INFO 14236 --- [           main] o.s.t.c.transaction.TransactionContext   : Rolled back transaction for test: [DefaultTestContext@350ec41e testClass = ITestUserController, testInstan
-ce = com.example.microservices.users.controller.ITestUserController@333ea5d6, testMethod = test31_givenUpdatedUser_thenCorrect_updateUser@ITestUserController, testException = [null], mergedContextConfigurati
+ce = com.example.microservices.users.itest.ITestUserController@333ea5d6, testMethod = test31_givenUpdatedUser_thenCorrect_updateUser@ITestUserController, testException = [null], mergedContextConfigurati
 on = [WebMergedContextConfiguration@69637b10 testClass = ITestUserController, locations = '{}', classes = '{class com.example.microservices.users.UsersApplication}', contextInitializerClasses = '[class com.e
 xample.microservices.users.controller.ITestUserController$Initializer]', activeProfiles = '{integration-test}', propertySourceLocations = '{classpath:application-integration-test.properties}', propertySource
 Properties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[[ImportsContextCustomizer@71984c3 key = [org.springframework.boot.test.autoconfigure.we
@@ -1797,9 +1797,9 @@ l]], attributes = map['org.springframework.test.context.web.ServletTestExecution
 older' -> true, 'org.springframework.test.context.web.ServletTestExecutionListener.resetRequestContextHolder' -> true, 'org.springframework.test.context.event.ApplicationEventsTestExecutionListener.recordApp
 licationEvents' -> false]]
 2022-12-14 14:20:03.536  INFO 14236 --- [           main] o.s.t.c.transaction.TransactionContext   : Began transaction (1) for test context [DefaultTestContext@350ec41e testClass = ITestUserController, testI
-nstance = com.example.microservices.users.controller.ITestUserController@3a721396, testMethod = test32_givenNotExistUpdatedUser_thenError_updateUser@ITestUserController, testException = [null], mergedContext
+nstance = com.example.microservices.users.itest.ITestUserController@3a721396, testMethod = test32_givenNotExistUpdatedUser_thenError_updateUser@ITestUserController, testException = [null], mergedContext
 Configuration = [WebMergedContextConfiguration@69637b10 testClass = ITestUserController, locations = '{}', classes = '{class com.example.microservices.users.UsersApplication}', contextInitializerClasses = '[
-class com.example.microservices.users.controller.ITestUserController$Initializer]', activeProfiles = '{integration-test}', propertySourceLocations = '{classpath:application-integration-test.properties}', pro
+class com.example.microservices.users.itest.ITestUserController$Initializer]', activeProfiles = '{integration-test}', propertySourceLocations = '{classpath:application-integration-test.properties}', pro
 pertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[[ImportsContextCustomizer@71984c3 key = [org.springframework.boot.test.autoc
 onfigure.web.servlet.MockMvcAutoConfiguration, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcWebClientAutoConfiguration, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcWebDri
 verAutoConfiguration, org.springframework.boot.autoconfigure.security.oauth2.client.servlet.OAuth2ClientAutoConfiguration, org.springframework.boot.autoconfigure.security.oauth2.resource.servlet.OAuth2Resour
@@ -1814,9 +1814,9 @@ rent = [null]], attributes = map['org.springframework.test.context.web.ServletTe
 estContextHolder' -> true, 'org.springframework.test.context.web.ServletTestExecutionListener.resetRequestContextHolder' -> true, 'org.springframework.test.context.event.ApplicationEventsTestExecutionListene
 r.recordApplicationEvents' -> false]]; transaction manager [org.springframework.orm.jpa.JpaTransactionManager@4f517209]; rollback [true]
 2022-12-14 14:20:03.808  INFO 14236 --- [           main] o.s.t.c.transaction.TransactionContext   : Rolled back transaction for test: [DefaultTestContext@350ec41e testClass = ITestUserController, testInstan
-ce = com.example.microservices.users.controller.ITestUserController@3a721396, testMethod = test32_givenNotExistUpdatedUser_thenError_updateUser@ITestUserController, testException = [null], mergedContextConfi
+ce = com.example.microservices.users.itest.ITestUserController@3a721396, testMethod = test32_givenNotExistUpdatedUser_thenError_updateUser@ITestUserController, testException = [null], mergedContextConfi
 guration = [WebMergedContextConfiguration@69637b10 testClass = ITestUserController, locations = '{}', classes = '{class com.example.microservices.users.UsersApplication}', contextInitializerClasses = '[class
- com.example.microservices.users.controller.ITestUserController$Initializer]', activeProfiles = '{integration-test}', propertySourceLocations = '{classpath:application-integration-test.properties}', property
+ com.example.microservices.users.itest.ITestUserController$Initializer]', activeProfiles = '{integration-test}', propertySourceLocations = '{classpath:application-integration-test.properties}', property
 SourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[[ImportsContextCustomizer@71984c3 key = [org.springframework.boot.test.autoconfig
 ure.web.servlet.MockMvcAutoConfiguration, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcWebClientAutoConfiguration, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcWebDriverAu
 toConfiguration, org.springframework.boot.autoconfigure.security.oauth2.client.servlet.OAuth2ClientAutoConfiguration, org.springframework.boot.autoconfigure.security.oauth2.resource.servlet.OAuth2ResourceSer
@@ -1831,9 +1831,9 @@ pertyMappingContextCustomizer@4b3fa0b3, org.springframework.boot.test.autoconfig
 ntextHolder' -> true, 'org.springframework.test.context.web.ServletTestExecutionListener.resetRequestContextHolder' -> true, 'org.springframework.test.context.event.ApplicationEventsTestExecutionListener.rec
 ordApplicationEvents' -> false]]
 2022-12-14 14:20:03.815  INFO 14236 --- [           main] o.s.t.c.transaction.TransactionContext   : Began transaction (1) for test context [DefaultTestContext@350ec41e testClass = ITestUserController, testI
-nstance = com.example.microservices.users.controller.ITestUserController@6ec2be63, testMethod = test41_givenNotExistUser_thenCorrect_createUser@ITestUserController, testException = [null], mergedContextConfi
+nstance = com.example.microservices.users.itest.ITestUserController@6ec2be63, testMethod = test41_givenNotExistUser_thenCorrect_createUser@ITestUserController, testException = [null], mergedContextConfi
 guration = [WebMergedContextConfiguration@69637b10 testClass = ITestUserController, locations = '{}', classes = '{class com.example.microservices.users.UsersApplication}', contextInitializerClasses = '[class
- com.example.microservices.users.controller.ITestUserController$Initializer]', activeProfiles = '{integration-test}', propertySourceLocations = '{classpath:application-integration-test.properties}', property
+ com.example.microservices.users.itest.ITestUserController$Initializer]', activeProfiles = '{integration-test}', propertySourceLocations = '{classpath:application-integration-test.properties}', property
 SourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[[ImportsContextCustomizer@71984c3 key = [org.springframework.boot.test.autoconfig
 ure.web.servlet.MockMvcAutoConfiguration, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcWebClientAutoConfiguration, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcWebDriverAu
 toConfiguration, org.springframework.boot.autoconfigure.security.oauth2.client.servlet.OAuth2ClientAutoConfiguration, org.springframework.boot.autoconfigure.security.oauth2.resource.servlet.OAuth2ResourceSer
@@ -1848,7 +1848,7 @@ pertyMappingContextCustomizer@4b3fa0b3, org.springframework.boot.test.autoconfig
 ntextHolder' -> true, 'org.springframework.test.context.web.ServletTestExecutionListener.resetRequestContextHolder' -> true, 'org.springframework.test.context.event.ApplicationEventsTestExecutionListener.rec
 ordApplicationEvents' -> false]]; transaction manager [org.springframework.orm.jpa.JpaTransactionManager@4f517209]; rollback [true]
 2022-12-14 14:20:04.024  INFO 14236 --- [           main] o.s.t.c.transaction.TransactionContext   : Rolled back transaction for test: [DefaultTestContext@350ec41e testClass = ITestUserController, testInstan
-ce = com.example.microservices.users.controller.ITestUserController@6ec2be63, testMethod = test41_givenNotExistUser_thenCorrect_createUser@ITestUserController, testException = [null], mergedContextConfigurat
+ce = com.example.microservices.users.itest.ITestUserController@6ec2be63, testMethod = test41_givenNotExistUser_thenCorrect_createUser@ITestUserController, testException = [null], mergedContextConfigurat
 ion = [WebMergedContextConfiguration@69637b10 testClass = ITestUserController, locations = '{}', classes = '{class com.example.microservices.users.UsersApplication}', contextInitializerClasses = '[class com.
 example.microservices.users.controller.ITestUserController$Initializer]', activeProfiles = '{integration-test}', propertySourceLocations = '{classpath:application-integration-test.properties}', propertySourc
 eProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[[ImportsContextCustomizer@71984c3 key = [org.springframework.boot.test.autoconfigure.w
@@ -1865,7 +1865,7 @@ ll]], attributes = map['org.springframework.test.context.web.ServletTestExecutio
 Holder' -> true, 'org.springframework.test.context.web.ServletTestExecutionListener.resetRequestContextHolder' -> true, 'org.springframework.test.context.event.ApplicationEventsTestExecutionListener.recordAp
 plicationEvents' -> false]]
 2022-12-14 14:20:04.035  INFO 14236 --- [           main] o.s.t.c.transaction.TransactionContext   : Began transaction (1) for test context [DefaultTestContext@350ec41e testClass = ITestUserController, testI
-nstance = com.example.microservices.users.controller.ITestUserController@71ebd1d9, testMethod = test42_givenExistUser_thenError_createUser@ITestUserController, testException = [null], mergedContextConfigurat
+nstance = com.example.microservices.users.itest.ITestUserController@71ebd1d9, testMethod = test42_givenExistUser_thenError_createUser@ITestUserController, testException = [null], mergedContextConfigurat
 ion = [WebMergedContextConfiguration@69637b10 testClass = ITestUserController, locations = '{}', classes = '{class com.example.microservices.users.UsersApplication}', contextInitializerClasses = '[class com.
 example.microservices.users.controller.ITestUserController$Initializer]', activeProfiles = '{integration-test}', propertySourceLocations = '{classpath:application-integration-test.properties}', propertySourc
 eProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[[ImportsContextCustomizer@71984c3 key = [org.springframework.boot.test.autoconfigure.w
@@ -1882,7 +1882,7 @@ ll]], attributes = map['org.springframework.test.context.web.ServletTestExecutio
 Holder' -> true, 'org.springframework.test.context.web.ServletTestExecutionListener.resetRequestContextHolder' -> true, 'org.springframework.test.context.event.ApplicationEventsTestExecutionListener.recordAp
 plicationEvents' -> false]]; transaction manager [org.springframework.orm.jpa.JpaTransactionManager@4f517209]; rollback [true]
 2022-12-14 14:20:04.193  INFO 14236 --- [           main] o.s.t.c.transaction.TransactionContext   : Rolled back transaction for test: [DefaultTestContext@350ec41e testClass = ITestUserController, testInstan
-ce = com.example.microservices.users.controller.ITestUserController@71ebd1d9, testMethod = test42_givenExistUser_thenError_createUser@ITestUserController, testException = [null], mergedContextConfiguration =
+ce = com.example.microservices.users.itest.ITestUserController@71ebd1d9, testMethod = test42_givenExistUser_thenError_createUser@ITestUserController, testException = [null], mergedContextConfiguration =
  [WebMergedContextConfiguration@69637b10 testClass = ITestUserController, locations = '{}', classes = '{class com.example.microservices.users.UsersApplication}', contextInitializerClasses = '[class com.examp
 le.microservices.users.controller.ITestUserController$Initializer]', activeProfiles = '{integration-test}', propertySourceLocations = '{classpath:application-integration-test.properties}', propertySourceProp
 erties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[[ImportsContextCustomizer@71984c3 key = [org.springframework.boot.test.autoconfigure.web.se
@@ -1899,9 +1899,9 @@ ringframework.boot.test.context.SpringBootTestWebEnvironment@f381794], resourceB
 r' -> true, 'org.springframework.test.context.web.ServletTestExecutionListener.resetRequestContextHolder' -> true, 'org.springframework.test.context.event.ApplicationEventsTestExecutionListener.recordApplica
 tionEvents' -> false]]
 2022-12-14 14:20:04.200  INFO 14236 --- [           main] o.s.t.c.transaction.TransactionContext   : Began transaction (1) for test context [DefaultTestContext@350ec41e testClass = ITestUserController, testI
-nstance = com.example.microservices.users.controller.ITestUserController@e74914d, testMethod = test51_givenExistAndUndeletedUser_thenCorrect_deleteUser@ITestUserController, testException = [null], mergedCont
+nstance = com.example.microservices.users.itest.ITestUserController@e74914d, testMethod = test51_givenExistAndUndeletedUser_thenCorrect_deleteUser@ITestUserController, testException = [null], mergedCont
 extConfiguration = [WebMergedContextConfiguration@69637b10 testClass = ITestUserController, locations = '{}', classes = '{class com.example.microservices.users.UsersApplication}', contextInitializerClasses =
- '[class com.example.microservices.users.controller.ITestUserController$Initializer]', activeProfiles = '{integration-test}', propertySourceLocations = '{classpath:application-integration-test.properties}',
+ '[class com.example.microservices.users.itest.ITestUserController$Initializer]', activeProfiles = '{integration-test}', propertySourceLocations = '{classpath:application-integration-test.properties}',
 propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[[ImportsContextCustomizer@71984c3 key = [org.springframework.boot.test.au
 toconfigure.web.servlet.MockMvcAutoConfiguration, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcWebClientAutoConfiguration, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcWeb
 DriverAutoConfiguration, org.springframework.boot.autoconfigure.security.oauth2.client.servlet.OAuth2ClientAutoConfiguration, org.springframework.boot.autoconfigure.security.oauth2.resource.servlet.OAuth2Res
@@ -1916,9 +1916,9 @@ TestArgs@1, org.springframework.boot.test.context.SpringBootTestWebEnvironment@f
 equestContextHolder' -> true, 'org.springframework.test.context.web.ServletTestExecutionListener.resetRequestContextHolder' -> true, 'org.springframework.test.context.event.ApplicationEventsTestExecutionList
 ener.recordApplicationEvents' -> false]]; transaction manager [org.springframework.orm.jpa.JpaTransactionManager@4f517209]; rollback [true]
 2022-12-14 14:20:04.629  INFO 14236 --- [           main] o.s.t.c.transaction.TransactionContext   : Rolled back transaction for test: [DefaultTestContext@350ec41e testClass = ITestUserController, testInstan
-ce = com.example.microservices.users.controller.ITestUserController@e74914d, testMethod = test51_givenExistAndUndeletedUser_thenCorrect_deleteUser@ITestUserController, testException = [null], mergedContextCo
+ce = com.example.microservices.users.itest.ITestUserController@e74914d, testMethod = test51_givenExistAndUndeletedUser_thenCorrect_deleteUser@ITestUserController, testException = [null], mergedContextCo
 nfiguration = [WebMergedContextConfiguration@69637b10 testClass = ITestUserController, locations = '{}', classes = '{class com.example.microservices.users.UsersApplication}', contextInitializerClasses = '[cl
-ass com.example.microservices.users.controller.ITestUserController$Initializer]', activeProfiles = '{integration-test}', propertySourceLocations = '{classpath:application-integration-test.properties}', prope
+ass com.example.microservices.users.itest.ITestUserController$Initializer]', activeProfiles = '{integration-test}', propertySourceLocations = '{classpath:application-integration-test.properties}', prope
 rtySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[[ImportsContextCustomizer@71984c3 key = [org.springframework.boot.test.autocon
 figure.web.servlet.MockMvcAutoConfiguration, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcWebClientAutoConfiguration, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcWebDrive
 rAutoConfiguration, org.springframework.boot.autoconfigure.security.oauth2.client.servlet.OAuth2ClientAutoConfiguration, org.springframework.boot.autoconfigure.security.oauth2.resource.servlet.OAuth2Resource
@@ -1933,7 +1933,7 @@ nt = [null]], attributes = map['org.springframework.test.context.web.ServletTest
 tContextHolder' -> true, 'org.springframework.test.context.web.ServletTestExecutionListener.resetRequestContextHolder' -> true, 'org.springframework.test.context.event.ApplicationEventsTestExecutionListener.
 recordApplicationEvents' -> false]]
 2022-12-14 14:20:04.642  INFO 14236 --- [           main] o.s.t.c.transaction.TransactionContext   : Began transaction (1) for test context [DefaultTestContext@350ec41e testClass = ITestUserController, testI
-nstance = com.example.microservices.users.controller.ITestUserController@3c88bef5, testMethod = test52_givenNotExistUser_thenError_deleteUser@ITestUserController, testException = [null], mergedContextConfigu
+nstance = com.example.microservices.users.itest.ITestUserController@3c88bef5, testMethod = test52_givenNotExistUser_thenError_deleteUser@ITestUserController, testException = [null], mergedContextConfigu
 ration = [WebMergedContextConfiguration@69637b10 testClass = ITestUserController, locations = '{}', classes = '{class com.example.microservices.users.UsersApplication}', contextInitializerClasses = '[class c
 om.example.microservices.users.controller.ITestUserController$Initializer]', activeProfiles = '{integration-test}', propertySourceLocations = '{classpath:application-integration-test.properties}', propertySo
 urceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[[ImportsContextCustomizer@71984c3 key = [org.springframework.boot.test.autoconfigur
@@ -1950,7 +1950,7 @@ rtyMappingContextCustomizer@4b3fa0b3, org.springframework.boot.test.autoconfigur
 extHolder' -> true, 'org.springframework.test.context.web.ServletTestExecutionListener.resetRequestContextHolder' -> true, 'org.springframework.test.context.event.ApplicationEventsTestExecutionListener.recor
 dApplicationEvents' -> false]]; transaction manager [org.springframework.orm.jpa.JpaTransactionManager@4f517209]; rollback [true]
 2022-12-14 14:20:04.891  INFO 14236 --- [           main] o.s.t.c.transaction.TransactionContext   : Rolled back transaction for test: [DefaultTestContext@350ec41e testClass = ITestUserController, testInstan
-ce = com.example.microservices.users.controller.ITestUserController@3c88bef5, testMethod = test52_givenNotExistUser_thenError_deleteUser@ITestUserController, testException = [null], mergedContextConfiguratio
+ce = com.example.microservices.users.itest.ITestUserController@3c88bef5, testMethod = test52_givenNotExistUser_thenError_deleteUser@ITestUserController, testException = [null], mergedContextConfiguratio
 n = [WebMergedContextConfiguration@69637b10 testClass = ITestUserController, locations = '{}', classes = '{class com.example.microservices.users.UsersApplication}', contextInitializerClasses = '[class com.ex
 ample.microservices.users.controller.ITestUserController$Initializer]', activeProfiles = '{integration-test}', propertySourceLocations = '{classpath:application-integration-test.properties}', propertySourceP
 roperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[[ImportsContextCustomizer@71984c3 key = [org.springframework.boot.test.autoconfigure.web
@@ -1967,9 +1967,9 @@ ppingContextCustomizer@4b3fa0b3, org.springframework.boot.test.autoconfigure.web
 lder' -> true, 'org.springframework.test.context.web.ServletTestExecutionListener.resetRequestContextHolder' -> true, 'org.springframework.test.context.event.ApplicationEventsTestExecutionListener.recordAppl
 icationEvents' -> false]]
 2022-12-14 14:20:04.899  INFO 14236 --- [           main] o.s.t.c.transaction.TransactionContext   : Began transaction (1) for test context [DefaultTestContext@350ec41e testClass = ITestUserController, testI
-nstance = com.example.microservices.users.controller.ITestUserController@f8d6d7d, testMethod = test53_givenExistAndIsDeletedUser_thenError_deleteUser@ITestUserController, testException = [null], mergedContex
+nstance = com.example.microservices.users.itest.ITestUserController@f8d6d7d, testMethod = test53_givenExistAndIsDeletedUser_thenError_deleteUser@ITestUserController, testException = [null], mergedContex
 tConfiguration = [WebMergedContextConfiguration@69637b10 testClass = ITestUserController, locations = '{}', classes = '{class com.example.microservices.users.UsersApplication}', contextInitializerClasses = '
-[class com.example.microservices.users.controller.ITestUserController$Initializer]', activeProfiles = '{integration-test}', propertySourceLocations = '{classpath:application-integration-test.properties}', pr
+[class com.example.microservices.users.itest.ITestUserController$Initializer]', activeProfiles = '{integration-test}', propertySourceLocations = '{classpath:application-integration-test.properties}', pr
 opertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[[ImportsContextCustomizer@71984c3 key = [org.springframework.boot.test.auto
 configure.web.servlet.MockMvcAutoConfiguration, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcWebClientAutoConfiguration, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcWebDr
 iverAutoConfiguration, org.springframework.boot.autoconfigure.security.oauth2.client.servlet.OAuth2ClientAutoConfiguration, org.springframework.boot.autoconfigure.security.oauth2.resource.servlet.OAuth2Resou
@@ -1984,9 +1984,9 @@ arent = [null]], attributes = map['org.springframework.test.context.web.ServletT
 uestContextHolder' -> true, 'org.springframework.test.context.web.ServletTestExecutionListener.resetRequestContextHolder' -> true, 'org.springframework.test.context.event.ApplicationEventsTestExecutionListen
 er.recordApplicationEvents' -> false]]; transaction manager [org.springframework.orm.jpa.JpaTransactionManager@4f517209]; rollback [true]
 2022-12-14 14:20:05.067  INFO 14236 --- [           main] o.s.t.c.transaction.TransactionContext   : Rolled back transaction for test: [DefaultTestContext@350ec41e testClass = ITestUserController, testInstan
-ce = com.example.microservices.users.controller.ITestUserController@f8d6d7d, testMethod = test53_givenExistAndIsDeletedUser_thenError_deleteUser@ITestUserController, testException = [null], mergedContextConf
+ce = com.example.microservices.users.itest.ITestUserController@f8d6d7d, testMethod = test53_givenExistAndIsDeletedUser_thenError_deleteUser@ITestUserController, testException = [null], mergedContextConf
 iguration = [WebMergedContextConfiguration@69637b10 testClass = ITestUserController, locations = '{}', classes = '{class com.example.microservices.users.UsersApplication}', contextInitializerClasses = '[clas
-s com.example.microservices.users.controller.ITestUserController$Initializer]', activeProfiles = '{integration-test}', propertySourceLocations = '{classpath:application-integration-test.properties}', propert
+s com.example.microservices.users.itest.ITestUserController$Initializer]', activeProfiles = '{integration-test}', propertySourceLocations = '{classpath:application-integration-test.properties}', propert
 ySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[[ImportsContextCustomizer@71984c3 key = [org.springframework.boot.test.autoconfi
 gure.web.servlet.MockMvcAutoConfiguration, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcWebClientAutoConfiguration, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcWebDriverA
 utoConfiguration, org.springframework.boot.autoconfigure.security.oauth2.client.servlet.OAuth2ClientAutoConfiguration, org.springframework.boot.autoconfigure.security.oauth2.resource.servlet.OAuth2ResourceSe
@@ -2000,7 +2000,7 @@ s@1, org.springframework.boot.test.context.SpringBootTestWebEnvironment@f381794]
  = [null]], attributes = map['org.springframework.test.context.web.ServletTestExecutionListener.activateListener' -> true, 'org.springframework.test.context.web.ServletTestExecutionListener.populatedRequestC
 ontextHolder' -> true, 'org.springframework.test.context.web.ServletTestExecutionListener.resetRequestContextHolder' -> true, 'org.springframework.test.context.event.ApplicationEventsTestExecutionListener.re
 cordApplicationEvents' -> false]]
-[INFO] Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 67.292 s - in com.example.microservices.users.controller.ITestUserController
+[INFO] Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 67.292 s - in com.example.microservices.users.itest.ITestUserController
 [INFO]
 [INFO] Results:
 [INFO]
