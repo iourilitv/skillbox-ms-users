@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @AutoConfigureTestDatabase
 @SpringBootTest(classes = UsersApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class SmokeTest {
+class SmokeTest {
 
     @Autowired private CityRepository cityRepository;
     @Autowired private TestRestTemplate restTemplate;
@@ -40,7 +40,7 @@ public class SmokeTest {
     }
 
     @Test
-    public void createUser_then_getAll_then_OK() {
+    void createUser_then_getAll_then_OK() {
         User userToCreate = createUser(99, cities.get(1));
         UserDTO userDTOToCreate = toUserDTO(userToCreate);
         var responseCreateUser = restTemplate.postForEntity(url, userDTOToCreate, String.class);
