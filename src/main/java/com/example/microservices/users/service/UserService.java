@@ -31,12 +31,11 @@ public class UserService {
         return String.format("User(id: %s, nickname: %s) has been updated successfully", savedUser.getId(), savedUser.getNickname());
     }
 
-    public String createUser(User user) {
+    public User createUser(User user) {
         if (userRepository.findByNicknameIncludingDeleted(user.getNickname()).isPresent()) {
             throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED);
         }
-        User savedUser = userRepository.save(user);
-        return String.format("New user(nickname: %s) has been saved with id: %s", savedUser.getNickname(), savedUser.getId());
+        return userRepository.save(user);
     }
 
     @Transactional

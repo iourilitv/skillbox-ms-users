@@ -35,16 +35,14 @@ public class FollowService {
     }
 
     @Transactional
-    public String createFollow(Follow follow) {
+    public Follow createFollow(Follow follow) {
         if (Objects.equals(follow.getFollowingId(), follow.getFollowerId())
                 || followRepository.findByFollowingIdAndFollowerId(follow.getFollowingId(), follow.getFollowerId()).isPresent()
                     ) {
             throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED);
         }
         follow.setFollowedAt(follow.getFollowedAt());
-        Follow savedFollow = followRepository.save(follow);
-        return String.format("User(id: %s) has been followed to User(id: %s) with Follow(id: %s)",
-                savedFollow.getFollowingId(), savedFollow.getFollowerId(), savedFollow.getId());
+        return followRepository.save(follow);
     }
 
     @Transactional
