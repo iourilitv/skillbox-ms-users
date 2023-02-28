@@ -36,10 +36,6 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import javax.persistence.EntityManager;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -48,6 +44,8 @@ import static com.example.microservices.users.util.MapperTestUtils.initMapper;
 import static com.example.microservices.users.util.UserTestUtils.createUser;
 import static com.example.microservices.users.util.UserTestUtils.toUserDTO;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * Module tests
@@ -155,14 +153,11 @@ class ITestUserController {
     void test41_givenNotExistUser_thenCorrect_createUser() throws Exception {
         User userToCreate = createUser(99, cities.get(1));
         UserDTO userDTO = toUserDTO(userToCreate);
-        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.post("/users")
-                .contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(userDTO))).andReturn();
-        MockHttpServletResponse response = mvcResult.getResponse();
-        assertEquals(HttpStatus.OK.value(), response.getStatus());
-        User savedUser = findUserByNickname(userToCreate.getNickname());
-        String expected = String.format("New user(nickname: %s) has been saved with id: %s", userToCreate.getNickname(), savedUser.getId());
-        String actual = response.getContentAsString();
-        assertEquals(expected, actual);
+        String expectedJson = mapper.writeValueAsString(userDTO);
+        mockMvc.perform(MockMvcRequestBuilders.post("/users")
+                .contentType(MediaType.APPLICATION_JSON).content(expectedJson))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").exists());
     }
 
     @Test
@@ -223,15 +218,6 @@ class ITestUserController {
                 .contentType(MediaType.APPLICATION_JSON)).andReturn();
         MockHttpServletResponse response = mvcResult.getResponse();
         assertEquals(expectedHttpStatus.value(), response.getStatus());
-    }
-
-    private User findUserByNickname(String nickname) {
-        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-        CriteriaQuery<User> criteriaQuery = cb.createQuery(User.class);
-        Root<User> root = criteriaQuery.from(User.class);
-        Predicate predicate = cb.equal(root.get("nickname"), nickname);
-        criteriaQuery.where(predicate);
-        return entityManager.createQuery(criteriaQuery).getSingleResult();
     }
 
     private void fillUpTestUsers() {

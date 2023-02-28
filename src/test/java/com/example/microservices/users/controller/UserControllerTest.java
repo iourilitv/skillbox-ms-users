@@ -147,17 +147,20 @@ class UserControllerTest {
     @Test
     void test41_givenNotExistUser_thenCorrect_createUser() throws Exception {
         User userToCreate = testUsers.get(0);
+        long id = userToCreate.getId();
         UserDTO userDTO = toUserDTO(userToCreate);
         userDTO.setId(null);
         when(userMapper.toEntity(userDTO)).thenReturn(userToCreate);
-        String expected = String.format("New user(nickname: %s) has been saved with id: %s", userToCreate.getNickname(), userDTO.getId());
-        when(userService.createUser(userToCreate)).thenReturn(expected);
+        when(userService.createUser(userToCreate)).thenReturn(userToCreate);
+        userDTO.setId(id);
+        when(userMapper.toDTO(userToCreate)).thenReturn(userDTO);
+        String expectedJson = mapper.writeValueAsString(userDTO);
         MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.post("/users")
-                .contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(userDTO))).andReturn();
+                .contentType(MediaType.APPLICATION_JSON).content(expectedJson)).andReturn();
         MockHttpServletResponse response = mvcResult.getResponse();
         assertEquals(HttpStatus.OK.value(), response.getStatus());
-        String actual = response.getContentAsString();
-        assertEquals(expected, actual);
+        String actualJson = response.getContentAsString();
+        assertEquals(expectedJson, actualJson);
     }
 
     @Test
