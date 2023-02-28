@@ -22,11 +22,13 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static com.example.microservices.users.util.FollowTestUtils.createFollowDTOs;
+import static com.example.microservices.users.util.FollowTestUtils.toFollow;
 import static com.example.microservices.users.util.MapperTestUtils.initMapper;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
@@ -105,5 +107,59 @@ public class FollowControllerTest {
         assertEquals(HttpStatus.OK.value(), response.getStatus());
         String actualJson = response.getContentAsString();
         assertEquals(expectedJson, actualJson);
+    }
+
+    @Test
+    void test41_givenExistFollowId_thenCorrect_getFollow() throws Exception {
+        FollowDTO expected = followDTOs.get(0);
+        Follow follow = toFollow(expected);
+        when(followService.getFollow(expected.getId())).thenReturn(follow);
+        when(followMapper.toDTO(follow)).thenReturn(expected);
+
+        String expectedJson = mapper.writeValueAsString(expected);
+        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get(BASE_URL + "/{id}", expected.getId())
+                .contentType(MediaType.APPLICATION_JSON)).andReturn();
+        MockHttpServletResponse response = mvcResult.getResponse();
+        assertEquals(HttpStatus.OK.value(), response.getStatus());
+        String actualJson = response.getContentAsString();
+        assertEquals(expectedJson, actualJson);
+    }
+
+    @Test
+    void test51_givenNew_thenCorrect_createFollow() throws Exception {
+        FollowDTO followDTO = followDTOs.get(1);
+        FollowDTO dtoToCreate = new FollowDTO(followDTO.getFollowingId(), followDTO.getFollowerId());
+        Follow followToCreate = toFollow(dtoToCreate);
+        when(followMapper.toEntity(dtoToCreate)).thenReturn(followToCreate);
+        FollowDTO expectedDTO =  new FollowDTO(followDTO.getFollowingId(), followDTO.getFollowerId());
+        expectedDTO.setId(99L);
+        expectedDTO.setFollowedAt(new Date());
+        Follow follow = toFollow(expectedDTO);
+        when(followService.createFollow(followToCreate)).thenReturn(follow);
+        when(followMapper.toDTO(follow)).thenReturn(expectedDTO);
+
+        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.post(BASE_URL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(dtoToCreate))).andReturn();
+        MockHttpServletResponse response = mvcResult.getResponse();
+        assertEquals(HttpStatus.OK.value(), response.getStatus());
+        String expectedJson = mapper.writeValueAsString(expectedDTO);
+        String actualJson = response.getContentAsString();
+        assertEquals(expectedJson, actualJson);
+    }
+
+    @Test
+    void test61_givenExist_thenCorrect_deleteFollow() throws Exception {
+        FollowDTO dtoToDelete = followDTOs.get(0);
+        String expected = String.format("User(id: %s) has been followed out from User(id: %s). The Follow(id: %s) has been deleted",
+                dtoToDelete.getFollowingId(), dtoToDelete.getFollowerId(), dtoToDelete.getId());
+        when(followService.deleteFollow(dtoToDelete.getId())).thenReturn(expected);
+
+        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.delete(BASE_URL + "/{id}", dtoToDelete.getId())
+                .contentType(MediaType.APPLICATION_JSON)).andReturn();
+        MockHttpServletResponse response = mvcResult.getResponse();
+        assertEquals(HttpStatus.OK.value(), response.getStatus());
+        String actual = response.getContentAsString();
+        assertEquals(expected, actual);
     }
 }
