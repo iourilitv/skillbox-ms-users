@@ -46,12 +46,13 @@ public class FollowController {
     }
 
     @PostMapping
-    public String createFollow(@RequestBody FollowDTO followDTO) {
+    public FollowDTO createFollow(@RequestBody FollowDTO followDTO) {
         if (followDTO.getId() != null) {
             throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED);
         }
         Follow follow = followMapper.toEntity(followDTO);
-        return followService.createFollow(follow);
+        Follow savedFollow = followService.createFollow(follow);
+        return followMapper.toDTO(savedFollow);
     }
 
     @DeleteMapping(value = "/{id}")

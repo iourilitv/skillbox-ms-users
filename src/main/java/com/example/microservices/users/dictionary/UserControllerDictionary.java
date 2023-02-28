@@ -70,17 +70,32 @@ public class UserControllerDictionary {
             "}";
 
     public static final String EXAMPLE_REQUEST_BODY_CREATE_USER = "{\n" +
-            "  \"firstName\": \"Oth\",\n" +
-            "  \"lastName\": \"Other\",\n" +
-            "  \"gender\": \"OTHER\",\n" +
-            "  \"birthday\": \"1990-05-12\",\n" +
+            "  \"firstName\": \"Ben\",\n" +
+            "  \"lastName\": \"Mask\",\n" +
+            "  \"gender\": \"MALE\",\n" +
+            "  \"birthday\": \"1990-01-02\",\n" +
             "  \"currentCity\": {\n" +
-            "    \"id\": 4,\n" +
-            "    \"name\": \"Paris\"\n" +
+            "    \"id\": 5,\n" +
+            "    \"name\": \"Tula\"\n" +
             "  },\n" +
-            "  \"nickname\": \"othic\"\n" +
+            "  \"nickname\": \"benmask\"\n" +
             "}";
-    public static final String EXAMPLE_RESPONSE_CREATE_USER_OK_200 = "New user(nickname: othic) has been saved with id: 5";
+
+    public static final String EXAMPLE_RESPONSE_CREATE_USER_OK_200 = "{\n" +
+            "    \"id\": 8,\n" +
+            "    \"firstName\": \"Ben\",\n" +
+            "    \"lastName\": \"Mask\",\n" +
+            "    \"gender\": \"MALE\",\n" +
+            "    \"birthday\": \"1990-01-02T00:00:00.000+00:00\",\n" +
+            "    \"currentCity\": {\n" +
+            "        \"id\": 5,\n" +
+            "        \"name\": \"Tula\"\n" +
+            "    },\n" +
+            "    \"nickname\": \"benmask\",\n" +
+            "    \"followingsNumber\": 0,\n" +
+            "    \"followersNumber\": 0\n" +
+            "}";
+
     public static final String EXAMPLE_RESPONSE_CREATE_USER_ERROR_412 = "{\n" +
             "  \"timestamp\": \"2022-12-06T21:52:23.801+00:00\",\n" +
             "  \"status\": 412,\n" +

@@ -178,18 +178,14 @@ class ITestFollowController {
         Follow followToSave = new Follow(user1.getId(), user2.getId());
         FollowDTO followDTO = toFollowDTO(followToSave);
 
-        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.post(BASE_URL)
-                .contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(followDTO))).andReturn();
-        MockHttpServletResponse response = mvcResult.getResponse();
-        assertEquals(HttpStatus.OK.value(), response.getStatus());
+        mockMvc.perform(MockMvcRequestBuilders.post(BASE_URL)
+                .contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(followDTO)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").exists());
 
-        Follow savedFollow = followRepository.findByFollowingIdAndFollowerId(followToSave.getFollowingId(), followToSave.getFollowerId()).orElse(null);
+        Follow savedFollow = followRepository.findByFollowingIdAndFollowerId(followToSave.getFollowingId(),
+                followToSave.getFollowerId()).orElse(null);
         assertNotNull(savedFollow);
-
-        String expected = String.format("User(id: %s) has been followed to User(id: %s) with Follow(id: %s)",
-                savedFollow.getFollowingId(), savedFollow.getFollowerId(), savedFollow.getId());
-        String actual = response.getContentAsString();
-        assertEquals(expected, actual);
     }
 
     @Test

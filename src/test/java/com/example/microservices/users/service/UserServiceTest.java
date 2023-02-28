@@ -93,11 +93,10 @@ class UserServiceTest {
     void test41_givenNotExistUser_thenCorrect_createUser() {
         City city = new City();
         city.setId(100);
-        User user = new User("new first name", "new last name", Gender.FEMALE, new Date(), city, "new_user");
-        when(repository.findByNicknameIncludingDeleted(user.getNickname())).thenReturn(Optional.empty());
-        when(repository.save(user)).thenReturn(user);
-        String expected = String.format("New user(nickname: %s) has been saved with id: %s", user.getNickname(), user.getId());
-        String actual = service.createUser(user);
+        User expected = new User("new first name", "new last name", Gender.FEMALE, new Date(), city, "new_user");
+        when(repository.findByNicknameIncludingDeleted(expected.getNickname())).thenReturn(Optional.empty());
+        when(repository.save(expected)).thenReturn(expected);
+        User actual = service.createUser(expected);
         assertEquals(expected, actual);
     }
 

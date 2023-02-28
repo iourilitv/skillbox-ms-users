@@ -89,16 +89,17 @@ public class UserController {
     @Operation(summary = "User creating")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Created the user",
-                    content = {@Content(mediaType = "application/json", schema = @Schema(implementation = String.class),
+                    content = {@Content(mediaType = "application/json", schema = @Schema(implementation = UserDTO.class),
                             examples = {@ExampleObject(value = EXAMPLE_RESPONSE_CREATE_USER_OK_200)})}),
             @ApiResponse(responseCode = "412", description = "This nickname already used",
                     content = @Content(examples = {@ExampleObject(value = EXAMPLE_RESPONSE_CREATE_USER_ERROR_412)}))})
     @PostMapping
-    public String createUser(@io.swagger.v3.oas.annotations.parameters.RequestBody(description = "User to be created",
+    public UserDTO createUser(@io.swagger.v3.oas.annotations.parameters.RequestBody(description = "User to be created",
             required = true, content = @Content(schema = @Schema(implementation = UserDTO.class),
             examples = {@ExampleObject(value = EXAMPLE_REQUEST_BODY_CREATE_USER)})) @RequestBody UserDTO userDTO) {
         User user = userMapper.toEntity(userDTO);
-        return userService.createUser(user);
+        User savedUser = userService.createUser(user);
+        return userMapper.toDTO(savedUser);
     }
 
     @Operation(summary = "User deleting")

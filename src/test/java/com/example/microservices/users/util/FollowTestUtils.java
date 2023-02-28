@@ -5,6 +5,7 @@ import com.example.microservices.users.entity.Follow;
 import com.example.microservices.users.entity.User;
 import org.springframework.lang.NonNull;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -44,11 +45,32 @@ public class FollowTestUtils {
         }
     }
 
+    public static Follow toFollow(@NonNull FollowDTO followDTO) {
+        Follow follow = new TestFollow(followDTO.getId(), followDTO.getFollowingId(), followDTO.getFollowerId());
+        follow.setFollowedAt(followDTO.getFollowedAt());
+        return follow;
+    }
+
     public static FollowDTO toFollowDTO(@NonNull Follow follow) {
         FollowDTO dto = new FollowDTO(follow.getFollowingId(), follow.getFollowerId());
         dto.setId(follow.getId());
         dto.setFollowedAt(follow.getFollowedAt());
         return dto;
+    }
+
+    public static List<FollowDTO> createFollowDTOs(int listSize) {
+        Random random = new Random();
+        final List<FollowDTO> list = new ArrayList<>();
+        for (int i = 0; i < listSize; i++) {
+            long followingId = random.nextInt(listSize);
+            long followerId = random.nextInt(listSize);
+            if (isAcceptableFollowDTOParams(list, followingId, followerId)) {
+                FollowDTO followDTO = new FollowDTO(followingId, followerId);
+                followDTO.setId(100L + i);
+                list.add(followDTO);
+            }
+        }
+        return list;
     }
 
     private static Follow createTestFollow(int i) {
@@ -70,6 +92,11 @@ public class FollowTestUtils {
     private static boolean isAcceptableFollowParams(Collection<Follow> follows, long followingId, long followerId) {
         return followingId != followerId
                 && follows.stream().noneMatch(f -> followingId == f.getFollowingId() && followerId == f.getFollowerId());
+    }
+
+    private static boolean isAcceptableFollowDTOParams(Collection<FollowDTO> followDTOs, long followingId, long followerId) {
+        return followingId != followerId
+                && followDTOs.stream().noneMatch(f -> followingId == f.getFollowingId() && followerId == f.getFollowerId());
     }
 
     public static class TestFollow extends Follow {
