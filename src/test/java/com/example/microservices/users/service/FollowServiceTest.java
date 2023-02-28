@@ -106,10 +106,8 @@ class FollowServiceTest {
         when(repository.findByFollowingIdAndFollowerId(followToSave.getFollowingId(), followToSave.getFollowerId()))
                 .thenReturn(Optional.empty());
         when(repository.save(followToSave)).thenReturn(savedFollow);
-        String expected = String.format("User(id: %s) has been followed to User(id: %s) with Follow(id: %s)",
-                savedFollow.getFollowingId(), savedFollow.getFollowerId(), savedFollow.getId());
-        String actual = service.createFollow(followToSave);
-        assertEquals(expected, actual);
+        Follow actual = service.createFollow(followToSave);
+        assertEquals(savedFollow, actual);
     }
 
     @Test
