@@ -6,7 +6,7 @@ import com.example.microservices.users.entity.City;
 import com.example.microservices.users.entity.User;
 import com.example.microservices.users.repository.CityRepository;
 import com.example.microservices.users.util.ITestUtilPostgreSQLContainer;
-import lombok.SneakyThrows;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +21,7 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Random;
 
@@ -54,13 +55,13 @@ class RegressionTest {
     }
 
     @Test
-    void test_regression() {
+    void test_regression() throws URISyntaxException {
         var userDto1 = createUser_thenOK(1);
         var userDto2 = createUser_thenOK(2);
         getUser_thenOK(userDto1);
         getUser_thenOK(userDto2);
+        getAll_thenOk(userDto1, userDto2);
 
-//        test02_getAll_thenOk();
 //        test03_setFollow1For2_thenOK();
 //        test04_removeFollow_thenOk();
 //        test05_updateUser_thenOK();
@@ -83,8 +84,7 @@ class RegressionTest {
         return actual;
     }
 
-    @SneakyThrows
-    private void getUser_thenOK(UserDTO origin) {
+    private void getUser_thenOK(UserDTO origin) throws URISyntaxException {
 //Успешно получить их по ID.
         var url = new URI(baseUrl + USERS_RESOURCE_URL + "/" + origin.getId());
         var response = restTemplate.getForEntity(url, UserDTO.class);
@@ -92,8 +92,13 @@ class RegressionTest {
         assertEquals(origin, response.getBody());
     }
 
-    private void test02_getAll_thenOk() {
+    private void getAll_thenOk(UserDTO... expectedArr) throws URISyntaxException {
 //Провести поиск пользователей.
+        var url = new URI(baseUrl + USERS_RESOURCE_URL);
+        var response = restTemplate.getForEntity(url, UserDTO[].class);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        UserDTO[] actualArr = response.getBody();
+        Assertions.assertThat(actualArr).containsSequence(expectedArr);
     }
 
     private void test03_setFollow1For2_thenOK() {
