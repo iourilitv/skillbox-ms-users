@@ -11,7 +11,7 @@ stages:
   - build
   - smoketests
   - itests
-  - regress
+  - regresstests
 
 # Packaging the project with JUnit tests running
 maven-build:
