@@ -35,7 +35,7 @@ import static org.mockito.Mockito.when;
 
 @WebMvcTest(FollowController.class)
 @TestMethodOrder(value = MethodOrderer.MethodName.class)
-public class FollowControllerTest {
+class FollowControllerTest {
     private static final int TEST_FOLLOWS_SIZE = 10;
     private static final String BASE_URL = "/follows";
 

@@ -57,13 +57,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @TestMethodOrder(value = MethodOrderer.MethodName.class)
 @AutoConfigureMockMvc
 @SpringBootTest(classes = UsersApplication.class)
-@ContextConfiguration(initializers = {ITestUserController.Initializer.class}) // This is only for example another way of implementing
+@ContextConfiguration(initializers = {ITestUserController.Initializer.class})
 @Testcontainers(disabledWithoutDocker = true)
 class ITestUserController {
     private static final int TEST_LIST_SIZE = 5;
 
     @Container
-    public static PostgreSQLContainer<?> sqlContainer = ITestUtilPostgreSQLContainer.getInstance();
+    private static final PostgreSQLContainer<?> sqlContainer = ITestUtilPostgreSQLContainer.getInstance();
     private static final ObjectMapper mapper = initMapper();
     private @Autowired MockMvc mockMvc;
     private @Autowired EntityManager entityManager;
@@ -240,7 +240,6 @@ class ITestUserController {
         entityManager.flush();
     }
 
-    // This is only for example another way of implementing. The best practice way is in ITestFollowController
     static class Initializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
         @Override
         public void initialize(ConfigurableApplicationContext applicationContext) {
