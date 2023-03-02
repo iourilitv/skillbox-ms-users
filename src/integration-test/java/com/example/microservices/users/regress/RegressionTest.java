@@ -78,8 +78,9 @@ class RegressionTest {
         getAllFollows_thenOK();
         getAllFollowings_thenOK(followDto1For2.getFollowerId());
         getAllFollowers_thenOK(followDto1For2.getFollowingId());
-
-//        test05_updateUser_thenOK();
+        userDto1.setSecondName("updated_" + userDto1.getSecondName());
+        updateUser_thenOK(userDto1);
+        getUser_thenOK(userDto1);
 //        test06_deleteUser_thenOK();
 //        test07_getDeletedUser_thenError404();
 //        test08_getNotExistUser_thenError404();
@@ -170,9 +171,9 @@ class RegressionTest {
         restTemplate.delete(url);
     }
 
-    private void test05_updateUser_thenOK() {
-//Проверить частичное изменение данных.
-//Проверить изменившиеся данные.
+    private void updateUser_thenOK(UserDTO userDTO) {
+        var url = String.format(baseUrl + USERS_RESOURCE_URL + "/%d", userDTO.getId());
+        restTemplate.put(url, userDTO);
     }
 
     private void test06_deleteUser_thenOK() {
