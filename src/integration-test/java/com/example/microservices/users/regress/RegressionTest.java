@@ -50,12 +50,15 @@ class RegressionTest {
     @Autowired private CityRepository cityRepository;
     @LocalServerPort private int port;
 
-    private String baseUrl;
+    private String baseUserUrl;
+    private String baseFollowUrl;
     private List<City> cities;
 
     @BeforeEach
     void setUp() {
-        baseUrl = "http://" + HOST_NAME + ":" + port;
+        String baseUrl = "http://" + HOST_NAME + ":" + port;
+        baseUserUrl = baseUrl + USERS_RESOURCE_URL;
+        baseFollowUrl = baseUrl + FOLLOWS_RESOURCE_URL;
         cities = (List<City>) cityRepository.findAll();
     }
 
@@ -90,8 +93,7 @@ class RegressionTest {
         int cityIndex = new Random().nextInt(cities.size() - 1);
         User userToCreate = createUser(userIndex, cities.get(cityIndex));
         UserDTO userDTOToCreate = toUserDTO(userToCreate);
-        var url = baseUrl + USERS_RESOURCE_URL;
-        var response = restTemplate.postForEntity(url, userDTOToCreate, UserDTO.class);
+        var response = restTemplate.postForEntity(baseUserUrl, userDTOToCreate, UserDTO.class);
         assertEquals(HttpStatus.OK, response.getStatusCode());
         UserDTO actual = response.getBody();
         assertNotNull(actual);
@@ -106,8 +108,7 @@ class RegressionTest {
     }
 
     private void getAllUsers_thenOk(UserDTO... expectedArr) {
-        var url = baseUrl + USERS_RESOURCE_URL;
-        var response = restTemplate.getForEntity(url, UserDTO[].class);
+        var response = restTemplate.getForEntity(baseUserUrl, UserDTO[].class);
         assertEquals(HttpStatus.OK, response.getStatusCode());
         UserDTO[] actualArr = response.getBody();
         assertThat(actualArr).containsSequence(expectedArr);
@@ -115,8 +116,7 @@ class RegressionTest {
 
     private FollowDTO followUp1For2_thenOK(UserDTO userDto1, UserDTO userDto2) {
     FollowDTO followDtoToCreate = new FollowDTO(userDto2.getId(), userDto1.getId());
-    var url = baseUrl + FOLLOWS_RESOURCE_URL;
-    var response = restTemplate.postForEntity(url, followDtoToCreate, FollowDTO.class);
+    var response = restTemplate.postForEntity(baseFollowUrl, followDtoToCreate, FollowDTO.class);
     assertEquals(HttpStatus.OK, response.getStatusCode());
     FollowDTO actual = response.getBody();
     assertNotNull(actual);
@@ -143,15 +143,14 @@ class RegressionTest {
     }
 
     private void getAllFollows_thenOK(FollowDTO... expectedArr) {
-        var url = baseUrl + FOLLOWS_RESOURCE_URL;
-        var response = restTemplate.getForEntity(url, FollowDTO[].class);
+        var response = restTemplate.getForEntity(baseFollowUrl, FollowDTO[].class);
         assertEquals(HttpStatus.OK, response.getStatusCode());
         FollowDTO[] actualArr = response.getBody();
         assertThat(actualArr).containsSequence(expectedArr);
     }
 
     private void getAllFollowings_thenOK(long followerId, FollowDTO... expectedArr) {
-        var url = String.format(baseUrl + FOLLOWS_RESOURCE_URL + "/followings/%d", followerId);
+        var url = String.format(baseFollowUrl + "/followings/%d", followerId);
         var response = restTemplate.getForEntity(url, FollowDTO[].class);
         assertEquals(HttpStatus.OK, response.getStatusCode());
         FollowDTO[] actualArr = response.getBody();
@@ -159,7 +158,7 @@ class RegressionTest {
     }
 
     private void getAllFollowers_thenOK(long followingId, FollowDTO... expectedArr) {
-        var url = String.format(baseUrl + FOLLOWS_RESOURCE_URL + "/followers/%d", followingId);
+        var url = String.format(baseFollowUrl + "/followers/%d", followingId);
         var response = restTemplate.getForEntity(url, FollowDTO[].class);
         assertEquals(HttpStatus.OK, response.getStatusCode());
         FollowDTO[] actualArr = response.getBody();
@@ -167,12 +166,12 @@ class RegressionTest {
     }
 
     private void removeFollow_thenOk(long id) {
-        var url = String.format(baseUrl + FOLLOWS_RESOURCE_URL + "/%d", id);
+        var url = String.format(baseFollowUrl + "/%d", id);
         restTemplate.delete(url);
     }
 
     private void updateUser_thenOK(UserDTO userDTO) {
-        var url = String.format(baseUrl + USERS_RESOURCE_URL + "/%d", userDTO.getId());
+        var url = String.format(baseUserUrl + "/%d", userDTO.getId());
         restTemplate.put(url, userDTO);
     }
 
@@ -189,7 +188,7 @@ class RegressionTest {
     }
 
     private ResponseEntity<UserDTO> getUserResponse(long id) {
-        var url = String.format(baseUrl + USERS_RESOURCE_URL + "/%d", id);
+        var url = String.format(baseUserUrl + "/%d", id);
         return restTemplate.getForEntity(url, UserDTO.class);
     }
 
