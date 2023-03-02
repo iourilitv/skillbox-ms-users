@@ -72,8 +72,13 @@ class RegressionTest {
         getAllFollows_thenOK(followDto1For2);
         getAllFollowings_thenOK(followDto1For2.getFollowerId(), followDto1For2);
         getAllFollowers_thenOK(followDto1For2.getFollowingId(), followDto1For2);
+        removeFollow_thenOk(followDto1For2.getId());
+        checkFollower_thenOk(userDto1.getId(), 0, 0);
+        checkFollowing_thenOk(userDto2.getId(), 0, 0);
+        getAllFollows_thenOK();
+        getAllFollowings_thenOK(followDto1For2.getFollowerId());
+        getAllFollowers_thenOK(followDto1For2.getFollowingId());
 
-//        test04_removeFollow_thenOk();
 //        test05_updateUser_thenOK();
 //        test06_deleteUser_thenOK();
 //        test07_getDeletedUser_thenError404();
@@ -160,9 +165,9 @@ class RegressionTest {
         assertThat(actualArr).containsSequence(expectedArr);
     }
 
-    private void test04_removeFollow_thenOk() {
-//Удалить подписку.
-//Проверить изменившиеся данные.
+    private void removeFollow_thenOk(long id) {
+        var url = String.format(baseUrl + FOLLOWS_RESOURCE_URL + "/%d", id);
+        restTemplate.delete(url);
     }
 
     private void test05_updateUser_thenOK() {
