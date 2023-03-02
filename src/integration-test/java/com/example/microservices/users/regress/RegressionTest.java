@@ -69,6 +69,7 @@ class RegressionTest {
         var userDto2 = createUser_thenOK(2);
         getUser_thenOK(userDto1);
         getUser_thenOK(userDto2);
+        getNotExistOrDeletedUser_thenError404(userDto1.getId() + 999);
         getAllUsers_thenOk(userDto1, userDto2);
         var followDto1For2 = followUp1For2_thenOK(userDto1, userDto2);
         checkFollower_thenOk(userDto1.getId(), 1, 0);
@@ -87,8 +88,7 @@ class RegressionTest {
         getUser_thenOK(userDto1);
         deleteUsers_thenOK(userDto1.getId(), userDto2.getId());
         getAllUsers_thenOk();
-//        test07_getDeletedUser_thenError404();
-//        test08_getNotExistUser_thenError404();
+        getNotExistOrDeletedUser_thenError404(userDto1.getId());
     }
 
     private UserDTO createUser_thenOK(int userIndex) {
@@ -178,19 +178,15 @@ class RegressionTest {
     }
 
     private void deleteUsers_thenOK(long... ids) {
-//Удалить пользователей.
         Arrays.stream(ids).forEach(id -> {
             var url = String.format(baseUserUrl + "/%d", id);
             restTemplate.delete(url);
         });
     }
 
-    private void test07_getDeletedUser_thenError404() {
-//Получить ошибку 404 по ID пользователей.
-    }
-
-    private void test08_getNotExistUser_thenError404() {
-//Получить ошибку 404 по ID пользователей.
+    private void getNotExistOrDeletedUser_thenError404(long id) {
+        var response = getUserResponse(id);
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
 
     private ResponseEntity<UserDTO> getUserResponse(long id) {
