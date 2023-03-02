@@ -17,6 +17,7 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,8 +25,6 @@ import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Random;
 
@@ -61,13 +60,15 @@ class RegressionTest {
     }
 
     @Test
-    void test_regression() throws URISyntaxException {
+    void test_regression() {
         var userDto1 = createUser_thenOK(1);
         var userDto2 = createUser_thenOK(2);
         getUser_thenOK(userDto1);
         getUser_thenOK(userDto2);
         getAllUsers_thenOk(userDto1, userDto2);
         var followDto1For2 = followUp1For2_thenOK(userDto1, userDto2);
+        checkFollower_thenOk(userDto1.getId(), 1, 0);
+        checkFollowing_thenOk(userDto2.getId(), 0, 1);
         getAllFollows_thenOK(followDto1For2);
         getAllFollowings_thenOK(followDto1For2.getFollowerId(), followDto1For2);
         getAllFollowers_thenOK(followDto1For2.getFollowingId(), followDto1For2);
@@ -80,7 +81,6 @@ class RegressionTest {
     }
 
     private UserDTO createUser_thenOK(int userIndex) {
-//Создать двух пользователей.
         int cityIndex = new Random().nextInt(cities.size() - 1);
         User userToCreate = createUser(userIndex, cities.get(cityIndex));
         UserDTO userDTOToCreate = toUserDTO(userToCreate);
@@ -93,17 +93,14 @@ class RegressionTest {
         return actual;
     }
 
-    private void getUser_thenOK(UserDTO origin) throws URISyntaxException {
-//Успешно получить их по ID.
-        var url = new URI(baseUrl + USERS_RESOURCE_URL + "/" + origin.getId());
-        var response = restTemplate.getForEntity(url, UserDTO.class);
+    private void getUser_thenOK(UserDTO origin) {
+        var response = getUserResponse(origin.getId());
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(origin, response.getBody());
     }
 
-    private void getAllUsers_thenOk(UserDTO... expectedArr) throws URISyntaxException {
-//Провести поиск пользователей.
-        var url = new URI(baseUrl + USERS_RESOURCE_URL);
+    private void getAllUsers_thenOk(UserDTO... expectedArr) {
+        var url = baseUrl + USERS_RESOURCE_URL;
         var response = restTemplate.getForEntity(url, UserDTO[].class);
         assertEquals(HttpStatus.OK, response.getStatusCode());
         UserDTO[] actualArr = response.getBody();
@@ -111,7 +108,6 @@ class RegressionTest {
     }
 
     private FollowDTO followUp1For2_thenOK(UserDTO userDto1, UserDTO userDto2) {
-//Подписать одного пользователя на другого.
     FollowDTO followDtoToCreate = new FollowDTO(userDto2.getId(), userDto1.getId());
     var url = baseUrl + FOLLOWS_RESOURCE_URL;
     var response = restTemplate.postForEntity(url, followDtoToCreate, FollowDTO.class);
@@ -122,8 +118,25 @@ class RegressionTest {
     return actual;
     }
 
+    private void checkFollower_thenOk(long followerId, int followingsNumber, int followersNumber) {
+        ResponseEntity<UserDTO> response = getUserResponse(followerId);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        var follower = response.getBody();
+        assertNotNull(follower);
+        assertEquals(followingsNumber, follower.getFollowingsNumber());
+        assertEquals(followersNumber, follower.getFollowersNumber());
+    }
+
+    private void checkFollowing_thenOk(long followingId, int followingsNumber, int followersNumber) {
+        ResponseEntity<UserDTO> response = getUserResponse(followingId);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        var following = response.getBody();
+        assertNotNull(following);
+        assertEquals(followingsNumber, following.getFollowingsNumber());
+        assertEquals(followersNumber, following.getFollowersNumber());
+    }
+
     private void getAllFollows_thenOK(FollowDTO... expectedArr) {
-//Проверить изменившиеся данные.
         var url = baseUrl + FOLLOWS_RESOURCE_URL;
         var response = restTemplate.getForEntity(url, FollowDTO[].class);
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -132,7 +145,6 @@ class RegressionTest {
     }
 
     private void getAllFollowings_thenOK(long followerId, FollowDTO... expectedArr) {
-//Проверить изменившиеся данные.
         var url = String.format(baseUrl + FOLLOWS_RESOURCE_URL + "/followings/%d", followerId);
         var response = restTemplate.getForEntity(url, FollowDTO[].class);
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -141,7 +153,6 @@ class RegressionTest {
     }
 
     private void getAllFollowers_thenOK(long followingId, FollowDTO... expectedArr) {
-//Проверить изменившиеся данные.
         var url = String.format(baseUrl + FOLLOWS_RESOURCE_URL + "/followers/%d", followingId);
         var response = restTemplate.getForEntity(url, FollowDTO[].class);
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -169,6 +180,11 @@ class RegressionTest {
 
     private void test08_getNotExistUser_thenError404() {
 //Получить ошибку 404 по ID пользователей.
+    }
+
+    private ResponseEntity<UserDTO> getUserResponse(long id) {
+        var url = String.format(baseUrl + USERS_RESOURCE_URL + "/%d", id);
+        return restTemplate.getForEntity(url, UserDTO.class);
     }
 
     static class Initializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
