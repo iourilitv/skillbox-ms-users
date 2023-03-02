@@ -25,6 +25,7 @@ import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -84,7 +85,8 @@ class RegressionTest {
         userDto1.setSecondName("updated_" + userDto1.getSecondName());
         updateUser_thenOK(userDto1);
         getUser_thenOK(userDto1);
-//        test06_deleteUser_thenOK();
+        deleteUsers_thenOK(userDto1.getId(), userDto2.getId());
+        getAllUsers_thenOk();
 //        test07_getDeletedUser_thenError404();
 //        test08_getNotExistUser_thenError404();
     }
@@ -175,8 +177,12 @@ class RegressionTest {
         restTemplate.put(url, userDTO);
     }
 
-    private void test06_deleteUser_thenOK() {
+    private void deleteUsers_thenOK(long... ids) {
 //Удалить пользователей.
+        Arrays.stream(ids).forEach(id -> {
+            var url = String.format(baseUserUrl + "/%d", id);
+            restTemplate.delete(url);
+        });
     }
 
     private void test07_getDeletedUser_thenError404() {
