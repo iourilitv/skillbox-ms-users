@@ -9,6 +9,7 @@ import com.example.microservices.users.util.ITestUtilPostgreSQLContainer;
 import com.example.microservices.users.util.UserTestUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.assertj.core.api.Assertions;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.MethodOrderer;
@@ -18,15 +19,10 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.util.TestPropertyValues;
-import org.springframework.context.ApplicationContextInitializer;
-import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -53,17 +49,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @Transactional
 @ActiveProfiles(profiles = "integration-test")
-@TestPropertySource(locations = "classpath:application-integration-test.properties")
 @TestMethodOrder(value = MethodOrderer.MethodName.class)
 @AutoConfigureMockMvc
-@SpringBootTest(classes = UsersApplication.class)
-@ContextConfiguration(initializers = {ITestUserController.Initializer.class})
 @Testcontainers(disabledWithoutDocker = true)
+@SpringBootTest(classes = UsersApplication.class)
 class ITestUserController {
     private static final int TEST_LIST_SIZE = 5;
 
-    @Container
-    private static final PostgreSQLContainer<?> sqlContainer = ITestUtilPostgreSQLContainer.getInstance();
+    @Container private static final PostgreSQLContainer<?> sqlContainer = ITestUtilPostgreSQLContainer.getInstance();
     private static final ObjectMapper mapper = initMapper();
     private @Autowired MockMvc mockMvc;
     private @Autowired EntityManager entityManager;
@@ -83,6 +76,14 @@ class ITestUserController {
     @AfterEach
     void tearDown() {
         testUsers.clear();
+    }
+
+    @Test
+    void test0_givenRequestForHealth_thenCorrect_health() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/actuator/health")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.status", Matchers.equalTo("UP")));
     }
 
     @Test
@@ -238,16 +239,5 @@ class ITestUserController {
     private void updateUser(User user) {
         entityManager.merge(user);
         entityManager.flush();
-    }
-
-    static class Initializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
-        @Override
-        public void initialize(ConfigurableApplicationContext applicationContext) {
-            TestPropertyValues.of(
-                    "spring.datasource.url=" + sqlContainer.getJdbcUrl(),
-                    "spring.datasource.username=" + sqlContainer.getUsername(),
-                    "spring.datasource.password=" + sqlContainer.getPassword()
-            ).applyTo(applicationContext.getEnvironment());
-        }
     }
 }
