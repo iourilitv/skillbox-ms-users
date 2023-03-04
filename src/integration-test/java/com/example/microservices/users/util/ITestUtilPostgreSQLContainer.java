@@ -32,9 +32,9 @@ public class ITestUtilPostgreSQLContainer extends PostgreSQLContainer<ITestUtilP
     @Override
     public void start() {
         super.start();
-        System.setProperty("POSTGRES_DB_URL", container.getJdbcUrl());
-        System.setProperty("POSTGRES_DB_USER", container.getUsername());
-        System.setProperty("POSTGRES_DB_PASSWORD", container.getPassword());
+        System.setProperty("DB_URL", container.getJdbcUrl());
+        System.setProperty("DB_USERNAME", container.getUsername());
+        System.setProperty("DB_PASSWORD", container.getPassword());
     }
 
     @Override

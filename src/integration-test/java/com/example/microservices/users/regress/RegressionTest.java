@@ -6,20 +6,17 @@ import com.example.microservices.users.dto.UserDTO;
 import com.example.microservices.users.entity.City;
 import com.example.microservices.users.entity.User;
 import com.example.microservices.users.repository.CityRepository;
-import com.example.microservices.users.util.ITestUtilPostgreSQLContainer;
+import com.example.microservices.users.util.SimplePostgreSQLTestContainer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.util.TestPropertyValues;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
-import org.springframework.context.ApplicationContextInitializer;
-import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.transaction.annotation.Transactional;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
@@ -36,9 +33,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @Transactional
-@TestPropertySource(locations = "classpath:application-integration-test.properties")
 @Testcontainers(disabledWithoutDocker = true)
-@ContextConfiguration(initializers = {RegressionTest.Initializer.class})
 @SpringBootTest(classes = UsersApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class RegressionTest {
 
@@ -46,7 +41,11 @@ class RegressionTest {
     private static final String USERS_RESOURCE_URL = "/users";
     private static final String FOLLOWS_RESOURCE_URL = "/follows";
 
-    @Container public static PostgreSQLContainer<?> sqlContainer = ITestUtilPostgreSQLContainer.getInstance();
+    @Container static PostgreSQLContainer<?> sqlContainer = SimplePostgreSQLTestContainer.sqlContainer();
+    @DynamicPropertySource static void setProperties(DynamicPropertyRegistry registry) {
+        SimplePostgreSQLTestContainer.setProperties(registry);
+    }
+
     @Autowired private TestRestTemplate restTemplate;
     @Autowired private CityRepository cityRepository;
     @LocalServerPort private int port;
@@ -192,16 +191,5 @@ class RegressionTest {
     private ResponseEntity<UserDTO> getUserResponse(long id) {
         var url = String.format(baseUserUrl + "/%d", id);
         return restTemplate.getForEntity(url, UserDTO.class);
-    }
-
-    static class Initializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
-        @Override
-        public void initialize(ConfigurableApplicationContext applicationContext) {
-            TestPropertyValues.of(
-                    "spring.datasource.url=" + sqlContainer.getJdbcUrl(),
-                    "spring.datasource.username=" + sqlContainer.getUsername(),
-                    "spring.datasource.password=" + sqlContainer.getPassword()
-            ).applyTo(applicationContext.getEnvironment());
-        }
     }
 }
