@@ -24,10 +24,13 @@ PS D:\Software\gitlab\GitLab-Runner> .\gitlab-runner.exe start
 Runtime platform                                    arch=amd64 os=windows pid=3280 revision=12335144 version=15.8.0
 ``
 
-## 3. Run SonarQube container in Docker DeskTop
+## 3. Run in Docker DeskTop the following containers:
+### sonarqube - CodeQuality checking server
+### nexus - Sonartype Nexus Repository Manager OSS
 
 ## 4. Run 2-nd PS in the project directory
 ``
 cd D:\projects\skillbox\microservices\users
 ``          
 Next working in D:\projects\skillbox\microservices\users>           
+
