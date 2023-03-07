@@ -85,6 +85,6 @@ deploy-to-nexus:
   stage: deploy
   image: $MAVEN_IMAGE
   script:
-    - mvn deploy -DskipTests=true `-Denv.Nexus_REPO_URL=${NEXUS_REPO_URL} `-Denv.Nexus_REPO_USER=${NEXUS_REPO_USER} `-Denv.Nexus_REPO_PASS=${NEXUS_REPO_PASS}
+    - mvn deploy -DskipTests=true `-Denv.Nexus_REPO_URL=$NEXUS_REPO_URL `-Denv.Nexus_REPO_USER=$NEXUS_REPO_USER `-Denv.Nexus_REPO_PASS=$NEXUS_REPO_PASS
   when:
     manual
