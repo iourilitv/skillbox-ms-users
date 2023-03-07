@@ -111,3 +111,21 @@ es/users/0.0.1-RELEASE/users-0.0.1-RELEASE.jar 400 Repository does not allow upd
 ...
 ``
 
+### Update the pipeline on gitlab
+#### Configure .gitlab-ci.yml
+- Add a new stage: deploy
+- Add a new job: 
+````
+deploy-to-nexus:
+stage: deploy
+  image: $MAVEN_IMAGE
+  script:
+    - mvn deploy -DskipTests=true `-Denv.Nexus_REPO_URL=${NEXUS_REPO_URL} `-Denv.Nexus_REPO_USER=${NEXUS_REPO_USER} `-Denv.Nexus_REPO_PASS=${NEXUS_REPO_PASS}
+  when:
+    manual
+````
+
+#### Create on gitlab the following project variables(Expanded)
+- NEXUS_REPO_URL: http://localhost:8081/repository/skillbox-mvn-hosted-
+- NEXUS_REPO_USER: admin
+- NEXUS_REPO_PASS: nexus
