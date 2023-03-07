@@ -3,7 +3,7 @@ Working for the first time a docker container with SonarType Nexus OSS 3 server 
 Continue devops/ci-cd/gitlab/gitlab-ci-cd_4-1_task2-7_artifact-to-sonartype-nexus3.md.
 Sources:            
 Менеджер репозиториев Sonatype Nexus 3(since 16:30): https://www.youtube.com/watch?v=6WjwrZknYVk
-
+Successfully.
 
 ## Prepare environment.
 Use devops/ci-cd/gitlab/gitlab-prepare-environment.md procedure.
@@ -44,7 +44,20 @@ Sonartype Documentation. Nexus Repository Maven Plugin: https://help.sonatype.co
 How to Use Gitlab-CI with Nexus (Since Step 5: Configure the Nexus deployment): https://blog.sonatype.com/how-to-use-gitlab-ci-with-nexus       
 
 ### Configure .m2/settings.xml
-#### Create if not exists settings.xml in C:\Users\{username}\.m2 directory
+#### Create if not exists settings.xml
+!!!! Attention.     
+Here is gitlab runner is used.      
+So the runner's .m2 directory location: C:\WINDOWS\system32\config\systemprofile\.m2.     
+See that in the logs of the deploy-to-nexus job.
+``
+...
+[INFO] --- maven-install-plugin:2.5.2:install (default-install) @ users ---
+[INFO] Installing D:\Software\gitlab\GitLab-Runner\builds\yxuxCRtR\0\iourilitv\skillbox-ms-users\target\users-0.0.1-SNAPSHOT.jar to C:\WINDOWS\system32\config\systemprofile\.m2\repository\com\example\microservices\users\0.0.1-SNAPSHOT\users-0.0.1-SNAPSHOT.jar
+...
+``
+#### Put settings.xml into runner's local repository directory:
+C:\WINDOWS\system32\config\systemprofile\.m2.
+
 #### Fill up it with the following:
 Add nexus servers as they named in distributionManagement/.../id into pom.xml     
 ``
@@ -124,6 +137,7 @@ stage: deploy
   when:
     manual
 ````
+The same result when using variables without {} like $NEXUS_REPO_URL etc.
 
 #### Create on gitlab the following project variables(Expanded)
 - NEXUS_REPO_URL: http://localhost:8081/repository/skillbox-mvn-hosted-
