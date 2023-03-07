@@ -296,4 +296,14 @@
 		</plugins>
 	</build>
 
+	<distributionManagement>
+		<repository>
+			<id>release</id>
+			<url>${env.Nexus_REPO_URL}release</url>
+		</repository>
+		<snapshotRepository>
+			<id>snapshot</id>
+			<url>${env.Nexus_REPO_URL}snapshot</url>
+		</snapshotRepository>
+	</distributionManagement>
 </project>
