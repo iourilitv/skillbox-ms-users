@@ -32,5 +32,20 @@ Runtime platform                                    arch=amd64 os=windows pid=32
 ``
 cd D:\projects\skillbox\microservices\users
 ``          
-Next working in D:\projects\skillbox\microservices\users>           
+Next working in D:\projects\skillbox\microservices\users>   
 
+*************************************************************           
+## Settings
+### Gitlab
+#### Variables
+##### Project (Expanded)
+- NEXUS_REPO_URL: http://localhost:8081/repository/skillbox-mvn-hosted-
+- NEXUS_REPO_USER: admin
+- NEXUS_REPO_PASS: nexus
+- SONAR_HOST_URL: http://localhost:9000
+- SONAR_LOGIN_TOKEN: squ_1af8d87893a5ce56f3b5975216a103a804e97b27
+
+### Default gitlab runner with PS: gitlab-win64-local
+#### Maven local repository location
+Put settings.xml into runner's local repository directory:          
+C:\WINDOWS\system32\config\systemprofile\.m2.
