@@ -1,4 +1,4 @@
-package com.example.microservices.users.exception.helpers;
+package com.example.microservices.users.error.helpers;
 
 import lombok.experimental.UtilityClass;
 

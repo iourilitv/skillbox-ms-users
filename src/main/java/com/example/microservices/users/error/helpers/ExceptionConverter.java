@@ -1,8 +1,8 @@
-package com.example.microservices.users.exception.helpers;
+package com.example.microservices.users.error.helpers;
 
-import com.example.microservices.users.entity.ErrorId;
-import com.example.microservices.users.entity.ErrorList;
-import com.example.microservices.users.entity.ErrorMeta;
+import com.example.microservices.users.error.entity.ErrorId;
+import com.example.microservices.users.error.entity.ErrorList;
+import com.example.microservices.users.error.entity.ErrorMeta;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 

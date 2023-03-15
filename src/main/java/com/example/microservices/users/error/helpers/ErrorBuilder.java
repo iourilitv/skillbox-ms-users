@@ -1,9 +1,9 @@
-package com.example.microservices.users.exception.helpers;
+package com.example.microservices.users.error.helpers;
 
-import com.example.microservices.users.entity.Error;
-import com.example.microservices.users.entity.ErrorId;
-import com.example.microservices.users.entity.ErrorMeta;
-import com.example.microservices.users.repository.PropertiesBasedErrorRepository;
+import com.example.microservices.users.error.entity.Error;
+import com.example.microservices.users.error.entity.ErrorId;
+import com.example.microservices.users.error.entity.ErrorMeta;
+import com.example.microservices.users.error.repository.PropertiesBasedErrorRepository;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;

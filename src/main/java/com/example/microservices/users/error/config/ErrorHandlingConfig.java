@@ -1,8 +1,8 @@
-package com.example.microservices.users.config;
+package com.example.microservices.users.error.config;
 
-import com.example.microservices.users.exception.helpers.ErrorBuilder;
-import com.example.microservices.users.exception.helpers.ExceptionConverter;
-import com.example.microservices.users.repository.PropertiesBasedErrorRepositoryImpl;
+import com.example.microservices.users.error.helpers.ErrorBuilder;
+import com.example.microservices.users.error.helpers.ExceptionConverter;
+import com.example.microservices.users.error.repository.PropertiesBasedErrorRepositoryImpl;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;

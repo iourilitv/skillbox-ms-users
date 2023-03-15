@@ -1,8 +1,6 @@
-package com.example.microservices.users.exception;
+package com.example.microservices.users.error.helpers;
 
-import com.example.microservices.users.entity.ErrorList;
-import com.example.microservices.users.exception.helpers.ErrorMessage;
-import com.example.microservices.users.exception.helpers.ExceptionConverter;
+import com.example.microservices.users.error.entity.ErrorList;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;

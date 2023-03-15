@@ -1,4 +1,4 @@
-package com.example.microservices.users.repository;
+package com.example.microservices.users.error.repository;
 
 //TODO Replace with JpaRepository
 public interface PropertiesBasedErrorRepository {

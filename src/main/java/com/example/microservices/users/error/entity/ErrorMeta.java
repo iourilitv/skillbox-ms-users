@@ -1,9 +1,7 @@
-package com.example.microservices.users.entity;
+package com.example.microservices.users.error.entity;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
-
-import javax.persistence.Embeddable;
 
 @Data
 @Accessors(chain = true)

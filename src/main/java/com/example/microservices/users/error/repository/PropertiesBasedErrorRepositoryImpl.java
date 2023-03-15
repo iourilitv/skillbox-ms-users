@@ -1,4 +1,4 @@
-package com.example.microservices.users.repository;
+package com.example.microservices.users.error.repository;
 
 import lombok.Getter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
