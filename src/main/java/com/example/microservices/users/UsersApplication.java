@@ -7,7 +7,7 @@ import org.springframework.context.annotation.PropertySources;
 
 @PropertySources({
 	@PropertySource(value = "classpath:application.properties", encoding = "UTF-8"),
-	@PropertySource(value = "classpath:application_RU.properties", encoding = "UTF-8")
+	@PropertySource(value = "classpath:error/errors_RU.properties", encoding = "UTF-8")
 })
 @SpringBootApplication
 public class UsersApplication {

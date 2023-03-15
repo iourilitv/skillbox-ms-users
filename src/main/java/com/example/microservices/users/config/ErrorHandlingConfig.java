@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ConditionalOnProperty(name = "enabled", prefix = "errors.handling", matchIfMissing = true)
+@ConditionalOnProperty(name = "enabled", prefix = "errors.handling")
 @EnableConfigurationProperties(PropertiesBasedErrorRepositoryImpl.class)
 public class ErrorHandlingConfig {
 
