@@ -60,11 +60,13 @@ public class ErrorBuilder {
         private ErrorMeta meta;
 
         public Error build() {
+            ErrorMeta getMetaIfEnabledOrDefault = metaEnabled ? meta : new ErrorMeta().setJExceptionMsg("Error Metadata is disabled");
             return new Error()
                     .setHttpStatus(isNull(httpStatus) ? defaultStatusCode : httpStatus)
                     .setFrontendCode(id.getOuterCode())
+                    .setTitle(isBlank(title) ? determineTitle(id.getInnerCode(), defaultTitle) : title)
                     .setDetail(detail)
-                    .setTitle(isBlank(title) ? determineTitle(id.getInnerCode(), defaultTitle) : title);
+                    .setMeta(getMetaIfEnabledOrDefault);
         }
 
         public ErrorPrototype httpStatus(HttpStatus httpStatus) {

@@ -19,11 +19,11 @@ public class Error {
 //    @Column(name = "frontend_code")
     private String frontendCode;
 
-//    @Column(name = "detail")
-    private String detail;
-
 //    @Column(name = "title")
     private String title;
+
+//    @Column(name = "detail")
+    private String detail;
 
 //    @Embedded
 //    @AttributeOverrides({

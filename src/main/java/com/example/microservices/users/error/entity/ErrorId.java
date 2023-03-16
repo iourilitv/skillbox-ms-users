@@ -6,6 +6,8 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 public class ErrorId {
+
+    public static final ErrorId INTERNAL_ERROR = new ErrorId("internalError", "internalErrorInnerCode");
     public static final ErrorId VALIDATION_ERROR = new ErrorId("validationError", "validationErrorInnerCode");
 
     private final String outerCode;
