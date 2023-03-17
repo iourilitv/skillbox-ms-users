@@ -15,10 +15,11 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import javax.annotation.PostConstruct;
-import javax.servlet.http.HttpServletRequest;
 
+import static com.example.microservices.users.error.entity.ErrorId.UNKNOWN_ERROR;
 import static com.example.microservices.users.error.helpers.ErrorMessage.HANDLING_ERROR_MESSAGE;
 import static com.example.microservices.users.error.helpers.ErrorMessage.UNKNOWN_ERROR_MESSAGE;
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 
 @Slf4j
 @Order(1)
@@ -35,9 +36,9 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<Object> handleUnknownException(Exception ex, HttpServletRequest request) {
+    public ResponseEntity<Object> handleUnknownException(Exception ex) {
         logError(UNKNOWN_ERROR_MESSAGE, ex);
-        ErrorList errorList = exceptionConverter.mapException(ex);
+        ErrorList errorList = exceptionConverter.mapException(UNKNOWN_ERROR, INTERNAL_SERVER_ERROR, ex);
         return toResponseEntity(errorList);
     }
 
@@ -46,14 +47,14 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
                                                              @NonNull HttpHeaders headers, @NonNull HttpStatus status,
                                                              @NonNull WebRequest request) {
         logError(HANDLING_ERROR_MESSAGE, ex);
-        ErrorList errorList = exceptionConverter.mapException(ex);
+        ErrorList errorList = exceptionConverter.mapException(status, ex);
         return toResponseEntity(errorList);
     }
 
     private ResponseEntity<Object> toResponseEntity(ErrorList errorList) {
         return new ResponseEntity<>(
                 errorList,
-                HttpStatus.valueOf(errorList.getErrors().get(0).getHttpStatus())
+                HttpStatus.valueOf(errorList.getErrors().get(0).getHttpStatusCode())
         );
     }
 

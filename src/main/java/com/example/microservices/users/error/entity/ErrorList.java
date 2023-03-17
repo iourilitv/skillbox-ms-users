@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-//TODO Replace with JpaRepository
 @Data
 @Accessors(chain = true)
 public class ErrorList {

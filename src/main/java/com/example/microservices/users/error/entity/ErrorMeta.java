@@ -5,7 +5,6 @@ import lombok.experimental.Accessors;
 
 @Data
 @Accessors(chain = true)
-//@Embeddable //TODO add to liquibase
 public class ErrorMeta {
 
     private String jExceptionMsg;

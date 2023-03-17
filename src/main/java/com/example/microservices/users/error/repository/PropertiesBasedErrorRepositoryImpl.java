@@ -7,7 +7,6 @@ import javax.annotation.PostConstruct;
 import java.util.HashMap;
 import java.util.Map;
 
-//TODO Replace with JpaRepository
 @Getter
 @ConfigurationProperties("errors.repositories.properties")
 public class PropertiesBasedErrorRepositoryImpl implements PropertiesBasedErrorRepository {
