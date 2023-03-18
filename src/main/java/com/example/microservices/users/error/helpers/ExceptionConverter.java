@@ -7,11 +7,19 @@ import org.springframework.http.HttpStatus;
 
 import static com.example.microservices.users.error.entity.ErrorId.INTERNAL_ERROR;
 import static com.example.microservices.users.error.entity.ErrorId.VALIDATION_ERROR;
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 
 @RequiredArgsConstructor
 public class ExceptionConverter {
 
     private final ErrorBuilder errorBuilder;
+
+    //TODO This is a draft
+    public ErrorList mapException(Exception ex) {
+        HttpStatus httpStatus = INTERNAL_SERVER_ERROR;
+        ErrorId errorId = determineErrorId(httpStatus);
+        return mapException(errorId, httpStatus, ex);
+    }
 
     public ErrorList mapException(HttpStatus httpStatus, Exception ex) {
         ErrorId errorId = determineErrorId(httpStatus);

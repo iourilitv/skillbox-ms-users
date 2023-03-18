@@ -16,10 +16,8 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import javax.annotation.PostConstruct;
 
-import static com.example.microservices.users.error.entity.ErrorId.UNKNOWN_ERROR;
-import static com.example.microservices.users.error.helpers.ErrorMessage.HANDLING_ERROR_MESSAGE;
-import static com.example.microservices.users.error.helpers.ErrorMessage.UNKNOWN_ERROR_MESSAGE;
-import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
+import static com.example.microservices.users.error.helpers.ErrorMessage.HANDLING_AN_ERROR_MESSAGE;
+import static com.example.microservices.users.error.helpers.ErrorMessage.HANDLING_RESPONSE_ENTITY_EXCEPTION_MESSAGE;
 
 @Slf4j
 @Order(1)
@@ -36,9 +34,9 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<Object> handleUnknownException(Exception ex) {
-        logError(UNKNOWN_ERROR_MESSAGE, ex);
-        ErrorList errorList = exceptionConverter.mapException(UNKNOWN_ERROR, INTERNAL_SERVER_ERROR, ex);
+    public ResponseEntity<Object> handleException(Exception ex) {
+        logError(HANDLING_AN_ERROR_MESSAGE, ex);
+        ErrorList errorList = exceptionConverter.mapException(ex);
         return toResponseEntity(errorList);
     }
 
@@ -46,7 +44,7 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
     protected @NonNull ResponseEntity<Object> handleExceptionInternal(@NonNull Exception ex, Object body,
                                                              @NonNull HttpHeaders headers, @NonNull HttpStatus status,
                                                              @NonNull WebRequest request) {
-        logError(HANDLING_ERROR_MESSAGE, ex);
+        logError(HANDLING_RESPONSE_ENTITY_EXCEPTION_MESSAGE, ex);
         ErrorList errorList = exceptionConverter.mapException(status, ex);
         return toResponseEntity(errorList);
     }
