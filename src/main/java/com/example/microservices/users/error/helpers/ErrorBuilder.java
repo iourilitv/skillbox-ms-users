@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.microservices.users.error.helpers.ErrorMessage.ERROR_META_DISABLED;
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
 /**
@@ -35,7 +36,7 @@ public class ErrorBuilder {
         String messageToCustomer = determineMessageToCustomer(errorId.getInnerCode());
         int httpStatusCode = determineHttpStatusCode(httpStatus);
         ErrorMeta getMetaIfEnabledOrDefault = metaEnabled ? ErrorMeta.fromException(ex) :
-                new ErrorMeta().setJExceptionMsg("Error Metadata is disabled");
+                new ErrorMeta().setJExceptionMsg(ERROR_META_DISABLED);
         return new Error()
                 .setHttpStatusCode(httpStatusCode)
                 .setFrontendCode(errorId.getOuterCode())

@@ -8,6 +8,7 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class ErrorMessage {
 
+    public static final String ERROR_META_DISABLED = "Error Metadata is disabled";
     public static final String HANDLING_AN_ERROR_MESSAGE = "Handling An Error...";
     public static final String HANDLING_RESPONSE_ENTITY_EXCEPTION_MESSAGE = "Handling ResponseEntityExceptionHandler's exception...";
     public static final String VALIDATION_ERROR_MESSAGE = "Some of input parameters are incorrect";
