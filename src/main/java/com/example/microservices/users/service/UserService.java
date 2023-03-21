@@ -24,8 +24,7 @@ public class UserService {
     }
 
     public User getUser(long id) {
-        return userRepository.findById(id).orElseThrow(() ->
-                new UserNotFoundResponseStatusException(String.valueOf(id)));
+        return userRepository.findById(id).orElseThrow(() -> new UserNotFoundResponseStatusException(id));
     }
 
     public String updateUser(User user) {

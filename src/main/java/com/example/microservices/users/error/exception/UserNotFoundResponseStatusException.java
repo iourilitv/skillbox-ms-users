@@ -5,8 +5,8 @@ public class UserNotFoundResponseStatusException extends ResourceNotFoundRespons
     private static final String USER_RESOURCE_NAME = "User";
     private static final String ID_FIELD_NAME = "id";
 
-    public UserNotFoundResponseStatusException(String fieldValue) {
-        super(USER_RESOURCE_NAME, ID_FIELD_NAME, fieldValue);
+    public UserNotFoundResponseStatusException(long id) {
+        super(USER_RESOURCE_NAME, ID_FIELD_NAME, String.valueOf(id));
     }
 
     public UserNotFoundResponseStatusException(String fieldName, String fieldValue) {
