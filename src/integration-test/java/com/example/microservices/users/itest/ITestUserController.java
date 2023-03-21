@@ -149,14 +149,21 @@ class ITestUserController {
     @Test
     void test32_givenNotExistUpdatedUser_thenError_updateUser() throws Exception {
         long notExistId = 9999L;
-        HttpStatus expectedHttpStatus = HttpStatus.UNPROCESSABLE_ENTITY;
         User userToUpdate = testUsers.get(0);
         userToUpdate.setSecondName("updated " + userToUpdate.getSecondName());
         UserDTO userDTO = toUserDTO(userToUpdate);
-        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.put("/users/{id}", notExistId)
-                .contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(userDTO))).andReturn();
-        MockHttpServletResponse response = mvcResult.getResponse();
-        assertEquals(expectedHttpStatus.value(), response.getStatus());
+        String jsonContent = String.format(
+                getJsonStringFile("/json/error/business/PreconditionFailed_UpdateUserValidationIdError_resp_500.json"),
+                userToUpdate.getId(),
+                notExistId
+        );
+        mockMvc.perform(MockMvcRequestBuilders.put("/users/{id}", notExistId)
+                .contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(userDTO)))
+                .andDo(print())
+                .andExpectAll(
+                        status().isInternalServerError(),
+                        content().json(jsonContent)
+                );
     }
 
     @Test
