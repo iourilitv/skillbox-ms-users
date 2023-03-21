@@ -18,7 +18,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.transaction.annotation.Transactional;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
@@ -26,6 +25,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 
 import static com.example.microservices.users.util.ITestUtils.getJsonStringFile;
 import static com.example.microservices.users.util.MapperTestUtils.initMapper;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -71,7 +71,7 @@ class ITestApplicationExceptionHandler {
 
         mockMvc.perform(MockMvcRequestBuilders.post("/users")
                         .contentType(unSupportedMediaType).content(requestBody))
-                .andDo(MockMvcResultHandlers.print())
+                .andDo(print())
                 .andExpectAll(
                         status().isUnsupportedMediaType(),
                         content().json(jsonContent)
@@ -86,7 +86,7 @@ class ITestApplicationExceptionHandler {
 
         mockMvc.perform(MockMvcRequestBuilders.post("/users")
                 .contentType(unSupportedMediaType).content(requestBody))
-                .andDo(MockMvcResultHandlers.print())
+                .andDo(print())
                 .andExpectAll(
                         status().isUnsupportedMediaType(),
                         content().json(jsonContent)
