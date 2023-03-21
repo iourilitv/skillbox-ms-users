@@ -1,0 +1,12 @@
+{
+  "errors": [
+    {
+      "httpStatusCode": 500,
+      "frontendCode": "businessError",
+      "messageToCustomer": "Внутренняя бизнес ошибка",
+      "meta": {
+        "jexceptionMsg": "com.example.microservices.users.error.exception.UserNotFoundResponseStatusException{HttpStatus: 404 NOT_FOUND, Reason: Resource User(id: 9999) Not Found}"
+      }
+    }
+  ]
+}

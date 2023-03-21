@@ -1,6 +1,7 @@
 package com.example.microservices.users.service;
 
 import com.example.microservices.users.entity.User;
+import com.example.microservices.users.error.exception.UserNotFoundResponseStatusException;
 import com.example.microservices.users.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,7 +24,8 @@ public class UserService {
     }
 
     public User getUser(long id) {
-        return userRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        return userRepository.findById(id).orElseThrow(() ->
+                new UserNotFoundResponseStatusException(String.valueOf(id)));
     }
 
     public String updateUser(User user) {

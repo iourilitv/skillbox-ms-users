@@ -2,11 +2,13 @@ package com.example.microservices.users.error.helpers;
 
 import com.example.microservices.users.error.entity.ErrorId;
 import com.example.microservices.users.error.entity.ErrorList;
+import com.example.microservices.users.error.exception.BusinessResponseStatusException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.server.ResponseStatusException;
 
+import static com.example.microservices.users.error.entity.ErrorId.BUSINESS_ERROR;
 import static com.example.microservices.users.error.entity.ErrorId.INTERNAL_ERROR;
+import static com.example.microservices.users.error.entity.ErrorId.UNKNOWN_ERROR;
 import static com.example.microservices.users.error.entity.ErrorId.VALIDATION_ERROR;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 
@@ -15,16 +17,14 @@ public class ExceptionConverter {
 
     private final ErrorBuilder errorBuilder;
 
-    //TODO This is a draft
     public ErrorList mapException(Exception ex) {
-        HttpStatus httpStatus;
-        if (ex instanceof ResponseStatusException) {
-            httpStatus = ((ResponseStatusException) ex).getStatus();
+        ErrorId errorId;
+        if (ex instanceof BusinessResponseStatusException) {
+            errorId = BUSINESS_ERROR;
         } else {
-            httpStatus = INTERNAL_SERVER_ERROR;
+            errorId = UNKNOWN_ERROR;
         }
-        ErrorId errorId = determineErrorId(httpStatus);
-        return mapException(errorId, httpStatus, ex);
+        return mapException(errorId, INTERNAL_SERVER_ERROR, ex);
     }
 
     public ErrorList mapException(HttpStatus httpStatus, Exception ex) {

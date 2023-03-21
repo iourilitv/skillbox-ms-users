@@ -36,10 +36,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.example.microservices.users.util.ITestUtils.getJsonStringFile;
 import static com.example.microservices.users.util.MapperTestUtils.initMapper;
 import static com.example.microservices.users.util.UserTestUtils.createUser;
 import static com.example.microservices.users.util.UserTestUtils.toUserDTO;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -116,11 +119,14 @@ class ITestUserController {
     @Test
     void test22_givenNotExistUserId_thenError_getUser() throws Exception {
         long notExistId = 9999L;
-        HttpStatus expectedHttpStatus = HttpStatus.NOT_FOUND;
-        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/users/{id}", notExistId)
-                .contentType(MediaType.APPLICATION_JSON)).andReturn();
-        MockHttpServletResponse response = mvcResult.getResponse();
-        assertEquals(expectedHttpStatus.value(), response.getStatus());
+        String jsonContent = getJsonStringFile("/json/error/business/UserNotFound_resp_500.json");
+        mockMvc.perform(MockMvcRequestBuilders.get("/users/{id}", notExistId)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpectAll(
+                        status().isInternalServerError(),
+                        content().json(jsonContent)
+                );
     }
 
     @Test
