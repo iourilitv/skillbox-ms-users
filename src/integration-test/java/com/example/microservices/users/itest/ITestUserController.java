@@ -119,7 +119,10 @@ class ITestUserController {
     @Test
     void test22_givenNotExistUserId_thenError_getUser() throws Exception {
         long notExistId = 9999L;
-        String jsonContent = getJsonStringFile("/json/error/business/UserNotFound_resp_500.json");
+        String jsonContent = String.format(
+                getJsonStringFile("/json/error/business/UserNotFound_resp_500.json"),
+                notExistId
+        );
         mockMvc.perform(MockMvcRequestBuilders.get("/users/{id}", notExistId)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())

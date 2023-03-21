@@ -5,7 +5,7 @@
       "frontendCode": "businessError",
       "messageToCustomer": "Внутренняя бизнес ошибка",
       "meta": {
-        "jexceptionMsg": "com.example.microservices.users.error.exception.UserNotFoundResponseStatusException{HttpStatus: 404 NOT_FOUND, Reason: Resource User(id: 9999) Not Found}"
+        "jexceptionMsg": "com.example.microservices.users.error.exception.UserNotFoundResponseStatusException{HttpStatus: 404 NOT_FOUND, Reason: Resource User(id: %d) Not Found}"
       }
     }
   ]
