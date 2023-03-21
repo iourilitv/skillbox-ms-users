@@ -206,12 +206,18 @@ class ITestUserController {
 
     @Test
     void test52_givenNotExistUser_thenError_deleteUser() throws Exception {
-        Long notExistId = 999L;
-        HttpStatus expectedHttpStatus = HttpStatus.PRECONDITION_FAILED;
-        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.delete("/users/{id}", notExistId)
-                .contentType(MediaType.APPLICATION_JSON)).andReturn();
-        MockHttpServletResponse response = mvcResult.getResponse();
-        assertEquals(expectedHttpStatus.value(), response.getStatus());
+        Long notExistId = 9999L;
+        String jsonContent = String.format(
+                getJsonStringFile("/json/error/business/PreconditionFailed_UserNotExist_resp_500.json"),
+                notExistId
+        );
+        mockMvc.perform(MockMvcRequestBuilders.delete("/users/{id}", notExistId)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpectAll(
+                        status().isInternalServerError(),
+                        content().json(jsonContent)
+                );
     }
 
     @Test
@@ -220,11 +226,17 @@ class ITestUserController {
         userToDelete.setDeleted(true);
         updateUser(userToDelete);
 
-        HttpStatus expectedHttpStatus = HttpStatus.PRECONDITION_FAILED;
-        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.delete("/users/{id}", userToDelete.getId())
-                .contentType(MediaType.APPLICATION_JSON)).andReturn();
-        MockHttpServletResponse response = mvcResult.getResponse();
-        assertEquals(expectedHttpStatus.value(), response.getStatus());
+        String jsonContent = String.format(
+                getJsonStringFile("/json/error/business/PreconditionFailed_UserAlreadyDeleted_resp_500.json"),
+                userToDelete.getId()
+        );
+        mockMvc.perform(MockMvcRequestBuilders.delete("/users/{id}", userToDelete.getId())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpectAll(
+                        status().isInternalServerError(),
+                        content().json(jsonContent)
+        );
     }
 
     private void fillUpTestUsers() {

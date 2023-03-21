@@ -1,6 +1,7 @@
 package com.example.microservices.users.service;
 
 import com.example.microservices.users.entity.User;
+import com.example.microservices.users.error.exception.PreconditionFailedResponseStatusException;
 import com.example.microservices.users.error.exception.UserNotFoundResponseStatusException;
 import com.example.microservices.users.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -42,8 +43,10 @@ public class UserService {
     @Transactional
     public String deleteUser(Long id) {
         Optional<User> userInDbOptional = userRepository.findById(id);
-        if (userInDbOptional.isEmpty() || userInDbOptional.get().isDeleted()) {
-            throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED);
+        if (userInDbOptional.isEmpty()) {
+            throw new PreconditionFailedResponseStatusException("User(id: " + id + ") Does Not Exist");
+        } else if(userInDbOptional.get().isDeleted()) {
+            throw new PreconditionFailedResponseStatusException("User(id: " + id + ") Is Already Deleted");
         }
         User user = userInDbOptional.get();
         userRepository.delete(user);
