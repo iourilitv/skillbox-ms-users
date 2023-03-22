@@ -179,27 +179,38 @@ class ITestUserController {
 
     @Test
     void test42_givenExistAndUndeletedUser_thenError_createUser() throws Exception {
-        HttpStatus expectedHttpStatus = HttpStatus.PRECONDITION_FAILED;
         User userToCreate = testUsers.get(0);
         UserDTO userDTO = toUserDTO(userToCreate);
-        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.post("/users")
-                .contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(userDTO))).andReturn();
-        MockHttpServletResponse response = mvcResult.getResponse();
-        assertEquals(expectedHttpStatus.value(), response.getStatus());
+        String jsonContent = String.format(
+                getJsonStringFile("/json/error/business/PreconditionFailed_UserNickNameAlreadyExist_resp_500.json"),
+                userToCreate.getNickname()
+        );
+        mockMvc.perform(MockMvcRequestBuilders.post("/users")
+                .contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(userDTO)))
+                .andDo(print())
+                .andExpectAll(
+                        status().isInternalServerError(),
+                        content().json(jsonContent)
+                );
     }
 
     @Test
     void test43_givenExistAndDeletedUser_thenError_createUser() throws Exception {
-        HttpStatus expectedHttpStatus = HttpStatus.PRECONDITION_FAILED;
         User userToCreate = testUsers.get(0);
         userToCreate.setDeleted(true);
         updateUser(userToCreate);
-
         UserDTO userDTO = toUserDTO(userToCreate);
-        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.post("/users")
-                .contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(userDTO))).andReturn();
-        MockHttpServletResponse response = mvcResult.getResponse();
-        assertEquals(expectedHttpStatus.value(), response.getStatus());
+        String jsonContent = String.format(
+                getJsonStringFile("/json/error/business/PreconditionFailed_UserNickNameAlreadyExist_resp_500.json"),
+                userToCreate.getNickname()
+        );
+        mockMvc.perform(MockMvcRequestBuilders.post("/users")
+                .contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(userDTO)))
+                .andDo(print())
+                .andExpectAll(
+                        status().isInternalServerError(),
+                        content().json(jsonContent)
+                );
     }
 
     @Test

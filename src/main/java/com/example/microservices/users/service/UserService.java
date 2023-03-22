@@ -5,9 +5,7 @@ import com.example.microservices.users.error.exception.PreconditionFailedRespons
 import com.example.microservices.users.error.exception.UserNotFoundResponseStatusException;
 import com.example.microservices.users.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -35,7 +33,8 @@ public class UserService {
 
     public User createUser(User user) {
         if (userRepository.findByNicknameIncludingDeleted(user.getNickname()).isPresent()) {
-            throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED);
+            throw new PreconditionFailedResponseStatusException(
+                    String.format("User(nickname: %s) Already Exists Including Deleted", user.getNickname()));
         }
         return userRepository.save(user);
     }
