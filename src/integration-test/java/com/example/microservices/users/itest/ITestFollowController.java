@@ -202,12 +202,14 @@ class ITestFollowController {
         String pathString = "/json/follow-create-with-id-request.json";
         Path path = Paths.get(Objects.requireNonNull(ITestFollowController.class.getResource(pathString)).toURI());
         String followDTOJson = Files.readString(path);
-        HttpStatus expectedHttpStatus = HttpStatus.PRECONDITION_FAILED;
-
-        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.post(BASE_URL)
-                .contentType(MediaType.APPLICATION_JSON).content(followDTOJson)).andReturn();
-        MockHttpServletResponse response = mvcResult.getResponse();
-        assertEquals(expectedHttpStatus.value(), response.getStatus());
+        String jsonContent = getJsonStringFile("/json/error/business/PreconditionFailed_FollowDTOIdIsNotNull_resp_500.json");
+        mockMvc.perform(MockMvcRequestBuilders.post(BASE_URL)
+                .contentType(MediaType.APPLICATION_JSON).content(followDTOJson))
+                .andDo(print())
+                .andExpectAll(
+                        status().isInternalServerError(),
+                        content().json(jsonContent)
+                );
     }
 
     @Test
