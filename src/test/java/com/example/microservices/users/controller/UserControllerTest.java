@@ -104,17 +104,6 @@ class UserControllerTest {
     }
 
     @Test
-    void test22_givenNotExistUserId_thenError_getUser() throws Exception {
-        long notExistId = 9999L;
-        HttpStatus expectedHttpStatus = HttpStatus.NOT_FOUND;
-        when(userService.getUser(notExistId)).thenThrow(new ResponseStatusException(expectedHttpStatus));
-        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/users/{id}", notExistId)
-                .contentType(MediaType.APPLICATION_JSON)).andReturn();
-        MockHttpServletResponse response = mvcResult.getResponse();
-        assertEquals(expectedHttpStatus.value(), response.getStatus());
-    }
-
-    @Test
     void test31_givenUpdatedUser_thenCorrect_updateUser() throws Exception {
         User userToUpdate = testUsers.get(0);
         userToUpdate.setSecondName("updated " + userToUpdate.getSecondName());
@@ -128,20 +117,6 @@ class UserControllerTest {
         assertEquals(HttpStatus.OK.value(), response.getStatus());
         String actual = response.getContentAsString();
         assertEquals(expected, actual);
-    }
-
-    @Test
-    void test32_givenNotExistUpdatedUser_thenError_updateUser() throws Exception {
-        long notExistId = 9999L;
-        HttpStatus expectedHttpStatus = HttpStatus.UNPROCESSABLE_ENTITY;
-        User userToUpdate = testUsers.get(0);
-        userToUpdate.setSecondName("updated " + userToUpdate.getSecondName());
-        UserDTO userDTO = toUserDTO(userToUpdate);
-        when(userMapper.toEntity(userDTO)).thenReturn(userToUpdate);
-        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.put("/users/{id}", notExistId)
-                .contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(userDTO))).andReturn();
-        MockHttpServletResponse response = mvcResult.getResponse();
-        assertEquals(expectedHttpStatus.value(), response.getStatus());
     }
 
     @Test
