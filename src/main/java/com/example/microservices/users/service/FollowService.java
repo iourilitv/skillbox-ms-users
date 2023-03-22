@@ -2,6 +2,7 @@ package com.example.microservices.users.service;
 
 import com.example.microservices.users.entity.Follow;
 import com.example.microservices.users.error.exception.FollowNotFoundResponseStatusException;
+import com.example.microservices.users.error.exception.PreconditionFailedResponseStatusException;
 import com.example.microservices.users.repository.FollowRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -38,9 +39,14 @@ public class FollowService {
 
     @Transactional
     public Follow createFollow(Follow follow) {
-        if (Objects.equals(follow.getFollowingId(), follow.getFollowerId())
-                || followRepository.findByFollowingIdAndFollowerId(follow.getFollowingId(), follow.getFollowerId()).isPresent()
-                    ) {
+        if (Objects.equals(follow.getFollowingId(), follow.getFollowerId())) {
+            throw new PreconditionFailedResponseStatusException(
+                    String.format(
+                            "Following And Follower Must Be Not The Same Person But Got The Same followingId: %s and followerId: %s",
+                            follow.getFollowingId(), follow.getFollowerId()
+                    ));
+        }
+        if (followRepository.findByFollowingIdAndFollowerId(follow.getFollowingId(), follow.getFollowerId()).isPresent()) {
             throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED);
         }
         follow.setFollowedAt(follow.getFollowedAt());

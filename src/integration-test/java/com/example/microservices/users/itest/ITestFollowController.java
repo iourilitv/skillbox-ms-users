@@ -216,13 +216,19 @@ class ITestFollowController {
     void test53_givenWithSameFollowingIdAndFollowerId_thenError_createFollow() throws Exception {
         Long sameUserId = 999L;
         FollowDTO followDTO = new FollowDTO(sameUserId, sameUserId);
-
-        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.post(BASE_URL)
-                .contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(followDTO))).andReturn();
-        HttpStatus expectedHttpStatus = HttpStatus.PRECONDITION_FAILED;
-
-        MockHttpServletResponse response = mvcResult.getResponse();
-        assertEquals(expectedHttpStatus.value(), response.getStatus());
+        String jsonContent = String.format(
+                getJsonStringFile("/json/error/business/PreconditionFailed_SameFollowingAndFollower_resp_500.json"),
+                sameUserId,
+                sameUserId
+        );
+        mockMvc.perform(MockMvcRequestBuilders.post(BASE_URL)
+                .contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(followDTO)))
+                .andDo(print())
+                .andExpectAll(
+                        status().isInternalServerError(),
+                        content().json(jsonContent)
+                )
+        ;
     }
 
     @Test
