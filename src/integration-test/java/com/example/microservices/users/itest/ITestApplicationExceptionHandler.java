@@ -107,7 +107,3 @@ class ITestApplicationExceptionHandler {
 // BindException.class, //113
 // NoHandlerFoundException.class, //114
 // AsyncRequestTimeoutException.class. //115
-
-//TODO FIXED
-//[ERROR] Failures:
-//[ERROR]   ITestFollowController.test54_givenExist_thenError_createFollow:224 expected: <412> but was: <500>

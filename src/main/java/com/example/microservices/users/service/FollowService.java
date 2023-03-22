@@ -5,10 +5,8 @@ import com.example.microservices.users.error.exception.FollowNotFoundResponseSta
 import com.example.microservices.users.error.exception.PreconditionFailedResponseStatusException;
 import com.example.microservices.users.repository.FollowRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Objects;
@@ -47,7 +45,10 @@ public class FollowService {
                     ));
         }
         if (followRepository.findByFollowingIdAndFollowerId(follow.getFollowingId(), follow.getFollowerId()).isPresent()) {
-            throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED);
+            throw new PreconditionFailedResponseStatusException(
+                    String.format("%s(followingId: %s, followerId: %s) Already Exists",
+                            RESOURCE, follow.getFollowingId(), follow.getFollowerId())
+            );
         }
         follow.setFollowedAt(follow.getFollowedAt());
         return followRepository.save(follow);

@@ -235,13 +235,21 @@ class ITestFollowController {
     void test54_givenExist_thenError_createFollow() throws Exception {
         Follow existFollow = follows.get(0);
         FollowDTO followDTO = toFollowDTO(existFollow);
-
-        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.post(BASE_URL)
-                .contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(followDTO))).andReturn();
-        HttpStatus expectedHttpStatus = HttpStatus.PRECONDITION_FAILED;
-
-        MockHttpServletResponse response = mvcResult.getResponse();
-        assertEquals(expectedHttpStatus.value(), response.getStatus());
+        followDTO.setId(null);
+        followDTO.setFollowedAt(null);
+        String jsonContent = String.format(
+                getJsonStringFile("/json/error/business/PreconditionFailed_FollowAlreadyExists_resp_500.json"),
+                RESOURCE,
+                followDTO.getFollowingId(),
+                followDTO.getFollowerId()
+        );
+        mockMvc.perform(MockMvcRequestBuilders.post(BASE_URL)
+                .contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(followDTO)))
+                .andDo(print())
+                .andExpectAll(
+                        status().isInternalServerError(),
+                        content().json(jsonContent)
+                );
     }
 
     @Test
