@@ -1,11 +1,11 @@
 package com.example.microservices.users.error.entity;
 
-import lombok.Data;
-import lombok.experimental.Accessors;
+import lombok.Getter;
 
-@Data
-@Accessors(chain = true)
-public class ErrorId {
+import java.io.Serializable;
+
+@Getter
+public class ErrorId implements Serializable {
 
     public static final ErrorId BUSINESS_ERROR = new ErrorId("businessError", "businessErrorInnerCode");
     public static final ErrorId INTERNAL_ERROR = new ErrorId("internalError", "internalErrorInnerCode");
@@ -19,7 +19,7 @@ public class ErrorId {
      * @param outerCode example: {@code businessError}
      * @param innerCode from Repository. example: {@code businessErrorInnerCode}
      */
-    public ErrorId(String outerCode, String innerCode) {
+    private ErrorId(String outerCode, String innerCode) {
         this.outerCode = outerCode;
         this.innerCode = innerCode;
     }

@@ -2,11 +2,10 @@ package com.example.microservices.users.error.helpers;
 
 import com.example.microservices.users.error.entity.ErrorId;
 import com.example.microservices.users.error.entity.ErrorList;
-import com.example.microservices.users.error.exception.BusinessResponseStatusException;
+import com.example.microservices.users.error.exception.BaseResponseStatusException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 
-import static com.example.microservices.users.error.entity.ErrorId.BUSINESS_ERROR;
 import static com.example.microservices.users.error.entity.ErrorId.INTERNAL_ERROR;
 import static com.example.microservices.users.error.entity.ErrorId.UNKNOWN_ERROR;
 import static com.example.microservices.users.error.entity.ErrorId.VALIDATION_ERROR;
@@ -19,8 +18,8 @@ public class ExceptionConverter {
 
     public ErrorList mapException(Exception ex) {
         ErrorId errorId;
-        if (ex instanceof BusinessResponseStatusException) {
-            errorId = BUSINESS_ERROR;
+        if (ex instanceof BaseResponseStatusException) {
+            errorId = ((BaseResponseStatusException) ex).getErrorId();
         } else {
             errorId = UNKNOWN_ERROR;
         }
