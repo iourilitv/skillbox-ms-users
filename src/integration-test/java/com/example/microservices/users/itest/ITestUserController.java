@@ -123,6 +123,7 @@ class ITestUserController {
         String jsonContent = String.format(
                 getJsonStringFile("/json/error/business/ResourceNotFound_resp_500.json"),
                 RESOURCE,
+                RESOURCE,
                 notExistId
         );
         mockMvc.perform(MockMvcRequestBuilders.get("/users/{id}", notExistId)
