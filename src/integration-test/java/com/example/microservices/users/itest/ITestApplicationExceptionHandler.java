@@ -55,8 +55,7 @@ class ITestApplicationExceptionHandler {
 
     }
 
-    //TODO This is a draft
-    @Ignore
+    @Ignore("This is a draft")
     @Test
     void test101_given_UnSupportedRequestMethod_HttpRequestMethodNotSupportedException() throws Exception {
 //        User userToCreate = testUsers.get(0);
