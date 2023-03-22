@@ -1,6 +1,7 @@
 package com.example.microservices.users.service;
 
 import com.example.microservices.users.entity.Follow;
+import com.example.microservices.users.error.exception.FollowNotFoundResponseStatusException;
 import com.example.microservices.users.repository.FollowRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Service
 public class FollowService {
+    private static final String RESOURCE = "Follow";
 
     private final FollowRepository followRepository;
 
@@ -31,7 +33,7 @@ public class FollowService {
     }
 
     public Follow getFollow(long id) {
-        return followRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        return followRepository.findById(id).orElseThrow(() -> new FollowNotFoundResponseStatusException(id));
     }
 
     @Transactional
@@ -51,10 +53,10 @@ public class FollowService {
         if (existFollowOptional.isPresent()) {
             followRepository.deleteById(id);
             Follow follow = existFollowOptional.get();
-            return String.format("User(id: %s) has been followed out from User(id: %s). The Follow(id: %s) has been deleted",
-                    follow.getFollowingId(), follow.getFollowerId(), follow.getId());
+            return String.format("User(id: %s) has been followed out from User(id: %s). The %s(id: %s) has been deleted",
+                    follow.getFollowingId(), follow.getFollowerId(), RESOURCE, follow.getId());
         }
-        return String.format("There is no Follow to delete with id: %s", id);
+        return String.format("There is no %s to delete with id: %s", RESOURCE, id);
     }
 
     public void setRefersDeletedUserInAllWhereFollowingIdOrFollowerId(Long userId, boolean flag) {

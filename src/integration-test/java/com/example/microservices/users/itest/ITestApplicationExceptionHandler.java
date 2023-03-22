@@ -110,7 +110,6 @@ class ITestApplicationExceptionHandler {
 
 //TODO FIXED
 //[ERROR] Failures:
-//[ERROR]   ITestFollowController.test42_givenNotExistFollowId_thenError_getFollow:166 expected: <404> but was: <500>
 //[ERROR]   ITestFollowController.test52_givenWithId_thenError_createFollow:198 expected: <412> but was: <500>
 //[ERROR]   ITestFollowController.test53_givenWithSameFollowingIdAndFollowerId_thenError_createFollow:211 expected: <412> but was: <500>
 //[ERROR]   ITestFollowController.test54_givenExist_thenError_createFollow:224 expected: <412> but was: <500>
