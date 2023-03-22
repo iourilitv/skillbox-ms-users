@@ -58,6 +58,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = UsersApplication.class)
 class ITestUserController {
     private static final int TEST_LIST_SIZE = 5;
+    private static final String RESOURCE = "User";
 
     @Container private static final PostgreSQLContainer<?> sqlContainer = ITestUtilPostgreSQLContainer.getInstance();
     private static final ObjectMapper mapper = initMapper();
@@ -120,7 +121,8 @@ class ITestUserController {
     void test22_givenNotExistUserId_thenError_getUser() throws Exception {
         long notExistId = 9999L;
         String jsonContent = String.format(
-                getJsonStringFile("/json/error/business/UserNotFound_resp_500.json"),
+                getJsonStringFile("/json/error/business/ResourceNotFound_resp_500.json"),
+                RESOURCE,
                 notExistId
         );
         mockMvc.perform(MockMvcRequestBuilders.get("/users/{id}", notExistId)

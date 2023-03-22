@@ -14,6 +14,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Service
 public class UserService {
+    private static final String RESOURCE = "User";
 
     private final UserRepository userRepository;
     private final FollowService followService;
@@ -28,13 +29,13 @@ public class UserService {
 
     public String updateUser(User user) {
         User savedUser = userRepository.save(user);
-        return String.format("User(id: %s, nickname: %s) has been updated successfully", savedUser.getId(), savedUser.getNickname());
+        return String.format("%s(id: %s, nickname: %s) has been updated successfully", RESOURCE, savedUser.getId(), savedUser.getNickname());
     }
 
     public User createUser(User user) {
         if (userRepository.findByNicknameIncludingDeleted(user.getNickname()).isPresent()) {
             throw new PreconditionFailedResponseStatusException(
-                    String.format("User(nickname: %s) Already Exists Including Deleted", user.getNickname()));
+                    String.format("%s(nickname: %s) Already Exists Including Deleted", RESOURCE, user.getNickname()));
         }
         return userRepository.save(user);
     }
@@ -43,13 +44,13 @@ public class UserService {
     public String deleteUser(Long id) {
         Optional<User> userInDbOptional = userRepository.findById(id);
         if (userInDbOptional.isEmpty()) {
-            throw new PreconditionFailedResponseStatusException("User(id: " + id + ") Does Not Exist");
+            throw new PreconditionFailedResponseStatusException(String.format("%s(id: %d) Does Not Exist", RESOURCE, id));
         } else if(userInDbOptional.get().isDeleted()) {
-            throw new PreconditionFailedResponseStatusException("User(id: " + id + ") Is Already Deleted");
+            throw new PreconditionFailedResponseStatusException(String.format("%s(id: %d) Is Already Deleted", RESOURCE, id));
         }
         User user = userInDbOptional.get();
         userRepository.delete(user);
         followService.setRefersDeletedUserInAllWhereFollowingIdOrFollowerId(user.getId(), true);
-        return String.format("User(id: %s, nickname: %s) has been deleted", user.getId(), user.getNickname());
+        return String.format("%s(id: %s, nickname: %s) has been deleted", RESOURCE, user.getId(), user.getNickname());
     }
 }
