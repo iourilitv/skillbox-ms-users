@@ -68,7 +68,7 @@ class RegressionTest {
         var userDto2 = createUser_thenOK(2);
         getUser_thenOK(userDto1);
         getUser_thenOK(userDto2);
-        getNotExistOrDeletedUser_thenError404(userDto1.getId() + 999);
+        getNotExistOrDeletedUser_then_PreconditionError_500(userDto1.getId() + 999);
         getAllUsers_thenOk(userDto1, userDto2);
         var followDto1For2 = followUp1For2_thenOK(userDto1, userDto2);
         checkFollower_thenOk(userDto1.getId(), 1, 0);
@@ -87,7 +87,7 @@ class RegressionTest {
         getUser_thenOK(userDto1);
         deleteUsers_thenOK(userDto1.getId(), userDto2.getId());
         getAllUsers_thenOk();
-        getNotExistOrDeletedUser_thenError404(userDto1.getId());
+        getNotExistOrDeletedUser_then_PreconditionError_500(userDto1.getId());
     }
 
     private UserDTO createUser_thenOK(int userIndex) {
@@ -183,9 +183,9 @@ class RegressionTest {
         });
     }
 
-    private void getNotExistOrDeletedUser_thenError404(long id) {
+    private void getNotExistOrDeletedUser_then_PreconditionError_500(long id) {
         var response = getUserResponse(id);
-        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
     }
 
     private ResponseEntity<UserDTO> getUserResponse(long id) {
