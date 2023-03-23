@@ -1,6 +1,7 @@
 package com.example.microservices.users.error;
 
 import com.example.microservices.users.error.entity.ErrorList;
+import com.example.microservices.users.error.entity.ErrorMeta;
 import com.example.microservices.users.error.exception.BaseResponseStatusException;
 import com.example.microservices.users.error.exception.UserNotFoundResponseStatusException;
 import com.example.microservices.users.error.helpers.ApplicationExceptionHandler;
@@ -39,6 +40,10 @@ class ApplicationExceptionHandlerTest {
             var actualResponseEntity = exceptionHandler.handleException(ex);
             assertEquals(expectedHttpStatus, actualResponseEntity.getStatusCode());
             assertEquals(expectedErrorList, actualResponseEntity.getBody());
+
+            ErrorMeta expectedErrorMeta = new ErrorMeta().setJExceptionMsg(jExceptionMsg);
+            ErrorMeta actualErrorMeta = ErrorMeta.fromException(ex);
+            assertEquals(expectedErrorMeta, actualErrorMeta);
         }
     }
 }
