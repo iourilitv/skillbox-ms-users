@@ -22,7 +22,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 
 @TestMethodOrder(value = MethodOrderer.MethodName.class)
-public class ExceptionConverterTest {
+class ExceptionConverterTest {
 
     private final ErrorBuilder errorBuilder = mock(ErrorBuilder.class);
     private final ExceptionConverter exceptionConverter = new ExceptionConverter(errorBuilder);
