@@ -1,0 +1,12 @@
+{
+  "errors": [
+    {
+      "httpStatusCode": 405,
+      "frontendCode": "validationError",
+      "messageToCustomer": "Ошибка валидации запроса",
+      "meta": {
+        "jexceptionMsg": "org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'DELETE' not supported"
+      }
+    }
+  ]
+}

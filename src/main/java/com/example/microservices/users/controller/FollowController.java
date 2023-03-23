@@ -2,10 +2,10 @@ package com.example.microservices.users.controller;
 
 import com.example.microservices.users.dto.FollowDTO;
 import com.example.microservices.users.entity.Follow;
+import com.example.microservices.users.error.exception.PreconditionFailedResponseStatusException;
 import com.example.microservices.users.mapper.FollowMapper;
 import com.example.microservices.users.service.FollowService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -47,9 +46,7 @@ public class FollowController {
 
     @PostMapping
     public FollowDTO createFollow(@RequestBody FollowDTO followDTO) {
-        if (followDTO.getId() != null) {
-            throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED);
-        }
+        verifyFollowDTO(followDTO);
         Follow follow = followMapper.toEntity(followDTO);
         Follow savedFollow = followService.createFollow(follow);
         return followMapper.toDTO(savedFollow);
@@ -58,5 +55,11 @@ public class FollowController {
     @DeleteMapping(value = "/{id}")
     public String deleteFollow(@PathVariable Long id) {
         return followService.deleteFollow(id);
+    }
+
+    private void verifyFollowDTO(FollowDTO followDTO) {
+        if (followDTO.getId() != null) {
+            throw new PreconditionFailedResponseStatusException("FollowDTO.id Must Be null Or Excluded");
+        }
     }
 }

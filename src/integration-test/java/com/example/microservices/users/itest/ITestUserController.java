@@ -36,10 +36,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.example.microservices.users.util.ITestUtils.getJsonStringFile;
 import static com.example.microservices.users.util.MapperTestUtils.initMapper;
 import static com.example.microservices.users.util.UserTestUtils.createUser;
 import static com.example.microservices.users.util.UserTestUtils.toUserDTO;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -55,6 +58,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = UsersApplication.class)
 class ITestUserController {
     private static final int TEST_LIST_SIZE = 5;
+    private static final String RESOURCE = "User";
 
     @Container private static final PostgreSQLContainer<?> sqlContainer = ITestUtilPostgreSQLContainer.getInstance();
     private static final ObjectMapper mapper = initMapper();
@@ -116,11 +120,19 @@ class ITestUserController {
     @Test
     void test22_givenNotExistUserId_thenError_getUser() throws Exception {
         long notExistId = 9999L;
-        HttpStatus expectedHttpStatus = HttpStatus.NOT_FOUND;
-        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/users/{id}", notExistId)
-                .contentType(MediaType.APPLICATION_JSON)).andReturn();
-        MockHttpServletResponse response = mvcResult.getResponse();
-        assertEquals(expectedHttpStatus.value(), response.getStatus());
+        String jsonContent = String.format(
+                getJsonStringFile("/json/error/business/ResourceNotFound_resp_500.json"),
+                RESOURCE,
+                RESOURCE,
+                notExistId
+        );
+        mockMvc.perform(MockMvcRequestBuilders.get("/users/{id}", notExistId)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpectAll(
+                        status().isInternalServerError(),
+                        content().json(jsonContent)
+                );
     }
 
     @Test
@@ -140,14 +152,21 @@ class ITestUserController {
     @Test
     void test32_givenNotExistUpdatedUser_thenError_updateUser() throws Exception {
         long notExistId = 9999L;
-        HttpStatus expectedHttpStatus = HttpStatus.UNPROCESSABLE_ENTITY;
         User userToUpdate = testUsers.get(0);
         userToUpdate.setSecondName("updated " + userToUpdate.getSecondName());
         UserDTO userDTO = toUserDTO(userToUpdate);
-        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.put("/users/{id}", notExistId)
-                .contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(userDTO))).andReturn();
-        MockHttpServletResponse response = mvcResult.getResponse();
-        assertEquals(expectedHttpStatus.value(), response.getStatus());
+        String jsonContent = String.format(
+                getJsonStringFile("/json/error/business/PreconditionFailed_UpdateUserValidationIdError_resp_500.json"),
+                userToUpdate.getId(),
+                notExistId
+        );
+        mockMvc.perform(MockMvcRequestBuilders.put("/users/{id}", notExistId)
+                .contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(userDTO)))
+                .andDo(print())
+                .andExpectAll(
+                        status().isInternalServerError(),
+                        content().json(jsonContent)
+                );
     }
 
     @Test
@@ -163,27 +182,38 @@ class ITestUserController {
 
     @Test
     void test42_givenExistAndUndeletedUser_thenError_createUser() throws Exception {
-        HttpStatus expectedHttpStatus = HttpStatus.PRECONDITION_FAILED;
         User userToCreate = testUsers.get(0);
         UserDTO userDTO = toUserDTO(userToCreate);
-        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.post("/users")
-                .contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(userDTO))).andReturn();
-        MockHttpServletResponse response = mvcResult.getResponse();
-        assertEquals(expectedHttpStatus.value(), response.getStatus());
+        String jsonContent = String.format(
+                getJsonStringFile("/json/error/business/PreconditionFailed_UserNickNameAlreadyExist_resp_500.json"),
+                userToCreate.getNickname()
+        );
+        mockMvc.perform(MockMvcRequestBuilders.post("/users")
+                .contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(userDTO)))
+                .andDo(print())
+                .andExpectAll(
+                        status().isInternalServerError(),
+                        content().json(jsonContent)
+                );
     }
 
     @Test
     void test43_givenExistAndDeletedUser_thenError_createUser() throws Exception {
-        HttpStatus expectedHttpStatus = HttpStatus.PRECONDITION_FAILED;
         User userToCreate = testUsers.get(0);
         userToCreate.setDeleted(true);
         updateUser(userToCreate);
-
         UserDTO userDTO = toUserDTO(userToCreate);
-        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.post("/users")
-                .contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(userDTO))).andReturn();
-        MockHttpServletResponse response = mvcResult.getResponse();
-        assertEquals(expectedHttpStatus.value(), response.getStatus());
+        String jsonContent = String.format(
+                getJsonStringFile("/json/error/business/PreconditionFailed_UserNickNameAlreadyExist_resp_500.json"),
+                userToCreate.getNickname()
+        );
+        mockMvc.perform(MockMvcRequestBuilders.post("/users")
+                .contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(userDTO)))
+                .andDo(print())
+                .andExpectAll(
+                        status().isInternalServerError(),
+                        content().json(jsonContent)
+                );
     }
 
     @Test
@@ -200,12 +230,18 @@ class ITestUserController {
 
     @Test
     void test52_givenNotExistUser_thenError_deleteUser() throws Exception {
-        Long notExistId = 999L;
-        HttpStatus expectedHttpStatus = HttpStatus.PRECONDITION_FAILED;
-        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.delete("/users/{id}", notExistId)
-                .contentType(MediaType.APPLICATION_JSON)).andReturn();
-        MockHttpServletResponse response = mvcResult.getResponse();
-        assertEquals(expectedHttpStatus.value(), response.getStatus());
+        Long notExistId = 9999L;
+        String jsonContent = String.format(
+                getJsonStringFile("/json/error/business/PreconditionFailed_UserNotExist_resp_500.json"),
+                notExistId
+        );
+        mockMvc.perform(MockMvcRequestBuilders.delete("/users/{id}", notExistId)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpectAll(
+                        status().isInternalServerError(),
+                        content().json(jsonContent)
+                );
     }
 
     @Test
@@ -214,11 +250,17 @@ class ITestUserController {
         userToDelete.setDeleted(true);
         updateUser(userToDelete);
 
-        HttpStatus expectedHttpStatus = HttpStatus.PRECONDITION_FAILED;
-        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.delete("/users/{id}", userToDelete.getId())
-                .contentType(MediaType.APPLICATION_JSON)).andReturn();
-        MockHttpServletResponse response = mvcResult.getResponse();
-        assertEquals(expectedHttpStatus.value(), response.getStatus());
+        String jsonContent = String.format(
+                getJsonStringFile("/json/error/business/PreconditionFailed_UserAlreadyDeleted_resp_500.json"),
+                userToDelete.getId()
+        );
+        mockMvc.perform(MockMvcRequestBuilders.delete("/users/{id}", userToDelete.getId())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpectAll(
+                        status().isInternalServerError(),
+                        content().json(jsonContent)
+        );
     }
 
     private void fillUpTestUsers() {

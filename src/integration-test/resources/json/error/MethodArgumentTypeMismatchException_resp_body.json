@@ -1,0 +1,12 @@
+{
+  "errors": [
+    {
+      "httpStatusCode": 400,
+      "frontendCode": "validationError",
+      "messageToCustomer": "Ошибка валидации запроса",
+      "meta": {
+        "jexceptionMsg": "org.springframework.web.method.annotation.MethodArgumentTypeMismatchException: Failed to convert value of type 'java.lang.String' to required type 'long'; nested exception is java.lang.NumberFormatException: For input string: \"wrongPathVariableType\""
+      }
+    }
+  ]
+}
