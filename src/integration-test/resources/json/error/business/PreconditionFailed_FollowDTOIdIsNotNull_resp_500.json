@@ -1,0 +1,12 @@
+{
+  "errors": [
+    {
+      "httpStatusCode": 500,
+      "frontendCode": "businessError",
+      "messageToCustomer": "Внутренняя бизнес ошибка",
+      "meta": {
+        "jexceptionMsg": "com.example.microservices.users.error.exception.PreconditionFailedResponseStatusException{HttpStatus: 412 PRECONDITION_FAILED, Reason: FollowDTO.id Must Be null Or Excluded}"
+      }
+    }
+  ]
+}

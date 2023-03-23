@@ -45,11 +45,14 @@ import java.util.stream.Collectors;
 
 import static com.example.microservices.users.util.FollowTestUtils.fillUpFollowsForUsers;
 import static com.example.microservices.users.util.FollowTestUtils.toFollowDTO;
+import static com.example.microservices.users.util.ITestUtils.getJsonStringFile;
 import static com.example.microservices.users.util.MapperTestUtils.initMapper;
 import static com.example.microservices.users.util.UserTestUtils.fillUpUsers;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -67,6 +70,7 @@ class ITestFollowController {
     private static final int TEST_USERS_SIZE = 3;
     private static final int TEST_FOLLOWS_SIZE = TEST_USERS_SIZE * TEST_USERS_SIZE;
     private static final String BASE_URL = "/follows";
+    private static final String RESOURCE = "Follow";
 
     @Container private static final PostgreSQLContainer<?> sqlContainer = ITestUtilPostgreSQLContainer.getInstance();
     private static final ObjectMapper mapper = initMapper();
@@ -159,11 +163,19 @@ class ITestFollowController {
     @Test
     void test42_givenNotExistFollowId_thenError_getFollow() throws Exception {
         long notExistId = 9999L;
-        HttpStatus expectedHttpStatus = HttpStatus.NOT_FOUND;
-        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get(BASE_URL + "/{id}", notExistId)
-                .contentType(MediaType.APPLICATION_JSON)).andReturn();
-        MockHttpServletResponse response = mvcResult.getResponse();
-        assertEquals(expectedHttpStatus.value(), response.getStatus());
+        String jsonContent = String.format(
+                getJsonStringFile("/json/error/business/ResourceNotFound_resp_500.json"),
+                RESOURCE,
+                RESOURCE,
+                notExistId
+        );
+        mockMvc.perform(MockMvcRequestBuilders.get(BASE_URL + "/{id}", notExistId)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpectAll(
+                        status().isInternalServerError(),
+                        content().json(jsonContent)
+                );
     }
 
     @Test
@@ -190,38 +202,54 @@ class ITestFollowController {
         String pathString = "/json/follow-create-with-id-request.json";
         Path path = Paths.get(Objects.requireNonNull(ITestFollowController.class.getResource(pathString)).toURI());
         String followDTOJson = Files.readString(path);
-        HttpStatus expectedHttpStatus = HttpStatus.PRECONDITION_FAILED;
-
-        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.post(BASE_URL)
-                .contentType(MediaType.APPLICATION_JSON).content(followDTOJson)).andReturn();
-        MockHttpServletResponse response = mvcResult.getResponse();
-        assertEquals(expectedHttpStatus.value(), response.getStatus());
+        String jsonContent = getJsonStringFile("/json/error/business/PreconditionFailed_FollowDTOIdIsNotNull_resp_500.json");
+        mockMvc.perform(MockMvcRequestBuilders.post(BASE_URL)
+                .contentType(MediaType.APPLICATION_JSON).content(followDTOJson))
+                .andDo(print())
+                .andExpectAll(
+                        status().isInternalServerError(),
+                        content().json(jsonContent)
+                );
     }
 
     @Test
     void test53_givenWithSameFollowingIdAndFollowerId_thenError_createFollow() throws Exception {
         Long sameUserId = 999L;
         FollowDTO followDTO = new FollowDTO(sameUserId, sameUserId);
-
-        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.post(BASE_URL)
-                .contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(followDTO))).andReturn();
-        HttpStatus expectedHttpStatus = HttpStatus.PRECONDITION_FAILED;
-
-        MockHttpServletResponse response = mvcResult.getResponse();
-        assertEquals(expectedHttpStatus.value(), response.getStatus());
+        String jsonContent = String.format(
+                getJsonStringFile("/json/error/business/PreconditionFailed_SameFollowingAndFollower_resp_500.json"),
+                sameUserId,
+                sameUserId
+        );
+        mockMvc.perform(MockMvcRequestBuilders.post(BASE_URL)
+                .contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(followDTO)))
+                .andDo(print())
+                .andExpectAll(
+                        status().isInternalServerError(),
+                        content().json(jsonContent)
+                )
+        ;
     }
 
     @Test
     void test54_givenExist_thenError_createFollow() throws Exception {
         Follow existFollow = follows.get(0);
         FollowDTO followDTO = toFollowDTO(existFollow);
-
-        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.post(BASE_URL)
-                .contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(followDTO))).andReturn();
-        HttpStatus expectedHttpStatus = HttpStatus.PRECONDITION_FAILED;
-
-        MockHttpServletResponse response = mvcResult.getResponse();
-        assertEquals(expectedHttpStatus.value(), response.getStatus());
+        followDTO.setId(null);
+        followDTO.setFollowedAt(null);
+        String jsonContent = String.format(
+                getJsonStringFile("/json/error/business/PreconditionFailed_FollowAlreadyExists_resp_500.json"),
+                RESOURCE,
+                followDTO.getFollowingId(),
+                followDTO.getFollowerId()
+        );
+        mockMvc.perform(MockMvcRequestBuilders.post(BASE_URL)
+                .contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(followDTO)))
+                .andDo(print())
+                .andExpectAll(
+                        status().isInternalServerError(),
+                        content().json(jsonContent)
+                );
     }
 
     @Test
