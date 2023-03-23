@@ -7,7 +7,6 @@ import com.example.microservices.users.error.entity.ErrorMeta;
 import com.example.microservices.users.error.exception.BaseResponseStatusException;
 import com.example.microservices.users.error.exception.UserNotFoundResponseStatusException;
 import com.example.microservices.users.error.helpers.ApplicationExceptionHandler;
-import com.example.microservices.users.error.helpers.ErrorBuilder;
 import com.example.microservices.users.error.helpers.ExceptionConverter;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
@@ -23,7 +22,6 @@ import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 @TestMethodOrder(value = MethodOrderer.MethodName.class)
 class ApplicationExceptionHandlerTest {
 
-    private final ErrorBuilder errorBuilder = mock(ErrorBuilder.class);
     private final ExceptionConverter exceptionConverter = mock(ExceptionConverter.class);
     private final ApplicationExceptionHandler exceptionHandler = new ApplicationExceptionHandler(exceptionConverter);
 
@@ -34,16 +32,15 @@ class ApplicationExceptionHandlerTest {
         String jExceptionMsg = String.format(
                 "com.example.microservices.users.error.exception.%sNotFoundResponseStatusException{HttpStatus: 404 NOT_FOUND, Reason: Resource %s(id: %d) Not Found}",
                 resource, resource, notExistId);
-        var exception = new UserNotFoundResponseStatusException(999);
         HttpStatus expectedHttpStatus = INTERNAL_SERVER_ERROR;
-        ErrorList errorList = new ErrorList(buildError(BUSINESS_ERROR, expectedHttpStatus, jExceptionMsg));
+        ErrorList expectedErrorList = new ErrorList(buildError(BUSINESS_ERROR, expectedHttpStatus, jExceptionMsg));
         try {
-            throw exception;
+            throw new UserNotFoundResponseStatusException(notExistId);
         } catch (BaseResponseStatusException ex) {
-            when(exceptionConverter.mapException(ex)).thenReturn(errorList);
+            when(exceptionConverter.mapException(ex)).thenReturn(expectedErrorList);
             var response = exceptionHandler.handleException(ex);
             assertEquals(expectedHttpStatus, response.getStatusCode());
-            assertEquals(errorList, response.getBody());
+            assertEquals(expectedErrorList, response.getBody());
         }
     }
 
