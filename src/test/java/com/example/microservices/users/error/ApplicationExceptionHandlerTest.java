@@ -1,9 +1,6 @@
 package com.example.microservices.users.error;
 
-import com.example.microservices.users.error.entity.Error;
-import com.example.microservices.users.error.entity.ErrorId;
 import com.example.microservices.users.error.entity.ErrorList;
-import com.example.microservices.users.error.entity.ErrorMeta;
 import com.example.microservices.users.error.exception.BaseResponseStatusException;
 import com.example.microservices.users.error.exception.UserNotFoundResponseStatusException;
 import com.example.microservices.users.error.helpers.ApplicationExceptionHandler;
@@ -14,6 +11,7 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.http.HttpStatus;
 
 import static com.example.microservices.users.error.entity.ErrorId.BUSINESS_ERROR;
+import static com.example.microservices.users.util.ErrorTestUtils.buildError;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -38,20 +36,9 @@ class ApplicationExceptionHandlerTest {
             throw new UserNotFoundResponseStatusException(notExistId);
         } catch (BaseResponseStatusException ex) {
             when(exceptionConverter.mapException(ex)).thenReturn(expectedErrorList);
-            var response = exceptionHandler.handleException(ex);
-            assertEquals(expectedHttpStatus, response.getStatusCode());
-            assertEquals(expectedErrorList, response.getBody());
+            var actualResponseEntity = exceptionHandler.handleException(ex);
+            assertEquals(expectedHttpStatus, actualResponseEntity.getStatusCode());
+            assertEquals(expectedErrorList, actualResponseEntity.getBody());
         }
-    }
-
-    private Error buildError(ErrorId errorId, HttpStatus httpStatus, String jExceptionMsg) {
-        String messageToCustomer = "Внутренняя бизнес ошибка";
-        int httpStatusCode = httpStatus.value();
-        ErrorMeta getMetaIfEnabledOrDefault = new ErrorMeta().setJExceptionMsg(jExceptionMsg);
-        return new Error()
-                .setHttpStatusCode(httpStatusCode)
-                .setFrontendCode(errorId.getOuterCode())
-                .setMessageToCustomer(messageToCustomer)
-                .setMeta(getMetaIfEnabledOrDefault);
     }
 }
