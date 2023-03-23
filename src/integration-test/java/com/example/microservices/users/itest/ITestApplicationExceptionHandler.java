@@ -4,8 +4,6 @@ import com.example.microservices.users.UsersApplication;
 import com.example.microservices.users.util.ITestUtilPostgreSQLContainer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang3.StringUtils;
-import org.junit.Ignore;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
@@ -25,6 +23,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 
 import static com.example.microservices.users.util.ITestUtils.getJsonStringFile;
 import static com.example.microservices.users.util.MapperTestUtils.initMapper;
+import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -40,6 +39,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Testcontainers(disabledWithoutDocker = true)
 @SpringBootTest(classes = UsersApplication.class)
 class ITestApplicationExceptionHandler {
+    private static final String BASE_URL = "/users";
 
     @Container private static final PostgreSQLContainer<?> sqlContainer = ITestUtilPostgreSQLContainer.getInstance();
     private static final ObjectMapper mapper = initMapper();
@@ -50,29 +50,14 @@ class ITestApplicationExceptionHandler {
         MockitoAnnotations.openMocks(this);
     }
 
-    @AfterEach
-    void tearDown() {
-
-    }
-
-    @Ignore("This is a draft")
     @Test
     void test101_given_UnSupportedRequestMethod_HttpRequestMethodNotSupportedException() throws Exception {
-//        User userToCreate = testUsers.get(0);
-//        userToCreate.setDeleted(true);
-//        updateUser(userToCreate);
-//
-//        UserDTO userDTO = toUserDTO(userToCreate);
-//        String requestBody = mapper.writeValueAsString(userDTO);
         String requestBody = StringUtils.EMPTY;
-        MediaType unSupportedMediaType = MediaType.TEXT_PLAIN;
-        String jsonContent = getJsonStringFile("/json/error/HttpMediaTypeNotSupportedException_resp_body.json");
-
-        mockMvc.perform(MockMvcRequestBuilders.post("/users")
-                        .contentType(unSupportedMediaType).content(requestBody))
+        String jsonContent = getJsonStringFile("/json/error/HttpRequestMethodNotSupportedException_resp_body.json");
+        mockMvc.perform(MockMvcRequestBuilders.delete(BASE_URL).contentType(APPLICATION_JSON).content(requestBody))
                 .andDo(print())
                 .andExpectAll(
-                        status().isUnsupportedMediaType(),
+                        status().isMethodNotAllowed(),
                         content().json(jsonContent)
                 );
     }
@@ -82,9 +67,7 @@ class ITestApplicationExceptionHandler {
         String requestBody = StringUtils.EMPTY;
         MediaType unSupportedMediaType = MediaType.TEXT_PLAIN;
         String jsonContent = getJsonStringFile("/json/error/HttpMediaTypeNotSupportedException_resp_body.json");
-
-        mockMvc.perform(MockMvcRequestBuilders.post("/users")
-                .contentType(unSupportedMediaType).content(requestBody))
+        mockMvc.perform(MockMvcRequestBuilders.post(BASE_URL).contentType(unSupportedMediaType).content(requestBody))
                 .andDo(print())
                 .andExpectAll(
                         status().isUnsupportedMediaType(),
