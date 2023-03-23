@@ -1,0 +1,12 @@
+{
+  "errors": [
+    {
+      "httpStatusCode": 400,
+      "frontendCode": "validationError",
+      "messageToCustomer": "Ошибка валидации запроса",
+      "meta": {
+        "jexceptionMsg": "org.springframework.http.converter.HttpMessageNotReadableException: Required request body is missing: public java.lang.String com.example.microservices.users.controller.UserController.updateUser(com.example.microservices.users.dto.UserDTO,java.lang.Long)"
+      }
+    }
+  ]
+}

@@ -15,7 +15,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
@@ -23,7 +22,10 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 
 import static com.example.microservices.users.util.ITestUtils.getJsonStringFile;
 import static com.example.microservices.users.util.MapperTestUtils.initMapper;
-import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -52,9 +54,8 @@ class ITestApplicationExceptionHandler {
 
     @Test
     void test101_given_UnSupportedRequestMethod_HttpRequestMethodNotSupportedException() throws Exception {
-        String requestBody = StringUtils.EMPTY;
         String jsonContent = getJsonStringFile("/json/error/HttpRequestMethodNotSupportedException_resp_body.json");
-        mockMvc.perform(MockMvcRequestBuilders.delete(BASE_URL).contentType(APPLICATION_JSON).content(requestBody))
+        mockMvc.perform(delete(BASE_URL))
                 .andDo(print())
                 .andExpectAll(
                         status().isMethodNotAllowed(),
@@ -64,25 +65,50 @@ class ITestApplicationExceptionHandler {
 
     @Test
     void test102_given_UnSupportedMediaType_HttpMediaTypeNotSupportedException() throws Exception {
-        String requestBody = StringUtils.EMPTY;
         MediaType unSupportedMediaType = MediaType.TEXT_PLAIN;
+        String requestBody = StringUtils.EMPTY;
         String jsonContent = getJsonStringFile("/json/error/HttpMediaTypeNotSupportedException_resp_body.json");
-        mockMvc.perform(MockMvcRequestBuilders.post(BASE_URL).contentType(unSupportedMediaType).content(requestBody))
+        mockMvc.perform(post(BASE_URL).contentType(unSupportedMediaType).content(requestBody))
                 .andDo(print())
                 .andExpectAll(
                         status().isUnsupportedMediaType(),
                         content().json(jsonContent)
                 );
     }
+
+    @Test
+    void test109_given_NoBody_HttpMessageNotReadableException() throws Exception {
+        String urlTemplate = String.format(BASE_URL + "/%s", 1L);
+        String requestBody = StringUtils.EMPTY;
+        String jsonContent = getJsonStringFile("/json/error/HttpMessageNotReadableException_resp_body.json");
+        mockMvc.perform(put(urlTemplate).content(requestBody))
+                .andDo(print())
+                .andExpectAll(
+                        status().isBadRequest(),
+                        content().json(jsonContent)
+                );
+    }
+
+    @Test
+    void test901_given_wrongPathVariableType_MethodArgumentTypeMismatchException() throws Exception {
+        String wrongPathVariableType = "wrongPathVariableType";
+        String urlTemplate = BASE_URL + "/" + wrongPathVariableType;
+        String jsonContent = getJsonStringFile("/json/error/MethodArgumentTypeMismatchException_resp_body.json");
+        mockMvc.perform(get(urlTemplate))
+                .andDo(print())
+                .andExpectAll(
+                        status().isBadRequest(),
+                        content().json(jsonContent)
+                );
+    }
 }
 
 // HttpMediaTypeNotAcceptableException.class, //103
-// MissingPathVariableException.class, //104
+// MissingPathVariableException.class, //104 //Can't make an imitation
 // MissingServletRequestParameterException.class, //105
 // ServletRequestBindingException.class, //106
 // ConversionNotSupportedException.class, //107
 // TypeMismatchException.class, //108
-// HttpMessageNotReadableException.class, //109
 // HttpMessageNotWritableException.class, //110
 // MethodArgumentNotValidException.class, //111
 // MissingServletRequestPartException.class, //112
