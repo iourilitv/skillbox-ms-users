@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
 import java.util.concurrent.TimeoutException;
 
 import static com.example.microservices.users.error.entity.ErrorId.BUSINESS_ERROR;
@@ -65,7 +66,8 @@ class ExceptionConverterTest {
         HttpStatus httpStatus = INTERNAL_SERVER_ERROR;
         ErrorId errorId = UNKNOWN_ERROR;
         Error error = buildError(errorId, httpStatus, jExceptionMsg);
-        ErrorList expected = new ErrorList(error);
+        ErrorList expected = new ErrorList();
+        expected.add(error);
         try {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, reason);
         } catch (ResponseStatusException ex) {
@@ -82,7 +84,7 @@ class ExceptionConverterTest {
         HttpStatus httpStatus = UNSUPPORTED_MEDIA_TYPE;
         ErrorId errorId = VALIDATION_ERROR;
         Error error = buildError(errorId, httpStatus, jExceptionMsg);
-        ErrorList expected = new ErrorList(error);
+        ErrorList expected = new ErrorList(List.of(error));
         try {
             throw new HttpMediaTypeNotSupportedException(message);
         } catch (HttpMediaTypeNotSupportedException ex) {
