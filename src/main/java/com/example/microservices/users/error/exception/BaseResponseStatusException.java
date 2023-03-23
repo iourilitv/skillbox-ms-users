@@ -1,11 +1,13 @@
 package com.example.microservices.users.error.exception;
 
 import com.example.microservices.users.error.entity.ErrorId;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
 @Getter
+@EqualsAndHashCode(callSuper = false)
 public class BaseResponseStatusException extends ResponseStatusException {
 
     protected final ErrorId errorId;
