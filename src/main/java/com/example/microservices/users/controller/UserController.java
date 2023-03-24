@@ -33,7 +33,7 @@ import static com.example.microservices.users.dictionary.UserControllerDictionar
 import static com.example.microservices.users.dictionary.UserControllerDictionary.EXAMPLE_RESPONSE_DELETE_USER_ERROR_412;
 import static com.example.microservices.users.dictionary.UserControllerDictionary.EXAMPLE_RESPONSE_DELETE_USER_OK_200;
 import static com.example.microservices.users.dictionary.UserControllerDictionary.EXAMPLE_RESPONSE_GET_ALL_OK_200;
-import static com.example.microservices.users.dictionary.UserControllerDictionary.EXAMPLE_RESPONSE_GET_USER_ERROR_404;
+import static com.example.microservices.users.dictionary.UserControllerDictionary.EXAMPLE_RESPONSE_GET_USER_NOT_FOUND_ERROR_500;
 import static com.example.microservices.users.dictionary.UserControllerDictionary.EXAMPLE_RESPONSE_GET_USER_OK_200;
 import static com.example.microservices.users.dictionary.UserControllerDictionary.EXAMPLE_RESPONSE_UPDATE_USER_ERROR_422;
 import static com.example.microservices.users.dictionary.UserControllerDictionary.EXAMPLE_RESPONSE_UPDATE_USER_OK_200;
@@ -53,7 +53,8 @@ public class UserController {
                     examples = {@ExampleObject(value = EXAMPLE_RESPONSE_GET_ALL_OK_200)})})
     @GetMapping
     public List<UserDTO> getAll() {
-        return userMapper.toDTOList(userService.getAll());
+        List<User> userList = userService.getAll();
+        return userMapper.toDTOList(userList);
     }
 
     @Operation(summary = "Getting User by id")
@@ -61,11 +62,12 @@ public class UserController {
             @ApiResponse(responseCode = "200", description = "Found the user",
                     content = {@Content(mediaType = "application/json", schema = @Schema(implementation = UserDTO.class),
                             examples = {@ExampleObject(value = EXAMPLE_RESPONSE_GET_USER_OK_200)})}),
-            @ApiResponse(responseCode = "404", description = "User not found",
-                    content = @Content(examples = {@ExampleObject(value = EXAMPLE_RESPONSE_GET_USER_ERROR_404)}))})
+            @ApiResponse(responseCode = "500", description = "User not found",
+                    content = @Content(examples = {@ExampleObject(value = EXAMPLE_RESPONSE_GET_USER_NOT_FOUND_ERROR_500)}))})
     @GetMapping(value = "/{id}")
     public UserDTO getUser(@Parameter(description = "id of user to be searched") @PathVariable long id) {
-        return userMapper.toDTO(userService.getUser(id));
+        User user = userService.getUser(id);
+        return userMapper.toDTO(user);
     }
 
     @Operation(summary = "User updating")

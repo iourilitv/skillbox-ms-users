@@ -53,11 +53,17 @@ public class UserControllerDictionary {
             "  }\n" +
             "]";
     public static final String EXAMPLE_RESPONSE_GET_USER_OK_200 = USER_1;
-    public static final String EXAMPLE_RESPONSE_GET_USER_ERROR_404 = "{\n" +
-            "  \"timestamp\": \"2022-12-06T21:47:11.775+00:00\",\n" +
-            "  \"status\": 404,\n" +
-            "  \"error\": \"Not Found\",\n" +
-            "  \"path\": \"/users/5\"\n" +
+    public static final String EXAMPLE_RESPONSE_GET_USER_NOT_FOUND_ERROR_500 = "{\n" +
+            "  \"errors\": [\n" +
+            "    {\n" +
+            "      \"httpStatusCode\": 500,\n" +
+            "      \"frontendCode\": \"businessError\",\n" +
+            "      \"messageToCustomer\": \"Внутренняя бизнес ошибка\",\n" +
+            "      \"meta\": {\n" +
+            "        \"jexceptionMsg\": \"com.example.microservices.users.error.exception.UserNotFoundResponseStatusException{HttpStatus: 404 NOT_FOUND, Reason: Resource User(id: 9999) Not Found}\"\n" +
+            "      }\n" +
+            "    }\n" +
+            "  ]\n" +
             "}";
 
     public static final String EXAMPLE_REQUEST_BODY_UPDATE_USER = USER_1;
