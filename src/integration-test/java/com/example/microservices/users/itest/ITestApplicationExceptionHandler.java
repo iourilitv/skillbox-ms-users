@@ -22,6 +22,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 
 import static com.example.microservices.users.util.ITestUtils.getJsonStringFile;
 import static com.example.microservices.users.util.MapperTestUtils.initMapper;
+import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -31,7 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
- * Module tests
+ * Module tests Exceptions of HttpRequest excluding BaseResponseStatusException inheritors
  */
 
 @Transactional
@@ -55,7 +56,7 @@ class ITestApplicationExceptionHandler {
     @Test
     void test101_given_UnSupportedRequestMethod_HttpRequestMethodNotSupportedException() throws Exception {
         String jsonContent = getJsonStringFile("/json/error/HttpRequestMethodNotSupportedException_resp_body.json");
-        mockMvc.perform(delete(BASE_URL))
+        mockMvc.perform(delete(BASE_URL + "/{id}", (Object)null))
                 .andDo(print())
                 .andExpectAll(
                         status().isMethodNotAllowed(),
@@ -78,10 +79,9 @@ class ITestApplicationExceptionHandler {
 
     @Test
     void test109_given_NoBody_HttpMessageNotReadableException() throws Exception {
-        String urlTemplate = String.format(BASE_URL + "/%s", 1L);
         String requestBody = StringUtils.EMPTY;
         String jsonContent = getJsonStringFile("/json/error/HttpMessageNotReadableException_resp_body.json");
-        mockMvc.perform(put(urlTemplate).content(requestBody))
+        mockMvc.perform(put(BASE_URL + "/{id}", 1L).contentType(APPLICATION_JSON).content(requestBody))
                 .andDo(print())
                 .andExpectAll(
                         status().isBadRequest(),
@@ -92,9 +92,8 @@ class ITestApplicationExceptionHandler {
     @Test
     void test901_given_wrongPathVariableType_MethodArgumentTypeMismatchException() throws Exception {
         String wrongPathVariableType = "wrongPathVariableType";
-        String urlTemplate = BASE_URL + "/" + wrongPathVariableType;
         String jsonContent = getJsonStringFile("/json/error/MethodArgumentTypeMismatchException_resp_body.json");
-        mockMvc.perform(get(urlTemplate))
+        mockMvc.perform(get(BASE_URL + "/{id}", wrongPathVariableType))
                 .andDo(print())
                 .andExpectAll(
                         status().isBadRequest(),
