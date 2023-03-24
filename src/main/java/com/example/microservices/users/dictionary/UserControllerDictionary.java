@@ -1,117 +1,23 @@
 package com.example.microservices.users.dictionary;
 
+import lombok.experimental.UtilityClass;
+
+@UtilityClass
 public class UserControllerDictionary {
-    private static final String USER_1 =
-            "{\n" +
-                    "  \"id\": 1,\n" +
-                    "  \"firstName\": \"Yury\",\n" +
-                    "  \"lastName\": \"Petrov\",\n" +
-                    "  \"secondName\": \"Stakanych\",\n" +
-                    "  \"gender\": \"MALE\",\n" +
-                    "  \"birthday\": \"2000-11-22T00:00:00.000+00:00\",\n" +
-                    "  \"currentCity\": {\n" +
-                    "    \"id\": 1,\n" +
-                    "    \"name\": \"Moscow\"\n" +
-                    "  },\n" +
-                    "  \"nickname\": \"iuric\",\n" +
-                    "  \"email\": \"y.petrov@mail.com\",\n" +
-                    "  \"phone\": \"+7(999)123-4567\",\n" +
-                    "  \"followingsNumber\": 2,\n" +
-                    "  \"followersNumber\": 1\n" +
-                    "}";
 
-    public static final String EXAMPLE_RESPONSE_GET_ALL_OK_200 = "[\n" +
-            USER_1 + ",\n" +
-            "  {\n" +
-            "    \"id\": 2,\n" +
-            "    \"firstName\": \"Anna\",\n" +
-            "    \"lastName\": \"Smile\",\n" +
-            "    \"secondName\": \"Maria\",\n" +
-            "    \"gender\": \"FEMALE\",\n" +
-            "    \"birthday\": \"2002-01-02T00:00:00.000+00:00\",\n" +
-            "    \"currentCity\": {\n" +
-            "      \"id\": 4,\n" +
-            "      \"name\": \"Paris\"\n" +
-            "    },\n" +
-            "    \"nickname\": \"asmile\",\n" +
-            "    \"followingsNumber\": 1,\n" +
-            "    \"followersNumber\": 1\n" +
-            "  },\n" +
-            "  {\n" +
-            "    \"id\": 4,\n" +
-            "    \"firstName\": \"Petia\",\n" +
-            "    \"lastName\": \"Homo\",\n" +
-            "    \"gender\": \"OTHER\",\n" +
-            "    \"birthday\": \"0001-01-01T00:00:00.000+00:00\",\n" +
-            "    \"currentCity\": {\n" +
-            "      \"id\": 2,\n" +
-            "      \"name\": \"Samara\"\n" +
-            "    },\n" +
-            "    \"nickname\": \"phomo\",\n" +
-            "    \"followingsNumber\": 0,\n" +
-            "    \"followersNumber\": 1\n" +
-            "  }\n" +
-            "]";
+    public static final String USER_1 = "{\"id\":1,\"firstName\":\"Yury\",\"lastName\":\"Petrov\",\"secondName\":\"Stakanych\",\"gender\":\"MALE\",\"birthday\":\"2000-11-22T00:00:00.000+00:00\",\"currentCity\":{\"id\":1,\"name\":\"Moscow\"},\"nickname\":\"iuric\",\"email\":\"y.petrov@mail.com\",\"phone\":\"+7(999)123-4567\",\"followingsNumber\":2,\"followersNumber\":1}";
+    public static final String USER_2 = "{\"id\":2,\"firstName\":\"Anna\",\"lastName\":\"Smile\",\"secondName\":\"Maria\",\"gender\":\"FEMALE\",\"birthday\":\"2002-01-02T00:00:00.000+00:00\",\"currentCity\":{\"id\":4,\"name\":\"Paris\"},\"nickname\":\"asmile\",\"followingsNumber\":1,\"followersNumber\":1}";
+    public static final String USER_4 = "{\"id\":4,\"firstName\":\"Petia\",\"lastName\":\"Homo\",\"gender\":\"OTHER\",\"birthday\":\"0001-01-01T00:00:00.000+00:00\",\"currentCity\":{\"id\":2,\"name\":\"Samara\"},\"nickname\":\"phomo\",\"followingsNumber\":0,\"followersNumber\":1}";
+    public static final String EXAMPLE_RESPONSE_GET_ALL_OK_200 = "[" + USER_1 + "," + USER_2 + "," + USER_4 + "]";
     public static final String EXAMPLE_RESPONSE_GET_USER_OK_200 = USER_1;
-    public static final String EXAMPLE_RESPONSE_GET_USER_ERROR_404 = "{\n" +
-            "  \"timestamp\": \"2022-12-06T21:47:11.775+00:00\",\n" +
-            "  \"status\": 404,\n" +
-            "  \"error\": \"Not Found\",\n" +
-            "  \"path\": \"/users/5\"\n" +
-            "}";
-
+    public static final String EXAMPLE_RESPONSE_GET_USER_NOT_FOUND_ERROR_500 = "{\"errors\":[{\"httpStatusCode\":500,\"frontendCode\":\"businessError\",\"messageToCustomer\":\"Внутренняя бизнес ошибка\",\"meta\":{\"jexceptionMsg\":\"com.example.microservices.users.error.exception.UserNotFoundResponseStatusException{HttpStatus: 404 NOT_FOUND, Reason: Resource User(id: 9999) Not Found}\"}}]}";
     public static final String EXAMPLE_REQUEST_BODY_UPDATE_USER = USER_1;
     public static final String EXAMPLE_RESPONSE_UPDATE_USER_OK_200 = "User(id: 5, nickname: othic) has been updated successfully";
-    public static final String EXAMPLE_RESPONSE_UPDATE_USER_ERROR_422 = "{\n" +
-            "  \"timestamp\": \"2022-12-07T05:43:37.995+00:00\",\n" +
-            "  \"status\": 422,\n" +
-            "  \"error\": \"Unprocessable Entity\",\n" +
-            "  \"path\": \"/users/10\"\n" +
-            "}";
-
-    public static final String EXAMPLE_REQUEST_BODY_CREATE_USER = "{\n" +
-            "  \"firstName\": \"Ben\",\n" +
-            "  \"lastName\": \"Mask\",\n" +
-            "  \"gender\": \"MALE\",\n" +
-            "  \"birthday\": \"1990-01-02\",\n" +
-            "  \"currentCity\": {\n" +
-            "    \"id\": 5,\n" +
-            "    \"name\": \"Tula\"\n" +
-            "  },\n" +
-            "  \"nickname\": \"benmask\"\n" +
-            "}";
-
-    public static final String EXAMPLE_RESPONSE_CREATE_USER_OK_200 = "{\n" +
-            "    \"id\": 8,\n" +
-            "    \"firstName\": \"Ben\",\n" +
-            "    \"lastName\": \"Mask\",\n" +
-            "    \"gender\": \"MALE\",\n" +
-            "    \"birthday\": \"1990-01-02T00:00:00.000+00:00\",\n" +
-            "    \"currentCity\": {\n" +
-            "        \"id\": 5,\n" +
-            "        \"name\": \"Tula\"\n" +
-            "    },\n" +
-            "    \"nickname\": \"benmask\",\n" +
-            "    \"followingsNumber\": 0,\n" +
-            "    \"followersNumber\": 0\n" +
-            "}";
-
-    public static final String EXAMPLE_RESPONSE_CREATE_USER_ERROR_412 = "{\n" +
-            "  \"timestamp\": \"2022-12-06T21:52:23.801+00:00\",\n" +
-            "  \"status\": 412,\n" +
-            "  \"error\": \"Precondition Failed\",\n" +
-            "  \"path\": \"/users\"\n" +
-            "}";
-
+    public static final String EXAMPLE_RESPONSE_UPDATE_USER_PRECONDITION_FAILED_ERROR_500 = "{\"errors\":[{\"httpStatusCode\":500,\"frontendCode\":\"businessError\",\"messageToCustomer\":\"Внутренняя бизнес ошибка\",\"meta\":{\"jexceptionMsg\":\"com.example.microservices.users.error.exception.PreconditionFailedResponseStatusException{HttpStatus: 412 PRECONDITION_FAILED, Reason: Values of User.id(111) And id(222) argument Are Not Equal}\"}}]}";
+    public static final String EXAMPLE_REQUEST_BODY_CREATE_USER = "{\"firstName\":\"Ben\",\"lastName\":\"Mask\",\"gender\":\"MALE\",\"birthday\": \"1990-01-02\",\"currentCity\":{\"id\":5,\"name\":\"Tula\"},\"nickname\":\"benmask\"}";
+    public static final String EXAMPLE_RESPONSE_CREATE_USER_OK_200 = "{\"id\":8,\"firstName\":\"Ben\",\"lastName\":\"Mask\",\"gender\":\"MALE\",\"birthday\":\"1990-01-02T00:00:00.000+00:00\",\"currentCity\":{\"id\": 5,\"name\":\"Tula\"},\"nickname\":\"benmask\",\"followingsNumber\":0,\"followersNumber\":0}";
+    public static final String EXAMPLE_RESPONSE_CREATE_USER_PRECONDITION_FAILED_ERROR_500 = "{\"errors\":[{\"httpStatusCode\":500,\"frontendCode\":\"businessError\",\"messageToCustomer\":\"Внутренняя бизнес ошибка\",\"meta\":{\"jexceptionMsg\":\"com.example.microservices.users.error.exception.PreconditionFailedResponseStatusException{HttpStatus: 412 PRECONDITION_FAILED, Reason: User(nickname: usednickname) Already Exists Including Deleted}\"}}]}";
     public static final String EXAMPLE_RESPONSE_DELETE_USER_OK_200 = "User(id: 5, nickname: othic) has been deleted";
-    public static final String EXAMPLE_RESPONSE_DELETE_USER_ERROR_412 = "{\n" +
-            "  \"timestamp\": \"2022-12-06T21:52:23.801+00:00\",\n" +
-            "  \"status\": 412,\n" +
-            "  \"error\": \"Precondition Failed\",\n" +
-            "  \"path\": \"/users/99999\"\n" +
-            "}";
-
-    private UserControllerDictionary() {
-        throw new IllegalStateException("Utility class");
-    }
+    public static final String EXAMPLE_RESPONSE_DELETE_USER_PRECONDITION_FAILED_1_ERROR_500 = "{\"errors\":[{\"httpStatusCode\":500,\"frontendCode\":\"businessError\",\"messageToCustomer\":\"Внутренняя бизнес ошибка\",\"meta\":{\"jexceptionMsg\":\"com.example.microservices.users.error.exception.PreconditionFailedResponseStatusException{HttpStatus: 412 PRECONDITION_FAILED, Reason: User(id: 9999) Does Not Exist}\"}}]}";
+    public static final String EXAMPLE_RESPONSE_DELETE_USER_PRECONDITION_FAILED_2_ERROR_500 = "{\"errors\":[{\"httpStatusCode\":500,\"frontendCode\":\"businessError\",\"messageToCustomer\":\"Внутренняя бизнес ошибка\",\"meta\":{\"jexceptionMsg\":\"com.example.microservices.users.error.exception.PreconditionFailedResponseStatusException{HttpStatus: 412 PRECONDITION_FAILED, Reason: User(id: 111) Is Already Deleted}\"}}]}";
 }

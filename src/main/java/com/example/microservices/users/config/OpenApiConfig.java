@@ -15,6 +15,6 @@ public class OpenApiConfig {
                 .info(new Info()
                         .title("Rest API of Users microservice")
                         .description("Rest API of Users microservice as a demo project on Spring Boot")
-                        .version("0.0.1"));
+                        .version("2.0"));
     }
 }
