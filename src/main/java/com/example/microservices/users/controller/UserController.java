@@ -35,8 +35,8 @@ import static com.example.microservices.users.dictionary.UserControllerDictionar
 import static com.example.microservices.users.dictionary.UserControllerDictionary.EXAMPLE_RESPONSE_GET_ALL_OK_200;
 import static com.example.microservices.users.dictionary.UserControllerDictionary.EXAMPLE_RESPONSE_GET_USER_NOT_FOUND_ERROR_500;
 import static com.example.microservices.users.dictionary.UserControllerDictionary.EXAMPLE_RESPONSE_GET_USER_OK_200;
-import static com.example.microservices.users.dictionary.UserControllerDictionary.EXAMPLE_RESPONSE_UPDATE_USER_ERROR_422;
 import static com.example.microservices.users.dictionary.UserControllerDictionary.EXAMPLE_RESPONSE_UPDATE_USER_OK_200;
+import static com.example.microservices.users.dictionary.UserControllerDictionary.EXAMPLE_RESPONSE_UPDATE_USER_PRECONDITION_FAILED_ERROR_500;
 
 @Tag(name = "Users", description = "CRUD operations with Users")
 @RequiredArgsConstructor
@@ -62,8 +62,9 @@ public class UserController {
             @ApiResponse(responseCode = "200", description = "Found the user",
                     content = {@Content(mediaType = "application/json", schema = @Schema(implementation = UserDTO.class),
                             examples = {@ExampleObject(value = EXAMPLE_RESPONSE_GET_USER_OK_200)})}),
-            @ApiResponse(responseCode = "500", description = "User not found",
-                    content = @Content(examples = {@ExampleObject(value = EXAMPLE_RESPONSE_GET_USER_NOT_FOUND_ERROR_500)}))})
+            @ApiResponse(responseCode = "500", description = "404 NOT_FOUND: User not found",
+                    content = @Content(examples = {@ExampleObject(value = EXAMPLE_RESPONSE_GET_USER_NOT_FOUND_ERROR_500)}))
+    })
     @GetMapping(value = "/{id}")
     public UserDTO getUser(@Parameter(description = "id of user to be searched") @PathVariable long id) {
         User user = userService.getUser(id);
@@ -75,8 +76,11 @@ public class UserController {
             @ApiResponse(responseCode = "200", description = "Updated the user",
                     content = {@Content(mediaType = "application/json", schema = @Schema(implementation = String.class),
                             examples = {@ExampleObject(value = EXAMPLE_RESPONSE_UPDATE_USER_OK_200)})}),
-            @ApiResponse(responseCode = "422", description = "UserDTO.id is not match /{id}",
-                    content = @Content(examples = {@ExampleObject(value = EXAMPLE_RESPONSE_UPDATE_USER_ERROR_422)}))})
+            @ApiResponse(responseCode = "500", description = "412 PRECONDITION_FAILED: UserDTO.id is not match /{id}",
+                    content = @Content(examples = {
+                            @ExampleObject(value = EXAMPLE_RESPONSE_UPDATE_USER_PRECONDITION_FAILED_ERROR_500)
+                    }))
+    })
     @PutMapping(value = "/{id}")
     public String updateUser(@io.swagger.v3.oas.annotations.parameters.RequestBody(description = "User to be updated",
             required = true, content = @Content(schema = @Schema(implementation = UserDTO.class),
