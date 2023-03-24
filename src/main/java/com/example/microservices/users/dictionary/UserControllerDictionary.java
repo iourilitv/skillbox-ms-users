@@ -108,11 +108,17 @@ public class UserControllerDictionary {
             "    \"followersNumber\": 0\n" +
             "}";
 
-    public static final String EXAMPLE_RESPONSE_CREATE_USER_ERROR_412 = "{\n" +
-            "  \"timestamp\": \"2022-12-06T21:52:23.801+00:00\",\n" +
-            "  \"status\": 412,\n" +
-            "  \"error\": \"Precondition Failed\",\n" +
-            "  \"path\": \"/users\"\n" +
+    public static final String EXAMPLE_RESPONSE_CREATE_USER_PRECONDITION_FAILED_ERROR_500 = "{\n" +
+            "  \"errors\": [\n" +
+            "    {\n" +
+            "      \"httpStatusCode\": 500,\n" +
+            "      \"frontendCode\": \"businessError\",\n" +
+            "      \"messageToCustomer\": \"Внутренняя бизнес ошибка\",\n" +
+            "      \"meta\": {\n" +
+            "        \"jexceptionMsg\": \"com.example.microservices.users.error.exception.PreconditionFailedResponseStatusException{HttpStatus: 412 PRECONDITION_FAILED, Reason: User(nickname: usednickname) Already Exists Including Deleted}\"\n" +
+            "      }\n" +
+            "    }\n" +
+            "  ]\n" +
             "}";
 
     public static final String EXAMPLE_RESPONSE_DELETE_USER_OK_200 = "User(id: 5, nickname: othic) has been deleted";

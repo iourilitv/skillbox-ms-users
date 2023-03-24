@@ -28,8 +28,8 @@ import java.util.Objects;
 
 import static com.example.microservices.users.dictionary.UserControllerDictionary.EXAMPLE_REQUEST_BODY_CREATE_USER;
 import static com.example.microservices.users.dictionary.UserControllerDictionary.EXAMPLE_REQUEST_BODY_UPDATE_USER;
-import static com.example.microservices.users.dictionary.UserControllerDictionary.EXAMPLE_RESPONSE_CREATE_USER_ERROR_412;
 import static com.example.microservices.users.dictionary.UserControllerDictionary.EXAMPLE_RESPONSE_CREATE_USER_OK_200;
+import static com.example.microservices.users.dictionary.UserControllerDictionary.EXAMPLE_RESPONSE_CREATE_USER_PRECONDITION_FAILED_ERROR_500;
 import static com.example.microservices.users.dictionary.UserControllerDictionary.EXAMPLE_RESPONSE_DELETE_USER_ERROR_412;
 import static com.example.microservices.users.dictionary.UserControllerDictionary.EXAMPLE_RESPONSE_DELETE_USER_OK_200;
 import static com.example.microservices.users.dictionary.UserControllerDictionary.EXAMPLE_RESPONSE_GET_ALL_OK_200;
@@ -96,8 +96,11 @@ public class UserController {
             @ApiResponse(responseCode = "200", description = "Created the user",
                     content = {@Content(mediaType = "application/json", schema = @Schema(implementation = UserDTO.class),
                             examples = {@ExampleObject(value = EXAMPLE_RESPONSE_CREATE_USER_OK_200)})}),
-            @ApiResponse(responseCode = "412", description = "This nickname already used",
-                    content = @Content(examples = {@ExampleObject(value = EXAMPLE_RESPONSE_CREATE_USER_ERROR_412)}))})
+            @ApiResponse(responseCode = "500", description = "412 PRECONDITION_FAILED: This nickname already used",
+                    content = @Content(examples = {
+                            @ExampleObject(value = EXAMPLE_RESPONSE_CREATE_USER_PRECONDITION_FAILED_ERROR_500)
+                    }))
+    })
     @PostMapping
     public UserDTO createUser(@io.swagger.v3.oas.annotations.parameters.RequestBody(description = "User to be created",
             required = true, content = @Content(schema = @Schema(implementation = UserDTO.class),
