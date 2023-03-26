@@ -83,7 +83,7 @@ Built:        2023-01-19T03:19:01+0000
 OS/Arch:      windows/amd64
 ``
 
-### Register a runner (in PowerShell)
+### Register a Project's runner (in PowerShell)
 #### Run the following command:
 ``
 .\gitlab-runner.exe register
@@ -234,3 +234,33 @@ Cleaning up project directory and file based variables
 00:01
 ERROR: Job failed: exit status 1
 
+### Register a Group's runner (in PowerShell)
+Group: study-projects-iourilitv/skillbox/microservices (Created 25.03.23)       
+Do the same as in chapter ### Register a Project's runner (in PowerShell).          
+#### Register gitlab-study-projects-iourilitv-win64-local
+!!!!! Using the same runner's agent as for the project runner, gitlab-win64-local.
+
+### Set up auto executable property by editing the runner
+Run untagged jobs : Indicates whether this runner can pick jobs without tags
+
+#### Logs
+``
+PS D:\Software\gitlab\GitLab-Runner> ./gitlab-runner.exe register
+Runtime platform                                    arch=amd64 os=windows pid=10352 revision=12335144 version=15.8.0
+Enter the GitLab instance URL (for example, https://gitlab.com/):
+https://gitlab.com/
+Enter the registration token:
+GR1348941szQQz5Eq26m-j4Y5tB7d
+Enter a description for the runner:
+[IOURI-X555L]: gitlab-study-projects-iourilitv-win64-local
+Enter tags for the runner (comma-separated):
+gitlab,gitlab-shell-windows
+Enter optional maintenance note for the runner:
+Local group runner on Windows10 Home 64-bit
+WARNING: Support for registration tokens and runner parameters in the 'register' command has been deprecated in GitLab Runner 15.6 and will be replaced with support for authentication tokens. For more information, see https://gitlab.com/gitlab-org/gitlab/-/issues/380872
+Registering runner... succeeded                     runner=GR1348941szQQz5Eq
+Enter an executor: docker-ssh, instance, kubernetes, custom, docker-windows, shell, ssh, virtualbox, docker+machine, docker-ssh+machine, docker, parallels:
+shell
+Runner registered successfully. Feel free to start it, but if it's running already the config should be automatically reloaded!
+Configuration (with the authentication token) was saved in "D:\\Software\\gitlab\\GitLab-Runner\\config.toml"
+``
