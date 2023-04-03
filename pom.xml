@@ -11,7 +11,7 @@
 
 	<groupId>com.example.microservices</groupId>
 	<artifactId>users</artifactId>
-	<version>2.0-RELEASE</version>
+	<version>2.0.1</version>
 	<name>users</name>
 	<description>Demo project for Spring Boot</description>
 

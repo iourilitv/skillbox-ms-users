@@ -37,15 +37,24 @@ Next working in D:\projects\skillbox\microservices\users>
 *************************************************************           
 ## Settings
 ### Gitlab
+#### Paths
+##### Group study-projects-iourilitv/skillbox/microservices (Created 25.03.23)
+##### Project study-projects-iourilitv/skillbox/microservices/users (Changed 26.03.2023)
+
 #### Variables
-##### Project (Expanded)
+##### Project ./users (Expanded)
 - NEXUS_REPO_URL: http://localhost:8081/repository/skillbox-mvn-hosted-
 - NEXUS_REPO_USER: admin
 - NEXUS_REPO_PASS: nexus
 - SONAR_HOST_URL: http://localhost:9000
 - SONAR_LOGIN_TOKEN: squ_1af8d87893a5ce56f3b5975216a103a804e97b27
+##### Group study-projects-iourilitv/skillbox/microservices
+The same as variables of ./users project.
 
-### Default gitlab runner with PS: gitlab-win64-local
+### Default gitlab runners with PS:
+#### gitlab-win64-local for project study-projects-iourilitv/skillbox/microservices/users
+#### gitlab-study-projects-iourilitv-win64-local for group study-projects-iourilitv/skillbox/microservices
+
 #### Maven local repository location
 Put settings.xml into runner's local repository directory:          
 C:\WINDOWS\system32\config\systemprofile\.m2.
