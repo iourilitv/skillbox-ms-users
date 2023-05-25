@@ -84,4 +84,19 @@ public class UserTestUtils {
         userDTO.setFollowersNumber(user.getFollowers() == null ? 0 : user.getFollowers().size());
         return userDTO;
     }
+
+    public static User toUser(UserDTO userDTO) {
+        User user = new User(userDTO.getId(), userDTO.getNickname());
+        user.setFirstName(userDTO.getFirstName());
+        user.setLastName(userDTO.getLastName());
+        user.setSecondName(userDTO.getSecondName());
+        user.setGender(userDTO.getGender());
+        user.setBirthday(userDTO.getBirthday());
+        user.setCurrentCity(new City(userDTO.getCurrentCity().getId(), userDTO.getCurrentCity().getName()));
+        user.setEmail(userDTO.getEmail());
+        user.setPhone(userDTO.getPhone());
+        user.setAbout(userDTO.getAbout());
+        user.setHardSkills(userDTO.getHardSkills());
+        return user;
+    }
 }

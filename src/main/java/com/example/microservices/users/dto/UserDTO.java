@@ -77,4 +77,21 @@ public class UserDTO {
         this.currentCity = currentCity;
         this.nickname = nickname;
     }
+
+    public UserDTO(UserDTO userDTO) {
+        this.id = userDTO.getId();
+        this.firstName = userDTO.getFirstName();
+        this.lastName = userDTO.getLastName();
+        this.secondName = userDTO.getSecondName();
+        this.gender = userDTO.getGender();
+        this.birthday = userDTO.getBirthday();
+        this.currentCity = userDTO.getCurrentCity();
+        this.nickname = userDTO.getNickname();
+        this.email = userDTO.getEmail();
+        this.phone = userDTO.getPhone();
+        this.about = userDTO.getAbout();
+        this.hardSkills = userDTO.getHardSkills();
+        this.followingsNumber = userDTO.getFollowingsNumber();
+        this.followersNumber = userDTO.getFollowersNumber();
+    }
 }
