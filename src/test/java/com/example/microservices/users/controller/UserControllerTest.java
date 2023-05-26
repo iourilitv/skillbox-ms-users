@@ -14,7 +14,6 @@ import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -32,6 +31,7 @@ import java.util.TimeZone;
 import java.util.stream.Collectors;
 
 import static com.example.microservices.users.util.UserTestUtils.fillUpTestUsers;
+import static com.example.microservices.users.util.UserTestUtils.toUser;
 import static com.example.microservices.users.util.UserTestUtils.toUserDTO;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
@@ -54,13 +54,12 @@ class UserControllerTest {
     private @MockBean UserService userService;
 
     private @Autowired MockMvc mockMvc;
-    private @Autowired ObjectMapper mapper;
+    private ObjectMapper mapper;
 
     private final List<User> testUsers = new ArrayList<>(TEST_LIST_SIZE);
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.openMocks(this);
         mapper = new JsonMapper();
         mapper.setDateFormat(new StdDateFormat().withColonInTimeZone(true));    //"birthday":"2022-12-02T06:55:59.842+00:00"
         mapper.setTimeZone(TimeZone.getTimeZone("UTC"));                        // timestamp in db without time zone
@@ -122,18 +121,20 @@ class UserControllerTest {
     @Test
     void test41_givenNotExistUser_thenCorrect_createUser() throws Exception {
         User userToCreate = testUsers.get(0);
-        long id = userToCreate.getId();
-        UserDTO userDTO = toUserDTO(userToCreate);
-        userDTO.setId(null);
-        when(userMapper.toEntity(userDTO)).thenReturn(userToCreate);
-        when(userService.createUser(userToCreate)).thenReturn(userToCreate);
-        userDTO.setId(id);
-        when(userMapper.toDTO(userToCreate)).thenReturn(userDTO);
-        String expectedJson = mapper.writeValueAsString(userDTO);
+        UserDTO expectedUserDTO = toUserDTO(userToCreate);
+        UserDTO userDTOtoSave = new UserDTO(expectedUserDTO);
+        userDTOtoSave.setId(null);
+        User userToSave = toUser(userDTOtoSave);
+        when(userMapper.toEntity(userDTOtoSave)).thenReturn(userToSave);
+        when(userService.createUser(userToSave)).thenReturn(userToCreate);
+
+        when(userMapper.toDTO(userToCreate)).thenReturn(expectedUserDTO);
+        String jsonToSend = mapper.writeValueAsString(userDTOtoSave);
         MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.post("/users")
-                .contentType(MediaType.APPLICATION_JSON).content(expectedJson)).andReturn();
+                .contentType(MediaType.APPLICATION_JSON).content(jsonToSend)).andReturn();
         MockHttpServletResponse response = mvcResult.getResponse();
         assertEquals(HttpStatus.OK.value(), response.getStatus());
+        String expectedJson = mapper.writeValueAsString(expectedUserDTO);
         String actualJson = response.getContentAsString();
         assertEquals(expectedJson, actualJson);
     }
